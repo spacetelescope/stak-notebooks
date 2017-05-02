@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>images.imgeom &#8212; The STAK Project 0.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bootstrap-stsci.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="images.imutil" href="images.imutil.html" />
+    <link rel="prev" title="images.imfilter" href="images.imfilter.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="_static/copybutton.js"></script>
+
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="index.html"><span id="logotext1">STScI</span><span id="logotext2">SSB</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="STScI Homepage" href="http://www.stsci.edu"></a></li>
+    <li><a title="General Index" href="genindex.html">Index</a></li>
+    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="images.imutil.html" title="images.imutil">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="images.imfilter.html" title="images.imfilter">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="index.html">The STAK Project 0.0.0 documentation</a>
+	 &#187;
+      </li>
+      
+      <li>images.imgeom</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="images-imgeom">
+<h1>images.imgeom<a class="headerlink" href="#images-imgeom" title="Permalink to this headline">¶</a></h1>
+<p>The images.imgeom package contains various image spatial manipulation
+and interpolation tasks.</p>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="Work in progress" src="_images/150pxblueconstuc.png" />
+</div>
+<p><strong>General Note about this package:</strong></p>
+<p>The tasks in this IRAF package include support for WCS updates after the
+image manipulations are preformed. We are currently working on the
+replacements for these WCS capabilities. For the moment we have included
+the array manipulation part of these tasks in this notebook.</p>
+<p><strong>Boundary Condition and Interpolation Options:</strong></p>
+<p>In the IRAF package the interpolation options are as follows: nearest,
+linear, poly3, poly5, spline3, sinc/lsinc. In the <code class="docutils literal"><span class="pre">scipy.ndimage</span></code>
+functions the interpolation option are spline degrees 0-5, where
+spline-0 is nearest and spline-1 is linear.</p>
+<p>The boundary condition options for IRAF and <code class="docutils literal"><span class="pre">scipy</span></code> are the same:
+nearest, wrap, reflect, and constant.</p>
+<p>Contents:</p>
+<ul class="simple">
+<li><a class="reference external" href="#blkavg">blkavg</a></li>
+<li><a class="reference external" href="#blkrep">blkrep</a></li>
+<li><a class="reference external" href="#im3dtran">im3dtran - imtranspose</a></li>
+<li><a class="reference external" href="#imshift">imshift - shiftlines</a></li>
+<li><a class="reference external" href="#magnify">magnify</a></li>
+<li><a class="reference external" href="#rotate">rotate</a></li>
+</ul>
+</div>
+<div class="section" id="blkavg">
+<h2>blkavg<a class="headerlink" href="#blkavg" title="Permalink to this headline">¶</a></h2>
+<p><strong>Please review the `Notes &lt;#notes&gt;`__ section above before running any
+examples in this notebook</strong></p>
+<p>The blkavg task takes in an arbitrary dimensioned image and preforms a
+block average across the requested box size. We can preform the same
+task with the <code class="docutils literal"><span class="pre">astropy.nddata.utils.block_reduce</span></code> function. In fact,
+this function is more generalized as you can apply any function (not
+just averaging) that accepts an <code class="docutils literal"><span class="pre">ndarray</span></code> and axis keyword to the
+block filter.</p>
+<p>Just added to ccdproc.. wrapper around astropy functions</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.nddata.utils</span> <span class="k">import</span> <span class="n">block_reduce</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">128</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">block_reduce</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[[</span>  <span class="mf">10.5</span><span class="p">,</span>   <span class="mf">12.5</span><span class="p">],</span>
+        <span class="p">[</span>  <span class="mf">18.5</span><span class="p">,</span>   <span class="mf">20.5</span><span class="p">]],</span>
+
+       <span class="p">[[</span>  <span class="mf">42.5</span><span class="p">,</span>   <span class="mf">44.5</span><span class="p">],</span>
+        <span class="p">[</span>  <span class="mf">50.5</span><span class="p">,</span>   <span class="mf">52.5</span><span class="p">]],</span>
+
+       <span class="p">[[</span>  <span class="mf">74.5</span><span class="p">,</span>   <span class="mf">76.5</span><span class="p">],</span>
+        <span class="p">[</span>  <span class="mf">82.5</span><span class="p">,</span>   <span class="mf">84.5</span><span class="p">]],</span>
+
+       <span class="p">[[</span> <span class="mf">106.5</span><span class="p">,</span>  <span class="mf">108.5</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">114.5</span><span class="p">,</span>  <span class="mf">116.5</span><span class="p">]]])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="blkrep">
+<h2>blkrep<a class="headerlink" href="#blkrep" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>The talks <code class="docutils literal"><span class="pre">blkrep</span></code> is used to block replicate an n-dimensional image.
+Astropy has the equivalent function <code class="docutils literal"><span class="pre">block_replicate</span></code>.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.nddata.utils</span> <span class="k">import</span> <span class="n">block_replicate</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># test data</span>
+<span class="n">my_arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">]]))</span>
+
+<span class="c1"># conservation of the array sum is the default</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">block_replicate</span><span class="p">(</span><span class="n">my_arr</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sum convservation&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+<span class="c1"># you can changes this using conserve_sum=False</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">block_replicate</span><span class="p">(</span><span class="n">my_arr</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">conserve_sum</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no sum conservation&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">sum</span> <span class="n">convservation</span>
+<span class="p">[[</span> <span class="mf">0.</span>          <span class="mf">0.</span>          <span class="mf">0.</span>          <span class="mf">0.11111111</span>  <span class="mf">0.11111111</span>  <span class="mf">0.11111111</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.</span>          <span class="mf">0.</span>          <span class="mf">0.</span>          <span class="mf">0.11111111</span>  <span class="mf">0.11111111</span>  <span class="mf">0.11111111</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.</span>          <span class="mf">0.</span>          <span class="mf">0.</span>          <span class="mf">0.11111111</span>  <span class="mf">0.11111111</span>  <span class="mf">0.11111111</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.22222222</span>  <span class="mf">0.22222222</span>  <span class="mf">0.22222222</span>  <span class="mf">0.33333333</span>  <span class="mf">0.33333333</span>  <span class="mf">0.33333333</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.22222222</span>  <span class="mf">0.22222222</span>  <span class="mf">0.22222222</span>  <span class="mf">0.33333333</span>  <span class="mf">0.33333333</span>  <span class="mf">0.33333333</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.22222222</span>  <span class="mf">0.22222222</span>  <span class="mf">0.22222222</span>  <span class="mf">0.33333333</span>  <span class="mf">0.33333333</span>  <span class="mf">0.33333333</span><span class="p">]]</span>
+<span class="n">no</span> <span class="nb">sum</span> <span class="n">conservation</span>
+<span class="p">[[</span> <span class="mf">0.</span>  <span class="mf">0.</span>  <span class="mf">0.</span>  <span class="mf">1.</span>  <span class="mf">1.</span>  <span class="mf">1.</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.</span>  <span class="mf">0.</span>  <span class="mf">0.</span>  <span class="mf">1.</span>  <span class="mf">1.</span>  <span class="mf">1.</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.</span>  <span class="mf">0.</span>  <span class="mf">0.</span>  <span class="mf">1.</span>  <span class="mf">1.</span>  <span class="mf">1.</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">2.</span>  <span class="mf">2.</span>  <span class="mf">2.</span>  <span class="mf">3.</span>  <span class="mf">3.</span>  <span class="mf">3.</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">2.</span>  <span class="mf">2.</span>  <span class="mf">2.</span>  <span class="mf">3.</span>  <span class="mf">3.</span>  <span class="mf">3.</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">2.</span>  <span class="mf">2.</span>  <span class="mf">2.</span>  <span class="mf">3.</span>  <span class="mf">3.</span>  <span class="mf">3.</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="im3dtran-imtranspose">
+<h2>im3dtran - imtranspose<a class="headerlink" href="#im3dtran-imtranspose" title="Permalink to this headline">¶</a></h2>
+<p>Tasks used to transpose images.
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.transpose.html">numpy.transpose</a>
+can handle any number of dimensions.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">in_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">out_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">in_array</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original array:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">in_array</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Transpose of original array&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out_array</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Original</span> <span class="n">array</span><span class="p">:</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">11</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span><span class="p">]]</span>
+<span class="n">Transpose</span> <span class="n">of</span> <span class="n">original</span> <span class="n">array</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">3</span>  <span class="mi">6</span>  <span class="mi">9</span> <span class="mi">12</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">1</span>  <span class="mi">4</span>  <span class="mi">7</span> <span class="mi">10</span> <span class="mi">13</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">2</span>  <span class="mi">5</span>  <span class="mi">8</span> <span class="mi">11</span> <span class="mi">14</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imshift-shiftlines">
+<h2>imshift - shiftlines<a class="headerlink" href="#imshift-shiftlines" title="Permalink to this headline">¶</a></h2>
+<p><strong>for this might want to copy this over to imshift, reference that
+entry</strong></p>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>The task imshift can shift an image in x and y by float values and will
+use interpolation to create the output image. Shiftlines preformed
+similar functionality but We will be using
+<a class="reference external" href="https://docs.scipy.org/doc/scipy-0.18.1/reference/generated/scipy.ndimage.shift.html#scipy.ndimage.shift">scipy.ndimage.shift</a>,
+where you can shift in any axis of your image. See the
+<a class="reference external" href="#notes">Notes</a> at the top of the notebook for fitting and boundary
+options.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="k">import</span> <span class="n">shift</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Don&#39;t forget that Python uses (y,x) format when specifiying shifts</span>
+<span class="n">in_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">out_array</span> <span class="o">=</span> <span class="n">shift</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.8</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">cval</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original array:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">in_array</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A zoom of 0.5 in y and 2 in x with nearest&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out_array</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Original</span> <span class="n">array</span><span class="p">:</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span> <span class="mi">21</span> <span class="mi">22</span> <span class="mi">23</span> <span class="mi">24</span><span class="p">]]</span>
+<span class="n">A</span> <span class="n">zoom</span> <span class="n">of</span> <span class="mf">0.5</span> <span class="ow">in</span> <span class="n">y</span> <span class="ow">and</span> <span class="mi">2</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">with</span> <span class="n">nearest</span>
+<span class="p">[[</span> <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">2</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">4</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">2</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">2</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">2</span> <span class="mi">16</span> <span class="mi">18</span> <span class="mi">19</span> <span class="mi">20</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="magnify">
+<h2>magnify<a class="headerlink" href="#magnify" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>The task magnify takes an image and magnifies the image by the desired
+amount, using a chosen iterpolation. The interpolation options
+avaialable for the magnify task are nearest, linear, poly3, poly5,
+spine3, sinc, lsinc, and drizzle. We will be using
+<a class="reference external" href="https://docs.scipy.org/doc/scipy-0.18.1/reference/generated/scipy.ndimage.zoom.html#scipy.ndimage.zoom">scipy.ndimage.zoom</a>
+as a python equivalent. For this task, the available interpolation
+options are nearest, and spline0-5 fits.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="k">import</span> <span class="n">zoom</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Don&#39;t forget that Python uses (y,x) format when specifiying magnification</span>
+<span class="n">in_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">out_array</span> <span class="o">=</span> <span class="n">zoom</span><span class="p">(</span><span class="n">in_array</span><span class="p">,</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">2.5</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original array:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">in_array</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A zoom of 0.5 in y and 2.5 in x with nearest&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out_array</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Original</span> <span class="n">array</span><span class="p">:</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span> <span class="mi">21</span> <span class="mi">22</span> <span class="mi">23</span> <span class="mi">24</span><span class="p">]]</span>
+<span class="n">A</span> <span class="n">zoom</span> <span class="n">of</span> <span class="mf">0.5</span> <span class="ow">in</span> <span class="n">y</span> <span class="ow">and</span> <span class="mf">2.5</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">with</span> <span class="n">nearest</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">4</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">11</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">12</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">13</span> <span class="mi">13</span> <span class="mi">14</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span> <span class="mi">20</span> <span class="mi">21</span> <span class="mi">21</span> <span class="mi">21</span> <span class="mi">22</span> <span class="mi">22</span> <span class="mi">22</span> <span class="mi">23</span> <span class="mi">23</span> <span class="mi">23</span> <span class="mi">24</span> <span class="mi">24</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rotate">
+<h2>rotate<a class="headerlink" href="#rotate" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>The task rotate is used to rotate and shift images. We will only cover
+rotation here, for shifting please see <a class="reference external" href="#shiftlines">shiftlines</a>. We
+will be using
+<a class="reference external" href="https://docs.scipy.org/doc/scipy-0.16.0/reference/generated/scipy.ndimage.interpolation.rotate.html">scipy.ndimage.rotate</a>
+for rotation using interpolation. For a simple 90 degree unit rotation
+we will use
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.rot90.html#numpy.rot90">numpy.rot90</a>.</p>
+<p>Rotation using interpolation:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="k">import</span> <span class="n">rotate</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">in_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1"># Rotate by 60 degrees</span>
+<span class="n">out_array</span> <span class="o">=</span> <span class="n">rotate</span><span class="p">(</span><span class="n">in_array</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original array:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">in_array</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A rotation of 60 degrees&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out_array</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Original</span> <span class="n">array</span><span class="p">:</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span> <span class="mi">21</span> <span class="mi">22</span> <span class="mi">23</span> <span class="mi">24</span><span class="p">]]</span>
+<span class="n">A</span> <span class="n">rotation</span> <span class="n">of</span> <span class="mi">60</span> <span class="n">degrees</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">3</span>  <span class="mi">9</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">5</span> <span class="mi">11</span> <span class="mi">15</span> <span class="mi">21</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">7</span> <span class="mi">12</span> <span class="mi">17</span> <span class="mi">22</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">0</span>  <span class="mi">3</span>  <span class="mi">9</span> <span class="mi">13</span> <span class="mi">19</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span> <span class="mi">15</span> <span class="mi">21</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Rotation in increments of 90 degrees:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">in_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1"># Rotate by 270 degrees</span>
+<span class="n">out_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">rot90</span><span class="p">(</span><span class="n">in_array</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Original array:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">in_array</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A rotation of 60 degrees&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out_array</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Original</span> <span class="n">array</span><span class="p">:</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">5</span>  <span class="mi">6</span>  <span class="mi">7</span>  <span class="mi">8</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">14</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">15</span> <span class="mi">16</span> <span class="mi">17</span> <span class="mi">18</span> <span class="mi">19</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span> <span class="mi">21</span> <span class="mi">22</span> <span class="mi">23</span> <span class="mi">24</span><span class="p">]]</span>
+<span class="n">A</span> <span class="n">rotation</span> <span class="n">of</span> <span class="mi">60</span> <span class="n">degrees</span>
+<span class="p">[[</span><span class="mi">20</span> <span class="mi">15</span> <span class="mi">10</span>  <span class="mi">5</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">21</span> <span class="mi">16</span> <span class="mi">11</span>  <span class="mi">6</span>  <span class="mi">1</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">22</span> <span class="mi">17</span> <span class="mi">12</span>  <span class="mi">7</span>  <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">23</span> <span class="mi">18</span> <span class="mi">13</span>  <span class="mi">8</span>  <span class="mi">3</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">24</span> <span class="mi">19</span> <span class="mi">14</span>  <span class="mi">9</span>  <span class="mi">4</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="not-replacing">
+<h2>Not Replacing<a class="headerlink" href="#not-replacing" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>imlintran - see <a class="reference external" href="#magnify">**images.imgeom.magnify**</a>,
+<a class="reference external" href="#rotate">**images.imgeom.rotate**</a>, and
+<a class="reference external" href="#imshift">**images.imgeom.imshift**</a></li>
+</ul>
+<p>For questions or comments please see <a class="reference external" href="https://github.com/spacetelescope/stak">our github
+page</a>. We encourage and
+appreciate user feedback.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="images.imfilter.html">images.imfilter</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">images.imgeom</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#blkavg">blkavg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#blkrep">blkrep</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#im3dtran-imtranspose">im3dtran - imtranspose</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imshift-shiftlines">imshift - shiftlines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#magnify">magnify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rotate">rotate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#not-replacing">Not Replacing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="images.imutil.html">images.imutil</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.fitsio.html">tables.fitsio</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="noao.imred.crutil.html">noao.imred.crutil</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="notebook_index.html">Jupyter Notebook Index</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="notebook_index.html#index">Index</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="images.imfilter.html"
+                        title="previous chapter">images.imfilter</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="images.imutil.html"
+                        title="next chapter">images.imutil</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/images.imgeom.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+      
+<form action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="_sources/images.imgeom.rst.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, Sara Ogaz, Justin Ely.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1. &nbsp;
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,1217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>images.imutil &#8212; The STAK Project 0.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/bootstrap-stsci.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tables.fitsio" href="tables.fitsio.html" />
+    <link rel="prev" title="images.imgeom" href="images.imgeom.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="_static/copybutton.js"></script>
+
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="index.html"><span id="logotext1">STScI</span><span id="logotext2">SSB</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="STScI Homepage" href="http://www.stsci.edu"></a></li>
+    <li><a title="General Index" href="genindex.html">Index</a></li>
+    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="tables.fitsio.html" title="tables.fitsio">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="images.imgeom.html" title="images.imgeom">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="index.html">The STAK Project 0.0.0 documentation</a>
+	 &#187;
+      </li>
+      
+      <li>images.imutil</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="images-imutil">
+<h1>images.imutil<a class="headerlink" href="#images-imutil" title="Permalink to this headline">¶</a></h1>
+<p>The images.imutil package provides general fits image tools such as
+header editing and image arithimetic.</p>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<p>Contents:</p>
+<ul class="simple">
+<li><a class="reference external" href="#chpixtype">chpixtype</a></li>
+<li><a class="reference external" href="#hedit">hedit</a></li>
+<li><a class="reference external" href="#hselect">hselect</a></li>
+<li><a class="reference external" href="#imarith">imarith/imdivide</a></li>
+<li><a class="reference external" href="#imcopy">imcopy</a></li>
+<li><a class="reference external" href="#imfunction">imfunction/imexpr</a></li>
+<li><a class="reference external" href="#imheader">imheader</a></li>
+<li><a class="reference external" href="#imhistogram">imhistogram</a></li>
+<li><a class="reference external" href="#imreplace">imreplace</a></li>
+<li><a class="reference external" href="#imslice">imslice</a></li>
+<li><a class="reference external" href="#imstack">imstack</a></li>
+<li><a class="reference external" href="#imstatistics">imstatistics</a></li>
+<li><a class="reference external" href="#imsum">imsum</a></li>
+<li><a class="reference external" href="#listpixels">listpixels</a></li>
+</ul>
+</div>
+<div class="section" id="chpixtype">
+<h2>chpixtype<a class="headerlink" href="#chpixtype" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>Chpixtype is a task that allows you to change the pixel type of a fits
+image. There is built in functionality in <code class="docutils literal"><span class="pre">astropy.io.fits</span></code> to preform
+this task with the <code class="docutils literal"><span class="pre">scale</span></code> method. Below you will find a table that
+translates the chpixtype newpixtype options into their equivalent
+<code class="docutils literal"><span class="pre">numpy</span></code>/<code class="docutils literal"><span class="pre">astropy</span></code> type
+(<a class="reference external" href="http://docs.scipy.org/doc/numpy/user/basics.types.html">http://docs.scipy.org/doc/numpy/user/basics.types.html</a>).</p>
+<p><strong>Type Conversions</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Chpixtype</th>
+<th class="head">Numpy/Astropy Type</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ushort</span></code></td>
+<td><code class="docutils literal"><span class="pre">uint16</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">short</span></code></td>
+<td><code class="docutils literal"><span class="pre">int16</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">int</span></code></td>
+<td><code class="docutils literal"><span class="pre">int32</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">long</span></code></td>
+<td><code class="docutils literal"><span class="pre">int64</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">real</span></code></td>
+<td><code class="docutils literal"><span class="pre">float32</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">double</span></code></td>
+<td><code class="docutils literal"><span class="pre">float64</span></code></td>
+</tr>
+</tbody>
+</table>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change this value to your desired data file, here were creating a filename</span>
+<span class="c1"># for our new changed data</span>
+<span class="n">orig_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+<span class="n">new_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_newdtype_flt.fits&#39;</span>
+
+<span class="c1"># Read in your fits file</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">orig_data</span><span class="p">)</span>
+
+<span class="c1"># Edit the datatype</span>
+<span class="n">hdu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
+
+<span class="c1"># Save changed hdu object to new file</span>
+<span class="c1"># The clobber argument tells the writeto method to overwrite if file already exists</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">new_data</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hedit">
+<h2>hedit<a class="headerlink" href="#hedit" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>The hedit task allows users to edit an image header. This functioanlity
+is covered in <code class="docutils literal"><span class="pre">astropy.io.fits</span></code>. Take note that to make changes to a
+fits file, you must use the <code class="docutils literal"><span class="pre">mode='update'</span></code> keyword in the
+<code class="docutils literal"><span class="pre">fits.open</span></code> call. Below you&#8217;ll find examples of editing a keyword if
+it does/doesn&#8217;t exist, and how to delete keywords from the header.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change this value to your desired data file</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+
+<span class="c1"># Open fits file, include the mode=&#39;update&#39; keyword</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;update&#39;</span><span class="p">)</span>
+
+<span class="c1"># Simple header change, will add keyword if it doesn&#39;t not exist</span>
+<span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;MYKEY1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Editing this keyword&#39;</span>
+
+<span class="c1"># Only add keyword if it does not already exist:</span>
+<span class="k">if</span> <span class="s1">&#39;MYKEY2&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">:</span>
+    <span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;MYKEY2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Also editing this&#39;</span>
+
+<span class="c1"># To delete keywords, first check if they exist:</span>
+<span class="k">if</span> <span class="s1">&#39;MYKEY2&#39;</span> <span class="ow">in</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">:</span>
+    <span class="k">del</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;MYKEY2&#39;</span><span class="p">]</span>
+
+<span class="c1"># Close fits file, this will save your changes</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hselect">
+<h2>hselect<a class="headerlink" href="#hselect" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>hselect is used to pull out specific header keywords. You can provide
+any filename string as you would in IRAF and it will be exapanded
+(wildcards are accepted). You can also use specific keyword values to
+filter files. We will be using the <code class="docutils literal"><span class="pre">stak</span></code> package <code class="docutils literal"><span class="pre">Hselect</span></code> class.
+The output table is an <code class="docutils literal"><span class="pre">astropy.table</span></code> object and stored in the
+<code class="docutils literal"><span class="pre">table</span></code> attribute.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">stak</span> <span class="k">import</span> <span class="n">Hselect</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Create Hselect object</span>
+<span class="n">myList</span> <span class="o">=</span> <span class="n">Hselect</span><span class="p">(</span><span class="s2">&quot;/eng/ssb/iraf_transition/test_data/jcz*&quot;</span><span class="p">,</span> <span class="s2">&quot;BUNIT,TIME-OBS&quot;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;0,1,2,3&quot;</span><span class="p">)</span>
+<span class="c1"># Display output astropy table object in nice notebook formatting</span>
+<span class="n">myList</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">show_in_notebook</span><span class="p">()</span>
+</pre></div>
+</div>
+&lt;Table masked=True length=8&gt;
+<table id="table4497701264-588354" class="table-striped table-bordered table-condensed">
+<thead><tr><th>idx</th><th>Filename</th><th>ExtNumber</th><th>BUNIT</th><th>TIME-OBS</th></tr></thead>
+<tr><td>0</td><td>/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits</td><td>0</td><td>--</td><td>01:04:51</td></tr>
+<tr><td>1</td><td>/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits</td><td>1</td><td>ELECTRONS</td><td>--</td></tr>
+<tr><td>2</td><td>/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits</td><td>2</td><td>ELECTRONS</td><td>--</td></tr>
+<tr><td>3</td><td>/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits</td><td>3</td><td>UNITLESS</td><td>--</td></tr>
+<tr><td>4</td><td>/eng/ssb/iraf_transition/test_data/jczgx1q1q_flc.fits</td><td>2</td><td>ELECTRONS</td><td>--</td></tr>
+<tr><td>5</td><td>/eng/ssb/iraf_transition/test_data/jczgx1q1q_flc.fits</td><td>3</td><td>UNITLESS</td><td>--</td></tr>
+<tr><td>6</td><td>/eng/ssb/iraf_transition/test_data/jczgx1q1q_flc.fits</td><td>0</td><td>--</td><td>02:16:10</td></tr>
+<tr><td>7</td><td>/eng/ssb/iraf_transition/test_data/jczgx1q1q_flc.fits</td><td>1</td><td>ELECTRONS</td><td>--</td></tr>
+</table><style>table.dataTable {clear: both; width: auto !important; margin: 0 !important;}
+.dataTables_info, .dataTables_length, .dataTables_filter, .dataTables_paginate{
+display: inline-block; margin-right: 1em; }
+.paginate_button { margin-right: 5px; }
+</style>
+<script>
+require.config({paths: {
+    datatables: 'https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min'
+}});
+require(["datatables"], function(){
+    console.log("$('#table4497701264-588354').dataTable()");
+    $('#table4497701264-588354').dataTable({
+        "order": [],
+        "iDisplayLength": 50,
+        "aLengthMenu": [[10, 25, 50, 100, 500, 1000, -1], [10, 25, 50, 100, 500, 1000, 'All']],
+        "pagingType": "full_numbers"
+    });
+});
+</script><div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Create Hselect object using expression parsing</span>
+<span class="n">myList2</span> <span class="o">=</span> <span class="n">Hselect</span><span class="p">(</span><span class="s2">&quot;/eng/ssb/iraf_transition/test_data/jcz*&quot;</span><span class="p">,</span> <span class="s2">&quot;BUNIT&quot;</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="s2">&quot;0,1,2,3&quot;</span><span class="p">,</span>
+                 <span class="n">expr</span><span class="o">=</span><span class="s2">&quot;BUNIT=&#39;ELECTRONS&#39;&quot;</span><span class="p">)</span>
+<span class="c1"># Display output astropy table object with a standard print</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">myList2</span><span class="o">.</span><span class="n">table</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>                       <span class="n">Filename</span>                       <span class="n">ExtNumber</span>   <span class="n">BUNIT</span>
+<span class="o">-----------------------------------------------------</span> <span class="o">---------</span> <span class="o">---------</span>
+<span class="o">/</span><span class="n">eng</span><span class="o">/</span><span class="n">ssb</span><span class="o">/</span><span class="n">iraf_transition</span><span class="o">/</span><span class="n">test_data</span><span class="o">/</span><span class="n">jczgx1q1q_flc</span><span class="o">.</span><span class="n">fits</span>         <span class="mi">2</span> <span class="n">ELECTRONS</span>
+<span class="o">/</span><span class="n">eng</span><span class="o">/</span><span class="n">ssb</span><span class="o">/</span><span class="n">iraf_transition</span><span class="o">/</span><span class="n">test_data</span><span class="o">/</span><span class="n">jczgx1ppq_flc</span><span class="o">.</span><span class="n">fits</span>         <span class="mi">1</span> <span class="n">ELECTRONS</span>
+<span class="o">/</span><span class="n">eng</span><span class="o">/</span><span class="n">ssb</span><span class="o">/</span><span class="n">iraf_transition</span><span class="o">/</span><span class="n">test_data</span><span class="o">/</span><span class="n">jczgx1ppq_flc</span><span class="o">.</span><span class="n">fits</span>         <span class="mi">2</span> <span class="n">ELECTRONS</span>
+<span class="o">/</span><span class="n">eng</span><span class="o">/</span><span class="n">ssb</span><span class="o">/</span><span class="n">iraf_transition</span><span class="o">/</span><span class="n">test_data</span><span class="o">/</span><span class="n">jczgx1q1q_flc</span><span class="o">.</span><span class="n">fits</span>         <span class="mi">1</span> <span class="n">ELECTRONS</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imarith-imdivide">
+<h2>imarith - imdivide<a class="headerlink" href="#imarith-imdivide" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>Imarith and imdivide both provide functionality to apply basic operators
+to whole image arrays. This task can be achieved with basic
+<code class="docutils literal"><span class="pre">astropy.io.fits</span></code> functionality along with <code class="docutils literal"><span class="pre">numpy</span></code> array
+functionality.</p>
+<p>The basic operands (<code class="docutils literal"><span class="pre">+</span></code>,<code class="docutils literal"><span class="pre">-</span></code>,<code class="docutils literal"><span class="pre">/</span></code>,<code class="docutils literal"><span class="pre">*</span></code>) can all be used with
+an assignment operator in python (<code class="docutils literal"><span class="pre">+=</span></code>,<code class="docutils literal"><span class="pre">-=</span></code>,<code class="docutils literal"><span class="pre">/=</span></code>,<code class="docutils literal"><span class="pre">*=</span></code>).
+See <a class="reference external" href="http://www.tutorialspoint.com/python/python_basic_operators.htm">http://www.tutorialspoint.com/python/python_basic_operators.htm</a>
+for more details</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Basic operands (+,-,/,*)</span>
+<span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data1</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+<span class="n">test_data2</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits&#39;</span>
+<span class="n">output_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/imarith_out.fits&#39;</span>
+
+<span class="c1"># Open fits file</span>
+<span class="n">hdu1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">test_data1</span><span class="p">)</span>
+<span class="n">hdu2</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">test_data2</span><span class="p">)</span>
+
+<span class="c1"># Here we add hdu2-ext1 to hdu1-ext1 by using the shortcute += operator</span>
+<span class="n">hdu1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">hdu2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1"># If you are dividing and need to avoid zeros in the image use indexing</span>
+<span class="n">indx_zeros</span> <span class="o">=</span> <span class="p">[</span><span class="n">hdu2</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">indx_nonzeros</span> <span class="o">=</span> <span class="p">[</span><span class="n">hdu2</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="c1"># Set this value as you would the divzero parameter in imarith</span>
+<span class="n">set_zeros</span> <span class="o">=</span> <span class="mf">999.9</span>
+<span class="n">hdu1</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indx_nonzeros</span><span class="p">]</span> <span class="o">/=</span> <span class="n">hdu2</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indx_nonzeros</span><span class="p">]</span>
+<span class="n">hdu1</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indx_zeros</span><span class="p">]</span> <span class="o">=</span> <span class="mf">999.9</span>
+
+<span class="c1"># Save your new file</span>
+<span class="c1"># The clobber argument tells the writeto method to overwrite if file already exists</span>
+<span class="n">hdu1</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">output_data</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Close hdu files</span>
+<span class="n">hdu1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">hdu2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imcopy">
+<h2>imcopy<a class="headerlink" href="#imcopy" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>Imcopy allows users to copy a fits image to a new file. We can
+accomplish this using <code class="docutils literal"><span class="pre">astropy.io.fits</span></code> by saving our fits file to a
+new filename.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired filenames</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+<span class="n">output_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/imcopy_out.fits&#39;</span>
+
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+<span class="c1"># The clobber argument tells the writeto method to overwrite if file already exists</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">output_data</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imfunction-imexpr">
+<h2>imfunction - imexpr<a class="headerlink" href="#imfunction-imexpr" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>Imfunction will apply a function to the image pixel values in an image
+array. Imexpr gives you similiar functionality with the added capability
+to combine different images using a user created expression. We can
+accomplish this using the built in funcitonality of the <code class="docutils literal"><span class="pre">numpy</span></code>
+library (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/routines.math.html">http://docs.scipy.org/doc/numpy/reference/routines.math.html</a>)</p>
+<p>If there is a particular function you would like to apply to your image
+array that you cannot find in the <code class="docutils literal"><span class="pre">numpy</span></code> library you can use the
+<code class="docutils literal"><span class="pre">np.vectorize</span></code> function, which can make any python function apply to
+each element of your array. But keep in mind that <code class="docutils literal"><span class="pre">np.vectorize</span></code> is
+esentially looping over the array, and may not be the most efficient
+method
+(<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.vectorize.html">http://docs.scipy.org/doc/numpy/reference/generated/numpy.vectorize.html</a>).</p>
+<p>Example using exsisting numpy function:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+<span class="n">output_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/imfunction_out.fits&#39;</span>
+
+<span class="c1"># Here we use the cosine function as an example</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+<span class="n">sci</span> <span class="o">=</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+<span class="c1"># When you call your new function, make sure to reassign the array to</span>
+<span class="c1"># the new values if the original function is not changing values in place</span>
+<span class="n">hdu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">hdu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Now save out to a new file, and close the original file, changes will</span>
+<span class="c1"># not be applied to the oiginal fits file.</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">output_data</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Example using user defined function and <code class="docutils literal"><span class="pre">np.vectorize</span></code>:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+<span class="n">output_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/imfunction2_out.fits&#39;</span>
+
+<span class="c1"># Here we use the following custom function as an example</span>
+<span class="k">def</span> <span class="nf">my_func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Now we open our file, and vectorize our function</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+<span class="n">sci</span> <span class="o">=</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="n">vcos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">my_func</span><span class="p">)</span>
+
+<span class="c1"># When you call your new function, make sure to reassign the array to</span>
+<span class="c1"># the new values if the original function is not changing values in place</span>
+<span class="n">hdu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">vcos</span><span class="p">(</span><span class="n">hdu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Now save out to a new file, and close the original file, changes will</span>
+<span class="c1"># not be applied to the oiginal fits file.</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">output_data</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imheader">
+<h2>imheader<a class="headerlink" href="#imheader" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>The imheader task allows the user to list header parameters for a list
+of images. Here we can use the <code class="docutils literal"><span class="pre">astropy</span></code> convenience function,
+<code class="docutils literal"><span class="pre">fits.getheader()</span></code></p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files, glob will capture all wildcard matches</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3y*&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">test_data</span><span class="p">:</span>
+    <span class="c1"># Pull the header from extension 1</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="nb">repr</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">XTENSION</span><span class="o">=</span> <span class="s1">&#39;IMAGE   &#39;</span>           <span class="o">/</span> <span class="n">IMAGE</span> <span class="n">extension</span>
+<span class="n">BITPIX</span>  <span class="o">=</span>                  <span class="o">-</span><span class="mi">32</span>
+<span class="n">NAXIS</span>   <span class="o">=</span>                    <span class="mi">2</span>
+<span class="n">NAXIS1</span>  <span class="o">=</span>                 <span class="mi">1014</span>
+<span class="n">NAXIS2</span>  <span class="o">=</span>                 <span class="mi">1014</span>
+<span class="n">PCOUNT</span>  <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">required</span> <span class="n">keyword</span><span class="p">;</span> <span class="n">must</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">GCOUNT</span>  <span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">required</span> <span class="n">keyword</span><span class="p">;</span> <span class="n">must</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">ORIGIN</span>  <span class="o">=</span> <span class="s1">&#39;HSTIO/CFITSIO March 2010&#39;</span>
+<span class="n">DATE</span>    <span class="o">=</span> <span class="s1">&#39;2016-06-02&#39;</span> <span class="o">/</span> <span class="n">date</span> <span class="n">this</span> <span class="n">file</span> <span class="n">was</span> <span class="n">written</span> <span class="p">(</span><span class="n">yyyy</span><span class="o">-</span><span class="n">mm</span><span class="o">-</span><span class="n">dd</span><span class="p">)</span>
+<span class="n">INHERIT</span> <span class="o">=</span>                    <span class="n">T</span> <span class="o">/</span> <span class="n">inherit</span> <span class="n">the</span> <span class="n">primary</span> <span class="n">header</span>
+<span class="n">EXTNAME</span> <span class="o">=</span> <span class="s1">&#39;SCI     &#39;</span>           <span class="o">/</span> <span class="n">extension</span> <span class="n">name</span>
+<span class="n">EXTVER</span>  <span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">extension</span> <span class="n">version</span> <span class="n">number</span>
+<span class="n">ROOTNAME</span><span class="o">=</span> <span class="s1">&#39;iczgs3ygq                         &#39;</span> <span class="o">/</span> <span class="n">rootname</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observation</span> <span class="nb">set</span>
+<span class="n">EXPNAME</span> <span class="o">=</span> <span class="s1">&#39;iczgs3ygq                &#39;</span> <span class="o">/</span> <span class="n">exposure</span> <span class="n">identifier</span>
+<span class="n">BUNIT</span>   <span class="o">=</span> <span class="s1">&#39;ELECTRONS/S&#39;</span>        <span class="o">/</span> <span class="n">brightness</span> <span class="n">units</span>
+
+              <span class="o">/</span> <span class="n">World</span> <span class="n">Coordinate</span> <span class="n">System</span> <span class="ow">and</span> <span class="n">Related</span> <span class="n">Parameters</span>
+
+<span class="n">WCSAXES</span> <span class="o">=</span>                    <span class="mi">2</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">World</span> <span class="n">Coordinate</span> <span class="n">System</span> <span class="n">axes</span>
+<span class="n">CRPIX1</span>  <span class="o">=</span>                <span class="mf">507.0</span> <span class="o">/</span> <span class="n">x</span><span class="o">-</span><span class="n">coordinate</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRPIX2</span>  <span class="o">=</span>                <span class="mf">507.0</span> <span class="o">/</span> <span class="n">y</span><span class="o">-</span><span class="n">coordinate</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRVAL1</span>  <span class="o">=</span>       <span class="mf">36.85374208875</span> <span class="o">/</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">value</span> <span class="n">at</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRVAL2</span>  <span class="o">=</span>       <span class="mf">48.92264646942</span> <span class="o">/</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">value</span> <span class="n">at</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CTYPE1</span>  <span class="o">=</span> <span class="s1">&#39;RA---TAN-SIP&#39;</span>       <span class="o">/</span> <span class="n">the</span> <span class="n">coordinate</span> <span class="nb">type</span> <span class="k">for</span> <span class="n">the</span> <span class="n">first</span> <span class="n">axis</span>
+<span class="n">CTYPE2</span>  <span class="o">=</span> <span class="s1">&#39;DEC--TAN-SIP&#39;</span>       <span class="o">/</span> <span class="n">the</span> <span class="n">coordinate</span> <span class="nb">type</span> <span class="k">for</span> <span class="n">the</span> <span class="n">second</span> <span class="n">axis</span>
+<span class="n">CD1_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">3.1758778512629E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">x</span>
+<span class="n">CD1_2</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">1.8099259044494E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">y</span>
+<span class="n">CD2_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0157648752092E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">x</span>
+<span class="n">CD2_2</span>   <span class="o">=</span> <span class="mf">2.83052387051731E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">y</span>
+<span class="n">LTV1</span>    <span class="o">=</span>        <span class="mf">0.0000000E+00</span> <span class="o">/</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">X</span> <span class="n">to</span> <span class="n">subsection</span> <span class="n">start</span>
+<span class="n">LTV2</span>    <span class="o">=</span>        <span class="mf">0.0000000E+00</span> <span class="o">/</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">Y</span> <span class="n">to</span> <span class="n">subsection</span> <span class="n">start</span>
+<span class="n">LTM1_1</span>  <span class="o">=</span>                  <span class="mf">1.0</span> <span class="o">/</span> <span class="n">reciprocal</span> <span class="n">of</span> <span class="n">sampling</span> <span class="n">rate</span> <span class="ow">in</span> <span class="n">X</span>
+<span class="n">LTM2_2</span>  <span class="o">=</span>                  <span class="mf">1.0</span> <span class="o">/</span> <span class="n">reciprocal</span> <span class="n">of</span> <span class="n">sampling</span> <span class="n">rate</span> <span class="ow">in</span> <span class="n">Y</span>
+<span class="n">PA_APER</span> <span class="o">=</span>              <span class="o">-</span><span class="mf">32.556</span> <span class="o">/</span> <span class="n">Position</span> <span class="n">Angle</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">aperture</span> <span class="n">center</span> <span class="p">(</span><span class="n">de</span>
+<span class="n">VAFACTOR</span><span class="o">=</span>   <span class="mf">9.999085821139E-01</span> <span class="o">/</span> <span class="n">velocity</span> <span class="n">aberration</span> <span class="n">plate</span> <span class="n">scale</span> <span class="n">factor</span>
+<span class="n">ORIENTAT</span><span class="o">=</span>              <span class="o">-</span><span class="mf">32.556</span> <span class="o">/</span> <span class="n">position</span> <span class="n">angle</span> <span class="n">of</span> <span class="n">image</span> <span class="n">y</span> <span class="n">axis</span> <span class="p">(</span><span class="n">deg</span><span class="o">.</span> <span class="n">e</span> <span class="n">of</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">RA_APER</span> <span class="o">=</span>   <span class="mf">3.685374208875E+01</span> <span class="o">/</span> <span class="n">RA</span> <span class="n">of</span> <span class="n">aperture</span> <span class="n">reference</span> <span class="n">position</span>
+<span class="n">DEC_APER</span><span class="o">=</span>   <span class="mf">4.892264646942E+01</span> <span class="o">/</span> <span class="n">Declination</span> <span class="n">of</span> <span class="n">aperture</span> <span class="n">reference</span> <span class="n">position</span>
+
+              <span class="o">/</span> <span class="n">REPEATED</span> <span class="n">EXPOSURES</span> <span class="n">INFORMATION</span>
+
+<span class="n">NCOMBINE</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">image</span> <span class="n">sets</span> <span class="n">combined</span> <span class="n">during</span> <span class="n">CR</span> <span class="n">rejecti</span>
+
+              <span class="o">/</span> <span class="n">READOUT</span> <span class="n">DEFINITION</span> <span class="n">PARAMETERS</span>
+
+<span class="n">CENTERA1</span><span class="o">=</span>                  <span class="mi">513</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis1</span> <span class="n">center</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">dect</span><span class="o">.</span> <span class="n">pix</span>
+<span class="n">CENTERA2</span><span class="o">=</span>                  <span class="mi">513</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis2</span> <span class="n">center</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">dect</span><span class="o">.</span> <span class="n">pix</span>
+<span class="n">SIZAXIS1</span><span class="o">=</span>                 <span class="mi">1024</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis1</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">SIZAXIS2</span><span class="o">=</span>                 <span class="mi">1024</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis2</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">BINAXIS1</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">axis1</span> <span class="n">data</span> <span class="nb">bin</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">BINAXIS2</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">axis2</span> <span class="n">data</span> <span class="nb">bin</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+
+              <span class="o">/</span> <span class="n">READOUT</span> <span class="n">PARAMETERS</span>
+
+<span class="n">SAMPNUM</span> <span class="o">=</span>                   <span class="mi">13</span> <span class="o">/</span> <span class="n">MULTIACCUM</span> <span class="n">sample</span> <span class="n">number</span>
+<span class="n">SAMPTIME</span><span class="o">=</span>           <span class="mf">602.937317</span> <span class="o">/</span> <span class="n">total</span> <span class="n">integration</span> <span class="n">time</span> <span class="p">(</span><span class="n">sec</span><span class="p">)</span>
+<span class="n">DELTATIM</span><span class="o">=</span>            <span class="mf">50.000412</span> <span class="o">/</span> <span class="n">integration</span> <span class="n">time</span> <span class="n">of</span> <span class="n">this</span> <span class="n">sample</span> <span class="p">(</span><span class="n">sec</span><span class="p">)</span>
+<span class="n">ROUTTIME</span><span class="o">=</span>   <span class="mf">5.740229030181E+04</span> <span class="o">/</span> <span class="n">UT</span> <span class="n">time</span> <span class="n">of</span> <span class="n">array</span> <span class="n">readout</span> <span class="p">(</span><span class="n">MJD</span><span class="p">)</span>
+<span class="n">TDFTRANS</span><span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">TDF</span> <span class="n">transitions</span> <span class="n">during</span> <span class="n">current</span> <span class="n">sample</span>
+
+              <span class="o">/</span> <span class="n">DATA</span> <span class="n">PACKET</span> <span class="n">INFORMATION</span>
+
+<span class="n">FILLCNT</span> <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">segments</span> <span class="n">containing</span> <span class="n">fill</span>
+<span class="n">ERRCNT</span>  <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">segments</span> <span class="n">containing</span> <span class="n">errors</span>
+<span class="n">PODPSFF</span> <span class="o">=</span>                    <span class="n">F</span> <span class="o">/</span> <span class="n">podps</span> <span class="n">fill</span> <span class="n">present</span> <span class="p">(</span><span class="n">T</span><span class="o">/</span><span class="n">F</span><span class="p">)</span>
+<span class="n">STDCFFF</span> <span class="o">=</span>                    <span class="n">F</span> <span class="o">/</span> <span class="n">science</span> <span class="n">telemetry</span> <span class="n">fill</span> <span class="n">data</span> <span class="n">present</span> <span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">F</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">STDCFFP</span> <span class="o">=</span> <span class="s1">&#39;0x5569&#39;</span>             <span class="o">/</span> <span class="n">science</span> <span class="n">telemetry</span> <span class="n">fill</span> <span class="n">pattern</span> <span class="p">(</span><span class="nb">hex</span><span class="p">)</span>
+
+              <span class="o">/</span> <span class="n">IMAGE</span> <span class="n">STATISTICS</span> <span class="n">AND</span> <span class="n">DATA</span> <span class="n">QUALITY</span> <span class="n">FLAGS</span>
+
+<span class="n">NGOODPIX</span><span class="o">=</span>               <span class="mi">990475</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SDQFLAGS</span><span class="o">=</span>                <span class="mi">31743</span> <span class="o">/</span> <span class="n">serious</span> <span class="n">data</span> <span class="n">quality</span> <span class="n">flags</span>
+<span class="n">GOODMIN</span> <span class="o">=</span>       <span class="o">-</span><span class="mf">2.8782272E+00</span> <span class="o">/</span> <span class="n">minimum</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">GOODMAX</span> <span class="o">=</span>        <span class="mf">1.1788658E+04</span> <span class="o">/</span> <span class="n">maximum</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">GOODMEAN</span><span class="o">=</span>        <span class="mf">9.9831134E-01</span> <span class="o">/</span> <span class="n">mean</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMIN</span>  <span class="o">=</span>        <span class="mf">1.8871337E-02</span> <span class="o">/</span> <span class="n">minimum</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMAX</span>  <span class="o">=</span>        <span class="mf">6.3982178E+01</span> <span class="o">/</span> <span class="n">maximum</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMEAN</span> <span class="o">=</span>        <span class="mf">5.3425826E-02</span> <span class="o">/</span> <span class="n">mean</span> <span class="n">value</span> <span class="n">of</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SOFTERRS</span><span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">soft</span> <span class="n">error</span> <span class="n">pixels</span> <span class="p">(</span><span class="n">DQF</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">MEANDARK</span><span class="o">=</span>        <span class="mf">1.2191877E+01</span> <span class="o">/</span> <span class="n">average</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dark</span> <span class="n">values</span> <span class="n">subtracted</span>
+<span class="n">MEANBLEV</span><span class="o">=</span>        <span class="mf">1.4332316E+04</span> <span class="o">/</span> <span class="n">average</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">bias</span> <span class="n">levels</span> <span class="n">subtracted</span>
+<span class="n">RADESYS</span> <span class="o">=</span> <span class="s1">&#39;ICRS    &#39;</span>
+<span class="n">OCX10</span>   <span class="o">=</span> <span class="mf">0.000786257500294596</span>
+<span class="n">OCX11</span>   <span class="o">=</span>   <span class="mf">0.1354287266731262</span>
+<span class="n">OCY10</span>   <span class="o">=</span>   <span class="mf">0.1209582984447479</span>
+<span class="n">OCY11</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">0.00042557646520435</span>
+<span class="n">IDCSCALE</span><span class="o">=</span>   <span class="mf">0.1282500028610229</span>
+<span class="n">IDCTHETA</span><span class="o">=</span>                 <span class="mf">45.0</span>
+<span class="n">IDCXREF</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">IDCYREF</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">IDCV2REF</span><span class="o">=</span>    <span class="mf">1.019000053405762</span>
+<span class="n">IDCV3REF</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.5070000290870667</span>
+<span class="n">WCSNAMEO</span><span class="o">=</span> <span class="s1">&#39;OPUS    &#39;</span>
+<span class="n">WCSAXESO</span><span class="o">=</span>                    <span class="mi">2</span>
+<span class="n">CRPIX1O</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">CRPIX2O</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">CDELT1O</span> <span class="o">=</span>                  <span class="mf">1.0</span>
+<span class="n">CDELT2O</span> <span class="o">=</span>                  <span class="mf">1.0</span>
+<span class="n">CUNIT1O</span> <span class="o">=</span> <span class="s1">&#39;deg     &#39;</span>
+<span class="n">CUNIT2O</span> <span class="o">=</span> <span class="s1">&#39;deg     &#39;</span>
+<span class="n">CTYPE1O</span> <span class="o">=</span> <span class="s1">&#39;RA---TAN&#39;</span>
+<span class="n">CTYPE2O</span> <span class="o">=</span> <span class="s1">&#39;DEC--TAN&#39;</span>
+<span class="n">CRVAL1O</span> <span class="o">=</span>       <span class="mf">36.85374208875</span>
+<span class="n">CRVAL2O</span> <span class="o">=</span>       <span class="mf">48.92264646942</span>
+<span class="n">LONPOLEO</span><span class="o">=</span>                <span class="mf">180.0</span>
+<span class="n">LATPOLEO</span><span class="o">=</span>       <span class="mf">48.92264646942</span>
+<span class="n">RADESYSO</span><span class="o">=</span> <span class="s1">&#39;ICRS    &#39;</span>
+<span class="n">CD1_1O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">3.17711E-05</span>
+<span class="n">CD1_2O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">1.80786E-05</span>
+<span class="n">CD2_1O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">2.01487E-05</span>
+<span class="n">CD2_2O</span>  <span class="o">=</span>          <span class="mf">2.83166E-05</span>
+<span class="n">IDCTAB</span>  <span class="o">=</span> <span class="s1">&#39;iref$w3m18525i_idc.fits&#39;</span>
+<span class="n">B_1_3</span>   <span class="o">=</span> <span class="mf">1.69983940010457E-13</span>
+<span class="n">B_0_3</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.2777970488111E-10</span>
+<span class="n">A_2_2</span>   <span class="o">=</span> <span class="mf">1.11275247848408E-13</span>
+<span class="n">B_0_4</span>   <span class="o">=</span> <span class="mf">1.03978470894974E-12</span>
+<span class="n">A_0_4</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0083179974495E-13</span>
+<span class="n">B_3_1</span>   <span class="o">=</span> <span class="mf">3.81044199963010E-13</span>
+<span class="n">A_3_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">1.9851733613323E-10</span>
+<span class="n">B_4_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">5.7352409055905E-13</span>
+<span class="n">B_0_2</span>   <span class="o">=</span> <span class="mf">2.98815054868485E-05</span>
+<span class="n">A_1_3</span>   <span class="o">=</span> <span class="mf">6.08832045645843E-13</span>
+<span class="n">A_4_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">3.2156784473326E-13</span>
+<span class="n">B_ORDER</span> <span class="o">=</span>                    <span class="mi">4</span>
+<span class="n">A_0_2</span>   <span class="o">=</span> <span class="mf">2.77482030873749E-08</span>
+<span class="n">A_2_1</span>   <span class="o">=</span> <span class="mf">1.22255499299390E-10</span>
+<span class="n">B_2_0</span>   <span class="o">=</span> <span class="mf">6.92276069494587E-06</span>
+<span class="n">A_2_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0701735553551E-07</span>
+<span class="n">A_3_1</span>   <span class="o">=</span> <span class="mf">4.13947711822547E-13</span>
+<span class="n">A_1_2</span>   <span class="o">=</span> <span class="mf">3.11477338242516E-11</span>
+<span class="n">A_ORDER</span> <span class="o">=</span>                    <span class="mi">4</span>
+<span class="n">B_1_2</span>   <span class="o">=</span> <span class="mf">7.47270961118588E-11</span>
+<span class="n">B_2_2</span>   <span class="o">=</span> <span class="mf">1.38557115814168E-13</span>
+<span class="n">A_0_3</span>   <span class="o">=</span> <span class="mf">4.55691839657869E-11</span>
+<span class="n">B_2_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.3836656728517E-10</span>
+<span class="n">B_3_0</span>   <span class="o">=</span> <span class="mf">5.14014553890418E-11</span>
+<span class="n">B_1_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.8538202053351E-07</span>
+<span class="n">A_1_1</span>   <span class="o">=</span> <span class="mf">2.44176437155426E-05</span>
+<span class="n">WCSNAME</span> <span class="o">=</span> <span class="s1">&#39;IDC_w3m18525i&#39;</span>
+<span class="n">MDRIZSKY</span><span class="o">=</span>   <span class="mf">0.8125642368041847</span> <span class="o">/</span> <span class="n">Sky</span> <span class="n">value</span> <span class="n">computed</span> <span class="n">by</span> <span class="n">AstroDrizzle</span>
+<span class="n">XTENSION</span><span class="o">=</span> <span class="s1">&#39;IMAGE   &#39;</span>           <span class="o">/</span> <span class="n">IMAGE</span> <span class="n">extension</span>
+<span class="n">BITPIX</span>  <span class="o">=</span>                   <span class="mi">32</span>
+<span class="n">NAXIS</span>   <span class="o">=</span>                    <span class="mi">2</span>
+<span class="n">NAXIS1</span>  <span class="o">=</span>                 <span class="mi">1014</span>
+<span class="n">NAXIS2</span>  <span class="o">=</span>                 <span class="mi">1014</span>
+<span class="n">PCOUNT</span>  <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">required</span> <span class="n">keyword</span><span class="p">;</span> <span class="n">must</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">GCOUNT</span>  <span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">required</span> <span class="n">keyword</span><span class="p">;</span> <span class="n">must</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">ORIGIN</span>  <span class="o">=</span> <span class="s1">&#39;HSTIO/CFITSIO March 2010&#39;</span>
+<span class="n">DATE</span>    <span class="o">=</span> <span class="s1">&#39;2016-06-02&#39;</span> <span class="o">/</span> <span class="n">date</span> <span class="n">this</span> <span class="n">file</span> <span class="n">was</span> <span class="n">written</span> <span class="p">(</span><span class="n">yyyy</span><span class="o">-</span><span class="n">mm</span><span class="o">-</span><span class="n">dd</span><span class="p">)</span>
+<span class="n">INHERIT</span> <span class="o">=</span>                    <span class="n">T</span> <span class="o">/</span> <span class="n">inherit</span> <span class="n">the</span> <span class="n">primary</span> <span class="n">header</span>
+<span class="n">EXTNAME</span> <span class="o">=</span> <span class="s1">&#39;SCI     &#39;</span>           <span class="o">/</span> <span class="n">extension</span> <span class="n">name</span>
+<span class="n">EXTVER</span>  <span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">extension</span> <span class="n">version</span> <span class="n">number</span>
+<span class="n">ROOTNAME</span><span class="o">=</span> <span class="s1">&#39;iczgs3ygq                         &#39;</span> <span class="o">/</span> <span class="n">rootname</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observation</span> <span class="nb">set</span>
+<span class="n">EXPNAME</span> <span class="o">=</span> <span class="s1">&#39;iczgs3ygq                &#39;</span> <span class="o">/</span> <span class="n">exposure</span> <span class="n">identifier</span>
+<span class="n">BUNIT</span>   <span class="o">=</span> <span class="s1">&#39;ELECTRONS/S&#39;</span>        <span class="o">/</span> <span class="n">brightness</span> <span class="n">units</span>
+
+              <span class="o">/</span> <span class="n">World</span> <span class="n">Coordinate</span> <span class="n">System</span> <span class="ow">and</span> <span class="n">Related</span> <span class="n">Parameters</span>
+
+<span class="n">WCSAXES</span> <span class="o">=</span>                    <span class="mi">2</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">World</span> <span class="n">Coordinate</span> <span class="n">System</span> <span class="n">axes</span>
+<span class="n">CRPIX1</span>  <span class="o">=</span>                <span class="mf">507.0</span> <span class="o">/</span> <span class="n">x</span><span class="o">-</span><span class="n">coordinate</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRPIX2</span>  <span class="o">=</span>                <span class="mf">507.0</span> <span class="o">/</span> <span class="n">y</span><span class="o">-</span><span class="n">coordinate</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRVAL1</span>  <span class="o">=</span>       <span class="mf">36.85374208875</span> <span class="o">/</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">value</span> <span class="n">at</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRVAL2</span>  <span class="o">=</span>       <span class="mf">48.92264646942</span> <span class="o">/</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">value</span> <span class="n">at</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CTYPE1</span>  <span class="o">=</span> <span class="s1">&#39;RA---TAN-SIP&#39;</span>       <span class="o">/</span> <span class="n">the</span> <span class="n">coordinate</span> <span class="nb">type</span> <span class="k">for</span> <span class="n">the</span> <span class="n">first</span> <span class="n">axis</span>
+<span class="n">CTYPE2</span>  <span class="o">=</span> <span class="s1">&#39;DEC--TAN-SIP&#39;</span>       <span class="o">/</span> <span class="n">the</span> <span class="n">coordinate</span> <span class="nb">type</span> <span class="k">for</span> <span class="n">the</span> <span class="n">second</span> <span class="n">axis</span>
+<span class="n">CD1_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">3.1758778512629E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">x</span>
+<span class="n">CD1_2</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">1.8099259044494E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">y</span>
+<span class="n">CD2_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0157648752092E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">x</span>
+<span class="n">CD2_2</span>   <span class="o">=</span> <span class="mf">2.83052387051731E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">y</span>
+<span class="n">LTV1</span>    <span class="o">=</span>        <span class="mf">0.0000000E+00</span> <span class="o">/</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">X</span> <span class="n">to</span> <span class="n">subsection</span> <span class="n">start</span>
+<span class="n">LTV2</span>    <span class="o">=</span>        <span class="mf">0.0000000E+00</span> <span class="o">/</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">Y</span> <span class="n">to</span> <span class="n">subsection</span> <span class="n">start</span>
+<span class="n">LTM1_1</span>  <span class="o">=</span>                  <span class="mf">1.0</span> <span class="o">/</span> <span class="n">reciprocal</span> <span class="n">of</span> <span class="n">sampling</span> <span class="n">rate</span> <span class="ow">in</span> <span class="n">X</span>
+<span class="n">LTM2_2</span>  <span class="o">=</span>                  <span class="mf">1.0</span> <span class="o">/</span> <span class="n">reciprocal</span> <span class="n">of</span> <span class="n">sampling</span> <span class="n">rate</span> <span class="ow">in</span> <span class="n">Y</span>
+<span class="n">PA_APER</span> <span class="o">=</span>              <span class="o">-</span><span class="mf">32.556</span> <span class="o">/</span> <span class="n">Position</span> <span class="n">Angle</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">aperture</span> <span class="n">center</span> <span class="p">(</span><span class="n">de</span>
+<span class="n">VAFACTOR</span><span class="o">=</span>   <span class="mf">9.999085821139E-01</span> <span class="o">/</span> <span class="n">velocity</span> <span class="n">aberration</span> <span class="n">plate</span> <span class="n">scale</span> <span class="n">factor</span>
+<span class="n">ORIENTAT</span><span class="o">=</span>              <span class="o">-</span><span class="mf">32.556</span> <span class="o">/</span> <span class="n">position</span> <span class="n">angle</span> <span class="n">of</span> <span class="n">image</span> <span class="n">y</span> <span class="n">axis</span> <span class="p">(</span><span class="n">deg</span><span class="o">.</span> <span class="n">e</span> <span class="n">of</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">RA_APER</span> <span class="o">=</span>   <span class="mf">3.685374208875E+01</span> <span class="o">/</span> <span class="n">RA</span> <span class="n">of</span> <span class="n">aperture</span> <span class="n">reference</span> <span class="n">position</span>
+<span class="n">DEC_APER</span><span class="o">=</span>   <span class="mf">4.892264646942E+01</span> <span class="o">/</span> <span class="n">Declination</span> <span class="n">of</span> <span class="n">aperture</span> <span class="n">reference</span> <span class="n">position</span>
+
+              <span class="o">/</span> <span class="n">REPEATED</span> <span class="n">EXPOSURES</span> <span class="n">INFORMATION</span>
+
+<span class="n">NCOMBINE</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">image</span> <span class="n">sets</span> <span class="n">combined</span> <span class="n">during</span> <span class="n">CR</span> <span class="n">rejecti</span>
+
+              <span class="o">/</span> <span class="n">READOUT</span> <span class="n">DEFINITION</span> <span class="n">PARAMETERS</span>
+
+<span class="n">CENTERA1</span><span class="o">=</span>                  <span class="mi">513</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis1</span> <span class="n">center</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">dect</span><span class="o">.</span> <span class="n">pix</span>
+<span class="n">CENTERA2</span><span class="o">=</span>                  <span class="mi">513</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis2</span> <span class="n">center</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">dect</span><span class="o">.</span> <span class="n">pix</span>
+<span class="n">SIZAXIS1</span><span class="o">=</span>                 <span class="mi">1024</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis1</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">SIZAXIS2</span><span class="o">=</span>                 <span class="mi">1024</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis2</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">BINAXIS1</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">axis1</span> <span class="n">data</span> <span class="nb">bin</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">BINAXIS2</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">axis2</span> <span class="n">data</span> <span class="nb">bin</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+
+              <span class="o">/</span> <span class="n">READOUT</span> <span class="n">PARAMETERS</span>
+
+<span class="n">SAMPNUM</span> <span class="o">=</span>                   <span class="mi">13</span> <span class="o">/</span> <span class="n">MULTIACCUM</span> <span class="n">sample</span> <span class="n">number</span>
+<span class="n">SAMPTIME</span><span class="o">=</span>           <span class="mf">602.937317</span> <span class="o">/</span> <span class="n">total</span> <span class="n">integration</span> <span class="n">time</span> <span class="p">(</span><span class="n">sec</span><span class="p">)</span>
+<span class="n">DELTATIM</span><span class="o">=</span>            <span class="mf">50.000412</span> <span class="o">/</span> <span class="n">integration</span> <span class="n">time</span> <span class="n">of</span> <span class="n">this</span> <span class="n">sample</span> <span class="p">(</span><span class="n">sec</span><span class="p">)</span>
+<span class="n">ROUTTIME</span><span class="o">=</span>   <span class="mf">5.740229030181E+04</span> <span class="o">/</span> <span class="n">UT</span> <span class="n">time</span> <span class="n">of</span> <span class="n">array</span> <span class="n">readout</span> <span class="p">(</span><span class="n">MJD</span><span class="p">)</span>
+<span class="n">TDFTRANS</span><span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">TDF</span> <span class="n">transitions</span> <span class="n">during</span> <span class="n">current</span> <span class="n">sample</span>
+
+              <span class="o">/</span> <span class="n">DATA</span> <span class="n">PACKET</span> <span class="n">INFORMATION</span>
+
+<span class="n">FILLCNT</span> <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">segments</span> <span class="n">containing</span> <span class="n">fill</span>
+<span class="n">ERRCNT</span>  <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">segments</span> <span class="n">containing</span> <span class="n">errors</span>
+<span class="n">PODPSFF</span> <span class="o">=</span>                    <span class="n">F</span> <span class="o">/</span> <span class="n">podps</span> <span class="n">fill</span> <span class="n">present</span> <span class="p">(</span><span class="n">T</span><span class="o">/</span><span class="n">F</span><span class="p">)</span>
+<span class="n">STDCFFF</span> <span class="o">=</span>                    <span class="n">F</span> <span class="o">/</span> <span class="n">science</span> <span class="n">telemetry</span> <span class="n">fill</span> <span class="n">data</span> <span class="n">present</span> <span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">F</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">STDCFFP</span> <span class="o">=</span> <span class="s1">&#39;0x5569&#39;</span>             <span class="o">/</span> <span class="n">science</span> <span class="n">telemetry</span> <span class="n">fill</span> <span class="n">pattern</span> <span class="p">(</span><span class="nb">hex</span><span class="p">)</span>
+
+              <span class="o">/</span> <span class="n">IMAGE</span> <span class="n">STATISTICS</span> <span class="n">AND</span> <span class="n">DATA</span> <span class="n">QUALITY</span> <span class="n">FLAGS</span>
+
+<span class="n">NGOODPIX</span><span class="o">=</span>               <span class="mi">990475</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SDQFLAGS</span><span class="o">=</span>                <span class="mi">31743</span> <span class="o">/</span> <span class="n">serious</span> <span class="n">data</span> <span class="n">quality</span> <span class="n">flags</span>
+<span class="n">GOODMIN</span> <span class="o">=</span>       <span class="o">-</span><span class="mf">2.8782272E+00</span> <span class="o">/</span> <span class="n">minimum</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">GOODMAX</span> <span class="o">=</span>        <span class="mf">1.1788658E+04</span> <span class="o">/</span> <span class="n">maximum</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">GOODMEAN</span><span class="o">=</span>        <span class="mf">9.9831134E-01</span> <span class="o">/</span> <span class="n">mean</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMIN</span>  <span class="o">=</span>        <span class="mf">1.8871337E-02</span> <span class="o">/</span> <span class="n">minimum</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMAX</span>  <span class="o">=</span>        <span class="mf">6.3982178E+01</span> <span class="o">/</span> <span class="n">maximum</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMEAN</span> <span class="o">=</span>        <span class="mf">5.3425826E-02</span> <span class="o">/</span> <span class="n">mean</span> <span class="n">value</span> <span class="n">of</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SOFTERRS</span><span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">soft</span> <span class="n">error</span> <span class="n">pixels</span> <span class="p">(</span><span class="n">DQF</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">MEANDARK</span><span class="o">=</span>        <span class="mf">1.2191877E+01</span> <span class="o">/</span> <span class="n">average</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dark</span> <span class="n">values</span> <span class="n">subtracted</span>
+<span class="n">MEANBLEV</span><span class="o">=</span>        <span class="mf">1.4332316E+04</span> <span class="o">/</span> <span class="n">average</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">bias</span> <span class="n">levels</span> <span class="n">subtracted</span>
+<span class="n">RADESYS</span> <span class="o">=</span> <span class="s1">&#39;ICRS    &#39;</span>
+<span class="n">OCX10</span>   <span class="o">=</span> <span class="mf">0.000786257500294596</span>
+<span class="n">OCX11</span>   <span class="o">=</span>   <span class="mf">0.1354287266731262</span>
+<span class="n">OCY10</span>   <span class="o">=</span>   <span class="mf">0.1209582984447479</span>
+<span class="n">OCY11</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">0.00042557646520435</span>
+<span class="n">IDCSCALE</span><span class="o">=</span>   <span class="mf">0.1282500028610229</span>
+<span class="n">IDCTHETA</span><span class="o">=</span>                 <span class="mf">45.0</span>
+<span class="n">IDCXREF</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">IDCYREF</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">IDCV2REF</span><span class="o">=</span>    <span class="mf">1.019000053405762</span>
+<span class="n">IDCV3REF</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.5070000290870667</span>
+<span class="n">WCSNAMEO</span><span class="o">=</span> <span class="s1">&#39;OPUS    &#39;</span>
+<span class="n">WCSAXESO</span><span class="o">=</span>                    <span class="mi">2</span>
+<span class="n">CRPIX1O</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">CRPIX2O</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">CDELT1O</span> <span class="o">=</span>                  <span class="mf">1.0</span>
+<span class="n">CDELT2O</span> <span class="o">=</span>                  <span class="mf">1.0</span>
+<span class="n">CUNIT1O</span> <span class="o">=</span> <span class="s1">&#39;deg     &#39;</span>
+<span class="n">CUNIT2O</span> <span class="o">=</span> <span class="s1">&#39;deg     &#39;</span>
+<span class="n">CTYPE1O</span> <span class="o">=</span> <span class="s1">&#39;RA---TAN&#39;</span>
+<span class="n">CTYPE2O</span> <span class="o">=</span> <span class="s1">&#39;DEC--TAN&#39;</span>
+<span class="n">CRVAL1O</span> <span class="o">=</span>       <span class="mf">36.85374208875</span>
+<span class="n">CRVAL2O</span> <span class="o">=</span>       <span class="mf">48.92264646942</span>
+<span class="n">LONPOLEO</span><span class="o">=</span>                <span class="mf">180.0</span>
+<span class="n">LATPOLEO</span><span class="o">=</span>       <span class="mf">48.92264646942</span>
+<span class="n">RADESYSO</span><span class="o">=</span> <span class="s1">&#39;ICRS    &#39;</span>
+<span class="n">CD1_1O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">3.17711E-05</span>
+<span class="n">CD1_2O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">1.80786E-05</span>
+<span class="n">CD2_1O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">2.01487E-05</span>
+<span class="n">CD2_2O</span>  <span class="o">=</span>          <span class="mf">2.83166E-05</span>
+<span class="n">IDCTAB</span>  <span class="o">=</span> <span class="s1">&#39;iref$w3m18525i_idc.fits&#39;</span>
+<span class="n">B_1_3</span>   <span class="o">=</span> <span class="mf">1.69983940010457E-13</span>
+<span class="n">B_0_3</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.2777970488111E-10</span>
+<span class="n">A_2_2</span>   <span class="o">=</span> <span class="mf">1.11275247848408E-13</span>
+<span class="n">B_0_4</span>   <span class="o">=</span> <span class="mf">1.03978470894974E-12</span>
+<span class="n">A_0_4</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0083179974495E-13</span>
+<span class="n">B_3_1</span>   <span class="o">=</span> <span class="mf">3.81044199963010E-13</span>
+<span class="n">A_3_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">1.9851733613323E-10</span>
+<span class="n">B_4_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">5.7352409055905E-13</span>
+<span class="n">B_0_2</span>   <span class="o">=</span> <span class="mf">2.98815054868485E-05</span>
+<span class="n">A_1_3</span>   <span class="o">=</span> <span class="mf">6.08832045645843E-13</span>
+<span class="n">A_4_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">3.2156784473326E-13</span>
+<span class="n">B_ORDER</span> <span class="o">=</span>                    <span class="mi">4</span>
+<span class="n">A_0_2</span>   <span class="o">=</span> <span class="mf">2.77482030873749E-08</span>
+<span class="n">A_2_1</span>   <span class="o">=</span> <span class="mf">1.22255499299390E-10</span>
+<span class="n">B_2_0</span>   <span class="o">=</span> <span class="mf">6.92276069494587E-06</span>
+<span class="n">A_2_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0701735553551E-07</span>
+<span class="n">A_3_1</span>   <span class="o">=</span> <span class="mf">4.13947711822547E-13</span>
+<span class="n">A_1_2</span>   <span class="o">=</span> <span class="mf">3.11477338242516E-11</span>
+<span class="n">A_ORDER</span> <span class="o">=</span>                    <span class="mi">4</span>
+<span class="n">B_1_2</span>   <span class="o">=</span> <span class="mf">7.47270961118588E-11</span>
+<span class="n">B_2_2</span>   <span class="o">=</span> <span class="mf">1.38557115814168E-13</span>
+<span class="n">A_0_3</span>   <span class="o">=</span> <span class="mf">4.55691839657869E-11</span>
+<span class="n">B_2_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.3836656728517E-10</span>
+<span class="n">B_3_0</span>   <span class="o">=</span> <span class="mf">5.14014553890418E-11</span>
+<span class="n">B_1_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.8538202053351E-07</span>
+<span class="n">A_1_1</span>   <span class="o">=</span> <span class="mf">2.44176437155426E-05</span>
+<span class="n">WCSNAME</span> <span class="o">=</span> <span class="s1">&#39;IDC_w3m18525i&#39;</span>
+<span class="n">MDRIZSKY</span><span class="o">=</span>   <span class="mf">0.8125642368041847</span> <span class="o">/</span> <span class="n">Sky</span> <span class="n">value</span> <span class="n">computed</span> <span class="n">by</span> <span class="n">AstroDrizzle</span>
+<span class="n">XTENSION</span><span class="o">=</span> <span class="s1">&#39;IMAGE   &#39;</span>           <span class="o">/</span> <span class="n">IMAGE</span> <span class="n">extension</span>
+<span class="n">BITPIX</span>  <span class="o">=</span>                  <span class="o">-</span><span class="mi">32</span>
+<span class="n">NAXIS</span>   <span class="o">=</span>                    <span class="mi">2</span>
+<span class="n">NAXIS1</span>  <span class="o">=</span>                 <span class="mi">1014</span>
+<span class="n">NAXIS2</span>  <span class="o">=</span>                 <span class="mi">1014</span>
+<span class="n">PCOUNT</span>  <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">required</span> <span class="n">keyword</span><span class="p">;</span> <span class="n">must</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">GCOUNT</span>  <span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">required</span> <span class="n">keyword</span><span class="p">;</span> <span class="n">must</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">ORIGIN</span>  <span class="o">=</span> <span class="s1">&#39;HSTIO/CFITSIO March 2010&#39;</span>
+<span class="n">DATE</span>    <span class="o">=</span> <span class="s1">&#39;2016-06-02&#39;</span> <span class="o">/</span> <span class="n">date</span> <span class="n">this</span> <span class="n">file</span> <span class="n">was</span> <span class="n">written</span> <span class="p">(</span><span class="n">yyyy</span><span class="o">-</span><span class="n">mm</span><span class="o">-</span><span class="n">dd</span><span class="p">)</span>
+<span class="n">INHERIT</span> <span class="o">=</span>                    <span class="n">T</span> <span class="o">/</span> <span class="n">inherit</span> <span class="n">the</span> <span class="n">primary</span> <span class="n">header</span>
+<span class="n">EXTNAME</span> <span class="o">=</span> <span class="s1">&#39;SCI     &#39;</span>           <span class="o">/</span> <span class="n">extension</span> <span class="n">name</span>
+<span class="n">EXTVER</span>  <span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">extension</span> <span class="n">version</span> <span class="n">number</span>
+<span class="n">ROOTNAME</span><span class="o">=</span> <span class="s1">&#39;iczgs3y5q                         &#39;</span> <span class="o">/</span> <span class="n">rootname</span> <span class="n">of</span> <span class="n">the</span> <span class="n">observation</span> <span class="nb">set</span>
+<span class="n">EXPNAME</span> <span class="o">=</span> <span class="s1">&#39;iczgs3y5q                &#39;</span> <span class="o">/</span> <span class="n">exposure</span> <span class="n">identifier</span>
+<span class="n">BUNIT</span>   <span class="o">=</span> <span class="s1">&#39;ELECTRONS/S&#39;</span>        <span class="o">/</span> <span class="n">brightness</span> <span class="n">units</span>
+
+              <span class="o">/</span> <span class="n">World</span> <span class="n">Coordinate</span> <span class="n">System</span> <span class="ow">and</span> <span class="n">Related</span> <span class="n">Parameters</span>
+
+<span class="n">WCSAXES</span> <span class="o">=</span>                    <span class="mi">2</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">World</span> <span class="n">Coordinate</span> <span class="n">System</span> <span class="n">axes</span>
+<span class="n">CRPIX1</span>  <span class="o">=</span>                <span class="mf">507.0</span> <span class="o">/</span> <span class="n">x</span><span class="o">-</span><span class="n">coordinate</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRPIX2</span>  <span class="o">=</span>                <span class="mf">507.0</span> <span class="o">/</span> <span class="n">y</span><span class="o">-</span><span class="n">coordinate</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRVAL1</span>  <span class="o">=</span>       <span class="mf">36.85747964213</span> <span class="o">/</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">value</span> <span class="n">at</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CRVAL2</span>  <span class="o">=</span>       <span class="mf">48.92227663477</span> <span class="o">/</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">value</span> <span class="n">at</span> <span class="n">reference</span> <span class="n">pixel</span>
+<span class="n">CTYPE1</span>  <span class="o">=</span> <span class="s1">&#39;RA---TAN-SIP&#39;</span>       <span class="o">/</span> <span class="n">the</span> <span class="n">coordinate</span> <span class="nb">type</span> <span class="k">for</span> <span class="n">the</span> <span class="n">first</span> <span class="n">axis</span>
+<span class="n">CTYPE2</span>  <span class="o">=</span> <span class="s1">&#39;DEC--TAN-SIP&#39;</span>       <span class="o">/</span> <span class="n">the</span> <span class="n">coordinate</span> <span class="nb">type</span> <span class="k">for</span> <span class="n">the</span> <span class="n">second</span> <span class="n">axis</span>
+<span class="n">CD1_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">3.1760811272930E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">x</span>
+<span class="n">CD1_2</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">1.8097365221752E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">first</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">y</span>
+<span class="n">CD2_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0155198493371E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">x</span>
+<span class="n">CD2_2</span>   <span class="o">=</span> <span class="mf">2.83091348126201E-05</span> <span class="o">/</span> <span class="n">partial</span> <span class="n">of</span> <span class="n">second</span> <span class="n">axis</span> <span class="n">coordinate</span> <span class="n">w</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">t</span><span class="o">.</span> <span class="n">y</span>
+<span class="n">LTV1</span>    <span class="o">=</span>        <span class="mf">0.0000000E+00</span> <span class="o">/</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">X</span> <span class="n">to</span> <span class="n">subsection</span> <span class="n">start</span>
+<span class="n">LTV2</span>    <span class="o">=</span>        <span class="mf">0.0000000E+00</span> <span class="o">/</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">Y</span> <span class="n">to</span> <span class="n">subsection</span> <span class="n">start</span>
+<span class="n">LTM1_1</span>  <span class="o">=</span>                  <span class="mf">1.0</span> <span class="o">/</span> <span class="n">reciprocal</span> <span class="n">of</span> <span class="n">sampling</span> <span class="n">rate</span> <span class="ow">in</span> <span class="n">X</span>
+<span class="n">LTM2_2</span>  <span class="o">=</span>                  <span class="mf">1.0</span> <span class="o">/</span> <span class="n">reciprocal</span> <span class="n">of</span> <span class="n">sampling</span> <span class="n">rate</span> <span class="ow">in</span> <span class="n">Y</span>
+<span class="n">PA_APER</span> <span class="o">=</span>             <span class="o">-</span><span class="mf">32.5531</span> <span class="o">/</span> <span class="n">Position</span> <span class="n">Angle</span> <span class="n">of</span> <span class="n">reference</span> <span class="n">aperture</span> <span class="n">center</span> <span class="p">(</span><span class="n">de</span>
+<span class="n">VAFACTOR</span><span class="o">=</span>   <span class="mf">9.999381116940E-01</span> <span class="o">/</span> <span class="n">velocity</span> <span class="n">aberration</span> <span class="n">plate</span> <span class="n">scale</span> <span class="n">factor</span>
+<span class="n">ORIENTAT</span><span class="o">=</span>             <span class="o">-</span><span class="mf">32.5531</span> <span class="o">/</span> <span class="n">position</span> <span class="n">angle</span> <span class="n">of</span> <span class="n">image</span> <span class="n">y</span> <span class="n">axis</span> <span class="p">(</span><span class="n">deg</span><span class="o">.</span> <span class="n">e</span> <span class="n">of</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">RA_APER</span> <span class="o">=</span>   <span class="mf">3.685747964213E+01</span> <span class="o">/</span> <span class="n">RA</span> <span class="n">of</span> <span class="n">aperture</span> <span class="n">reference</span> <span class="n">position</span>
+<span class="n">DEC_APER</span><span class="o">=</span>   <span class="mf">4.892227663477E+01</span> <span class="o">/</span> <span class="n">Declination</span> <span class="n">of</span> <span class="n">aperture</span> <span class="n">reference</span> <span class="n">position</span>
+
+              <span class="o">/</span> <span class="n">REPEATED</span> <span class="n">EXPOSURES</span> <span class="n">INFORMATION</span>
+
+<span class="n">NCOMBINE</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">image</span> <span class="n">sets</span> <span class="n">combined</span> <span class="n">during</span> <span class="n">CR</span> <span class="n">rejecti</span>
+
+              <span class="o">/</span> <span class="n">READOUT</span> <span class="n">DEFINITION</span> <span class="n">PARAMETERS</span>
+
+<span class="n">CENTERA1</span><span class="o">=</span>                  <span class="mi">513</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis1</span> <span class="n">center</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">dect</span><span class="o">.</span> <span class="n">pix</span>
+<span class="n">CENTERA2</span><span class="o">=</span>                  <span class="mi">513</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis2</span> <span class="n">center</span> <span class="n">pt</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">dect</span><span class="o">.</span> <span class="n">pix</span>
+<span class="n">SIZAXIS1</span><span class="o">=</span>                 <span class="mi">1024</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis1</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">SIZAXIS2</span><span class="o">=</span>                 <span class="mi">1024</span> <span class="o">/</span> <span class="n">subarray</span> <span class="n">axis2</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">BINAXIS1</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">axis1</span> <span class="n">data</span> <span class="nb">bin</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+<span class="n">BINAXIS2</span><span class="o">=</span>                    <span class="mi">1</span> <span class="o">/</span> <span class="n">axis2</span> <span class="n">data</span> <span class="nb">bin</span> <span class="n">size</span> <span class="ow">in</span> <span class="n">unbinned</span> <span class="n">detector</span> <span class="n">pixels</span>
+
+              <span class="o">/</span> <span class="n">READOUT</span> <span class="n">PARAMETERS</span>
+
+<span class="n">SAMPNUM</span> <span class="o">=</span>                   <span class="mi">14</span> <span class="o">/</span> <span class="n">MULTIACCUM</span> <span class="n">sample</span> <span class="n">number</span>
+<span class="n">SAMPTIME</span><span class="o">=</span>           <span class="mf">652.937744</span> <span class="o">/</span> <span class="n">total</span> <span class="n">integration</span> <span class="n">time</span> <span class="p">(</span><span class="n">sec</span><span class="p">)</span>
+<span class="n">DELTATIM</span><span class="o">=</span>            <span class="mf">50.000412</span> <span class="o">/</span> <span class="n">integration</span> <span class="n">time</span> <span class="n">of</span> <span class="n">this</span> <span class="n">sample</span> <span class="p">(</span><span class="n">sec</span><span class="p">)</span>
+<span class="n">ROUTTIME</span><span class="o">=</span>   <span class="mf">5.740226431774E+04</span> <span class="o">/</span> <span class="n">UT</span> <span class="n">time</span> <span class="n">of</span> <span class="n">array</span> <span class="n">readout</span> <span class="p">(</span><span class="n">MJD</span><span class="p">)</span>
+<span class="n">TDFTRANS</span><span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">TDF</span> <span class="n">transitions</span> <span class="n">during</span> <span class="n">current</span> <span class="n">sample</span>
+
+              <span class="o">/</span> <span class="n">DATA</span> <span class="n">PACKET</span> <span class="n">INFORMATION</span>
+
+<span class="n">FILLCNT</span> <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">segments</span> <span class="n">containing</span> <span class="n">fill</span>
+<span class="n">ERRCNT</span>  <span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">segments</span> <span class="n">containing</span> <span class="n">errors</span>
+<span class="n">PODPSFF</span> <span class="o">=</span>                    <span class="n">F</span> <span class="o">/</span> <span class="n">podps</span> <span class="n">fill</span> <span class="n">present</span> <span class="p">(</span><span class="n">T</span><span class="o">/</span><span class="n">F</span><span class="p">)</span>
+<span class="n">STDCFFF</span> <span class="o">=</span>                    <span class="n">F</span> <span class="o">/</span> <span class="n">science</span> <span class="n">telemetry</span> <span class="n">fill</span> <span class="n">data</span> <span class="n">present</span> <span class="p">(</span><span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">F</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">STDCFFP</span> <span class="o">=</span> <span class="s1">&#39;0x5569&#39;</span>             <span class="o">/</span> <span class="n">science</span> <span class="n">telemetry</span> <span class="n">fill</span> <span class="n">pattern</span> <span class="p">(</span><span class="nb">hex</span><span class="p">)</span>
+
+              <span class="o">/</span> <span class="n">IMAGE</span> <span class="n">STATISTICS</span> <span class="n">AND</span> <span class="n">DATA</span> <span class="n">QUALITY</span> <span class="n">FLAGS</span>
+
+<span class="n">NGOODPIX</span><span class="o">=</span>               <span class="mi">990476</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SDQFLAGS</span><span class="o">=</span>                <span class="mi">31743</span> <span class="o">/</span> <span class="n">serious</span> <span class="n">data</span> <span class="n">quality</span> <span class="n">flags</span>
+<span class="n">GOODMIN</span> <span class="o">=</span>       <span class="o">-</span><span class="mf">2.9155195E+00</span> <span class="o">/</span> <span class="n">minimum</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">GOODMAX</span> <span class="o">=</span>        <span class="mf">2.6231844E+04</span> <span class="o">/</span> <span class="n">maximum</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">GOODMEAN</span><span class="o">=</span>        <span class="mf">9.3451303E-01</span> <span class="o">/</span> <span class="n">mean</span> <span class="n">value</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMIN</span>  <span class="o">=</span>        <span class="mf">1.1295157E-02</span> <span class="o">/</span> <span class="n">minimum</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMAX</span>  <span class="o">=</span>        <span class="mf">9.8745354E+01</span> <span class="o">/</span> <span class="n">maximum</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SNRMEAN</span> <span class="o">=</span>        <span class="mf">4.9034115E-02</span> <span class="o">/</span> <span class="n">mean</span> <span class="n">value</span> <span class="n">of</span> <span class="n">signal</span> <span class="n">to</span> <span class="n">noise</span> <span class="n">of</span> <span class="n">good</span> <span class="n">pixels</span>
+<span class="n">SOFTERRS</span><span class="o">=</span>                    <span class="mi">0</span> <span class="o">/</span> <span class="n">number</span> <span class="n">of</span> <span class="n">soft</span> <span class="n">error</span> <span class="n">pixels</span> <span class="p">(</span><span class="n">DQF</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">MEANDARK</span><span class="o">=</span>        <span class="mf">1.3298962E+01</span> <span class="o">/</span> <span class="n">average</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dark</span> <span class="n">values</span> <span class="n">subtracted</span>
+<span class="n">MEANBLEV</span><span class="o">=</span>        <span class="mf">1.4334856E+04</span> <span class="o">/</span> <span class="n">average</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">bias</span> <span class="n">levels</span> <span class="n">subtracted</span>
+<span class="n">RADESYS</span> <span class="o">=</span> <span class="s1">&#39;ICRS    &#39;</span>
+<span class="n">OCX10</span>   <span class="o">=</span> <span class="mf">0.000779107213020324</span>
+<span class="n">OCX11</span>   <span class="o">=</span>   <span class="mf">0.1354261934757233</span>
+<span class="n">OCY10</span>   <span class="o">=</span>    <span class="mf">0.120962917804718</span>
+<span class="n">OCY11</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">0.00042105099419131</span>
+<span class="n">IDCSCALE</span><span class="o">=</span>   <span class="mf">0.1282500028610229</span>
+<span class="n">IDCTHETA</span><span class="o">=</span>                 <span class="mf">45.0</span>
+<span class="n">IDCXREF</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">IDCYREF</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">IDCV2REF</span><span class="o">=</span>    <span class="mf">1.019000053405762</span>
+<span class="n">IDCV3REF</span><span class="o">=</span>  <span class="o">-</span><span class="mf">0.5070000290870667</span>
+<span class="n">WCSNAMEO</span><span class="o">=</span> <span class="s1">&#39;OPUS    &#39;</span>
+<span class="n">WCSAXESO</span><span class="o">=</span>                    <span class="mi">2</span>
+<span class="n">CRPIX1O</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">CRPIX2O</span> <span class="o">=</span>                <span class="mf">507.0</span>
+<span class="n">CDELT1O</span> <span class="o">=</span>                  <span class="mf">1.0</span>
+<span class="n">CDELT2O</span> <span class="o">=</span>                  <span class="mf">1.0</span>
+<span class="n">CUNIT1O</span> <span class="o">=</span> <span class="s1">&#39;deg     &#39;</span>
+<span class="n">CUNIT2O</span> <span class="o">=</span> <span class="s1">&#39;deg     &#39;</span>
+<span class="n">CTYPE1O</span> <span class="o">=</span> <span class="s1">&#39;RA---TAN&#39;</span>
+<span class="n">CTYPE2O</span> <span class="o">=</span> <span class="s1">&#39;DEC--TAN&#39;</span>
+<span class="n">CRVAL1O</span> <span class="o">=</span>       <span class="mf">36.85747964213</span>
+<span class="n">CRVAL2O</span> <span class="o">=</span>       <span class="mf">48.92227663477</span>
+<span class="n">LONPOLEO</span><span class="o">=</span>                <span class="mf">180.0</span>
+<span class="n">LATPOLEO</span><span class="o">=</span>       <span class="mf">48.92227663477</span>
+<span class="n">RADESYSO</span><span class="o">=</span> <span class="s1">&#39;ICRS    &#39;</span>
+<span class="n">CD1_1O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">3.17721E-05</span>
+<span class="n">CD1_2O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">1.80771E-05</span>
+<span class="n">CD2_1O</span>  <span class="o">=</span>         <span class="o">-</span><span class="mf">2.01471E-05</span>
+<span class="n">CD2_2O</span>  <span class="o">=</span>          <span class="mf">2.83175E-05</span>
+<span class="n">IDCTAB</span>  <span class="o">=</span> <span class="s1">&#39;iref$w3m18525i_idc.fits&#39;</span>
+<span class="n">B_1_2</span>   <span class="o">=</span> <span class="mf">2.35150691092754E-11</span>
+<span class="n">A_3_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">1.8769691205859E-10</span>
+<span class="n">B_ORDER</span> <span class="o">=</span>                    <span class="mi">4</span>
+<span class="n">A_2_1</span>   <span class="o">=</span> <span class="mf">9.33802326056672E-11</span>
+<span class="n">A_1_1</span>   <span class="o">=</span> <span class="mf">2.44489619913889E-05</span>
+<span class="n">A_2_2</span>   <span class="o">=</span> <span class="mf">5.99856272799014E-15</span>
+<span class="n">B_0_3</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0092851573342E-10</span>
+<span class="n">B_3_1</span>   <span class="o">=</span> <span class="mf">1.00607112230593E-13</span>
+<span class="n">B_3_0</span>   <span class="o">=</span> <span class="mf">3.66824943640799E-11</span>
+<span class="n">A_2_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">1.8678411786277E-07</span>
+<span class="n">B_1_3</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">6.9677270201133E-15</span>
+<span class="n">A_0_2</span>   <span class="o">=</span> <span class="mf">4.73630640333079E-08</span>
+<span class="n">A_1_3</span>   <span class="o">=</span> <span class="mf">5.55221560333543E-13</span>
+<span class="n">B_0_4</span>   <span class="o">=</span> <span class="mf">7.52827599670567E-13</span>
+<span class="n">B_2_2</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">1.1683621160870E-13</span>
+<span class="n">A_0_4</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0852050771470E-13</span>
+<span class="n">B_0_2</span>   <span class="o">=</span> <span class="mf">2.99875048026693E-05</span>
+<span class="n">A_4_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">3.1314754837293E-13</span>
+<span class="n">B_4_0</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">6.4384058620497E-13</span>
+<span class="n">A_ORDER</span> <span class="o">=</span>                    <span class="mi">4</span>
+<span class="n">A_0_3</span>   <span class="o">=</span> <span class="mf">2.65011000430244E-11</span>
+<span class="n">B_2_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.8558390691514E-10</span>
+<span class="n">A_1_2</span>   <span class="o">=</span> <span class="mf">5.07616164062598E-11</span>
+<span class="n">B_1_1</span>   <span class="o">=</span> <span class="o">-</span><span class="mf">2.0379403931148E-07</span>
+<span class="n">A_3_1</span>   <span class="o">=</span> <span class="mf">5.25748787891111E-13</span>
+<span class="n">B_2_0</span>   <span class="o">=</span> <span class="mf">6.97816138011029E-06</span>
+<span class="n">WCSNAME</span> <span class="o">=</span> <span class="s1">&#39;IDC_w3m18525i&#39;</span>
+<span class="n">MDRIZSKY</span><span class="o">=</span>   <span class="mf">0.7757664823972165</span> <span class="o">/</span> <span class="n">Sky</span> <span class="n">value</span> <span class="n">computed</span> <span class="n">by</span> <span class="n">AstroDrizzle</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imhistogram">
+<h2>imhistogram<a class="headerlink" href="#imhistogram" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>Imhistogram will plot a customized histogram of the provided image data.
+To make a histogram in Python we are going to use matplotlibs <code class="docutils literal"><span class="pre">hist</span></code>
+function. See the <code class="docutils literal"><span class="pre">hist</span></code> documentation for options to change the
+histogram type, scaling, bin sizes, and more
+(<a class="reference external" href="http://matplotlib.org/api/pyplot_api.html">http://matplotlib.org/api/pyplot_api.html</a>)</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+
+<span class="c1"># Plotting Imports/Setup</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+
+<span class="c1"># Pull out the first science array, we also need to flatten the data before sending it to hist</span>
+<span class="n">sci1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span><span class="n">ext</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sci1f</span> <span class="o">=</span> <span class="n">sci1</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="c1"># Now we can plot our histogram, using some of the optional keywords in hist</span>
+<span class="c1"># The hist function returns the values of the histogram bins (n), the edges</span>
+<span class="c1"># of the bins (obins), and the patches used to create the histogram</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">obins</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sci1f</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<img alt="_images/images.imutil_48_0.png" src="_images/images.imutil_48_0.png" />
+</div>
+<div class="section" id="imreplace">
+<h2>imreplace<a class="headerlink" href="#imreplace" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>We can use simple <code class="docutils literal"><span class="pre">numpy</span></code> array manipulation to replicate imreplace.
+For details on how to grow the boolean array for replacement see crgrow,
+or the <code class="docutils literal"><span class="pre">`skimage.dilation</span></code>
+documentation &lt;<a class="reference external" href="http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?highlight=dilation#skimage.morphology.dilation">http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?highlight=dilation#skimage.morphology.dilation</a>&gt;`__.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+
+<span class="c1"># Pull out the first science array, make boolean mask with your requirements</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">test_data</span><span class="p">)</span>
+<span class="n">sci1</span> <span class="o">=</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">mask1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">sci1</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">sci1</span><span class="o">&lt;</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="c1"># Use mask to replace values</span>
+<span class="n">sci1</span><span class="p">[</span><span class="n">mask1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">999</span>
+
+<span class="c1"># We can also use numpy where to pull out index numbers</span>
+<span class="n">mask2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sci1</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">mask2</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span> <span class="mi">474</span><span class="p">,</span>  <span class="mi">474</span><span class="p">,</span>  <span class="mi">606</span><span class="p">,</span>  <span class="mi">607</span><span class="p">,</span>  <span class="mi">607</span><span class="p">,</span>  <span class="mi">607</span><span class="p">,</span>  <span class="mi">608</span><span class="p">,</span>  <span class="mi">608</span><span class="p">,</span>  <span class="mi">608</span><span class="p">,</span>  <span class="mi">608</span><span class="p">,</span>  <span class="mi">609</span><span class="p">,</span>
+        <span class="mi">609</span><span class="p">,</span>  <span class="mi">609</span><span class="p">,</span>  <span class="mi">609</span><span class="p">,</span>  <span class="mi">610</span><span class="p">,</span>  <span class="mi">610</span><span class="p">,</span>  <span class="mi">610</span><span class="p">,</span>  <span class="mi">804</span><span class="p">,</span>  <span class="mi">804</span><span class="p">,</span>  <span class="mi">809</span><span class="p">,</span>  <span class="mi">809</span><span class="p">,</span>  <span class="mi">810</span><span class="p">,</span>
+        <span class="mi">883</span><span class="p">,</span>  <span class="mi">883</span><span class="p">,</span> <span class="mi">1002</span><span class="p">,</span> <span class="mi">1013</span><span class="p">]),</span> <span class="n">array</span><span class="p">([</span><span class="mi">455</span><span class="p">,</span> <span class="mi">456</span><span class="p">,</span> <span class="mi">285</span><span class="p">,</span> <span class="mi">284</span><span class="p">,</span> <span class="mi">285</span><span class="p">,</span> <span class="mi">286</span><span class="p">,</span> <span class="mi">284</span><span class="p">,</span> <span class="mi">285</span><span class="p">,</span> <span class="mi">286</span><span class="p">,</span> <span class="mi">287</span><span class="p">,</span> <span class="mi">284</span><span class="p">,</span> <span class="mi">285</span><span class="p">,</span> <span class="mi">286</span><span class="p">,</span>
+       <span class="mi">287</span><span class="p">,</span> <span class="mi">284</span><span class="p">,</span> <span class="mi">285</span><span class="p">,</span> <span class="mi">286</span><span class="p">,</span> <span class="mi">349</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span>  <span class="mi">53</span><span class="p">,</span> <span class="mi">575</span><span class="p">,</span>  <span class="mi">53</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span> <span class="mi">162</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">460</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imslice">
+<h2>imslice<a class="headerlink" href="#imslice" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>Imslice can take a 3-D datacube fits image and return multiple 2D images
+sliced through the chosen dimension. Keep in mind for the python
+equivalent workflow that the header file from the original input image
+will be used for all output images, including WCS information. We will
+be using
+<code class="docutils literal"><span class="pre">`numpy.split</span></code> &lt;<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.split.html#numpy.split">https://docs.scipy.org/doc/numpy/reference/generated/numpy.split.html#numpy.split</a>&gt;`__.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Pull image data array and image header</span>
+<span class="n">orig_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/eng/ssb/iraf_transition/test_data/imstack_out.fits&#39;</span><span class="p">)</span>
+<span class="n">header1</span> <span class="o">=</span> <span class="n">orig_hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span>
+<span class="n">image1</span> <span class="o">=</span> <span class="n">orig_hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+<span class="n">orig_hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># Slice images easily by using numpy.split, which returns a list of the output arrays</span>
+<span class="n">arr_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">image1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;final shape of a slice is:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Now we can write this new array into a new fits files by packing it back into an HDU object</span>
+<span class="n">hdu1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">arr_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">header1</span><span class="p">)</span>
+<span class="n">hdu1</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;/eng/ssb/iraf_transition/test_data/imslice_out1.fits&#39;</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">hdu2</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">arr_list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">header1</span><span class="p">)</span>
+<span class="n">hdu2</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;/eng/ssb/iraf_transition/test_data/imslice_out2.fits&#39;</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">final</span> <span class="n">shape</span> <span class="n">of</span> <span class="n">a</span> <span class="nb">slice</span> <span class="ow">is</span><span class="p">:</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2048</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imstack">
+<h2>imstack<a class="headerlink" href="#imstack" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>imstack can take multiple fits images and stack the data, writing out a
+new file where the fits data is 1-dimension higher then the input
+images. Here we show that manipulation using the <code class="docutils literal"><span class="pre">astropy</span></code> library and
+<code class="docutils literal"><span class="pre">`numpy.stack</span></code> &lt;<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html#numpy.stack">https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html#numpy.stack</a>&gt;`__.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Pull two image data arrays and image header</span>
+<span class="n">header1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="s1">&#39;/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits&#39;</span><span class="p">,</span><span class="n">ext</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">image1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits&#39;</span><span class="p">)</span>
+<span class="n">image2</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s1">&#39;/eng/ssb/iraf_transition/test_data/jczgx1q1q_flc.fits&#39;</span><span class="p">)</span>
+
+<span class="c1"># Stack arrays, the new dimension will be put first, unless otherwise specified with the axis keyword</span>
+<span class="n">outstack</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">image1</span><span class="p">,</span><span class="n">image2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;final shape is:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">outstack</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Now we can write this new array into a new fits file by packing it back into an HDU object</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">outstack</span><span class="p">,</span><span class="n">header1</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s1">&#39;/eng/ssb/iraf_transition/test_data/imstack_out.fits&#39;</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">final</span> <span class="n">shape</span> <span class="ow">is</span><span class="p">:</span>
+<span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2048</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imstatistics">
+<h2>imstatistics<a class="headerlink" href="#imstatistics" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>We will use the <code class="docutils literal"><span class="pre">astropy.stats.sigma_clipped_stats</span></code> function here,
+which has some wider capabilites then the imstatistics function. Please
+see the <code class="docutils literal"><span class="pre">stats</span></code> <a class="reference external" href="http://docs.astropy.org/en/stable/api/astropy.stats.sigma_clipped_stats.html">package
+documentation</a>
+for details on the advanced usage .</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="k">import</span> <span class="n">stats</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+<span class="n">sci1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span><span class="n">ext</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># The sigma_clipped_stats function returns the mean, median, and stddev respectively</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">sigma_clipped_stats</span><span class="p">(</span><span class="n">sci1</span><span class="p">,</span><span class="n">sigma</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span><span class="n">iters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span> <span class="n">output</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.82121155347072006</span><span class="p">,</span> <span class="mf">0.81694626808166504</span><span class="p">,</span> <span class="mf">0.058198063937460652</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="imsum">
+<h2>imsum<a class="headerlink" href="#imsum" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>We will be using the <code class="docutils literal"><span class="pre">ccdproc</span></code> <code class="docutils literal"><span class="pre">Combiner</span></code> class here. Keep in mind
+that the original fits header is not retained in the <code class="docutils literal"><span class="pre">CCDData</span></code> object.
+Please see the documentation for more details
+(<a class="reference external" href="http://ccdproc.readthedocs.io/en/latest/ccdproc/image_combination.html">http://ccdproc.readthedocs.io/en/latest/ccdproc/image_combination.html</a>).</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="k">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">ccdproc</span> <span class="k">import</span> <span class="n">CCDData</span><span class="p">,</span> <span class="n">Combiner</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data1</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits&#39;</span>
+<span class="n">test_data2</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits&#39;</span>
+
+<span class="c1"># First we need to pull out the science arrays to create CCDData objects</span>
+<span class="c1"># Our acutal unit is electrons/sec, this is not accepted by the current</span>
+<span class="c1"># set of units</span>
+<span class="n">cdata1</span> <span class="o">=</span> <span class="n">CCDData</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">test_data1</span><span class="p">,</span> <span class="n">hdu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">electron</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+<span class="n">cdata2</span> <span class="o">=</span> <span class="n">cdata1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">cdata3</span> <span class="o">=</span> <span class="n">CCDData</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">test_data2</span><span class="p">,</span> <span class="n">hdu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">electron</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">s</span><span class="p">)</span>
+<span class="n">cdata4</span> <span class="o">=</span> <span class="n">cdata3</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">combiner</span> <span class="o">=</span> <span class="n">Combiner</span><span class="p">([</span><span class="n">cdata1</span><span class="p">,</span> <span class="n">cdata2</span><span class="p">,</span> <span class="n">cdata3</span><span class="p">,</span> <span class="n">cdata4</span><span class="p">])</span>
+
+<span class="c1"># Now we can make our mask for extrema clipping</span>
+<span class="c1"># The equivalent of low_reject, high_reject parameter</span>
+<span class="n">combiner</span><span class="o">.</span><span class="n">clip_extrema</span><span class="p">(</span><span class="n">nlow</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nhigh</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># And finally to combine...</span>
+<span class="n">final_combine</span> <span class="o">=</span> <span class="n">combiner</span><span class="o">.</span><span class="n">average_combine</span><span class="p">()</span>
+<span class="nb">print</span> <span class="n">final_combine</span><span class="o">.</span><span class="n">data</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">INFO</span><span class="p">:</span> <span class="n">using</span> <span class="n">the</span> <span class="n">unit</span> <span class="n">electron</span> <span class="o">/</span> <span class="n">s</span> <span class="n">passed</span> <span class="n">to</span> <span class="n">the</span> <span class="n">FITS</span> <span class="n">reader</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">the</span> <span class="n">unit</span> <span class="n">ELECTRONS</span><span class="o">/</span><span class="n">S</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">FITS</span> <span class="n">file</span><span class="o">.</span> <span class="p">[</span><span class="n">ccdproc</span><span class="o">.</span><span class="n">ccddata</span><span class="p">]</span>
+<span class="n">INFO</span><span class="p">:</span> <span class="n">using</span> <span class="n">the</span> <span class="n">unit</span> <span class="n">electron</span> <span class="o">/</span> <span class="n">s</span> <span class="n">passed</span> <span class="n">to</span> <span class="n">the</span> <span class="n">FITS</span> <span class="n">reader</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">the</span> <span class="n">unit</span> <span class="n">ELECTRONS</span><span class="o">/</span><span class="n">S</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">FITS</span> <span class="n">file</span><span class="o">.</span> <span class="p">[</span><span class="n">ccdproc</span><span class="o">.</span><span class="n">ccddata</span><span class="p">]</span>
+<span class="p">[[</span>  <span class="mf">0.87720111</span>   <span class="mf">0.82106587</span>   <span class="mf">0.79521415</span> <span class="o">...</span><span class="p">,</span>   <span class="mf">3.87308204</span>   <span class="mf">7.41545987</span>
+    <span class="mf">9.01969481</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">0.89028609</span>   <span class="mf">0.7884455</span>    <span class="mf">0.8240625</span>  <span class="o">...</span><span class="p">,</span>   <span class="mf">0.86163342</span>   <span class="mf">4.53510189</span>
+    <span class="mf">0.99109203</span><span class="p">]</span>
+ <span class="p">[</span>  <span class="mf">0.81683022</span>   <span class="mf">0.83273572</span>   <span class="mf">0.82175627</span> <span class="o">...</span><span class="p">,</span>   <span class="mf">3.60699821</span>  <span class="o">-</span><span class="mf">7.82266164</span>
+    <span class="mf">2.95994186</span><span class="p">]</span>
+ <span class="o">...</span><span class="p">,</span>
+ <span class="p">[</span> <span class="mf">40.72796059</span>  <span class="mf">15.36561799</span>  <span class="o">-</span><span class="mf">8.79329443</span> <span class="o">...</span><span class="p">,</span>  <span class="mf">22.68277168</span>  <span class="mf">25.31048012</span>
+   <span class="mf">28.829813</span>  <span class="p">]</span>
+ <span class="p">[</span> <span class="mf">46.28870392</span>  <span class="o">-</span><span class="mf">4.50218874</span>   <span class="mf">1.74757147</span> <span class="o">...</span><span class="p">,</span>  <span class="mf">13.24364138</span>  <span class="mf">25.70440292</span>
+   <span class="mf">11.0971849</span> <span class="p">]</span>
+ <span class="p">[</span> <span class="mf">42.8106432</span>   <span class="mf">29.66250706</span>  <span class="mf">63.18441772</span> <span class="o">...</span><span class="p">,</span>   <span class="mf">0.</span>           <span class="mf">9.80057049</span>
+   <span class="mf">22.66858006</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listpixels">
+<h2>listpixels<a class="headerlink" href="#listpixels" title="Permalink to this headline">¶</a></h2>
+<p>** Please review the <a class="reference external" href="#notes">Notes</a> section above before running
+any examples in this notebook **</p>
+<p>listpixels was used to list an indexed section of a FITs data array.
+This is easy to do using <code class="docutils literal"><span class="pre">astropy</span></code>, but keep in mind that Python
+indexs from zero, and with the y-axis leading, i.e. [y,x]. You also want
+to end the cut with the pixel <em>after</em> the end pixel. So to get 1-10 in x
+and 5-15 in y, you will index like so: array[4:15,0:10]</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data1</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits&#39;</span>
+
+<span class="c1"># To quickly pull out the data array you can use the astropy convience fucntion</span>
+<span class="n">data_arr</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">test_data1</span><span class="p">,</span><span class="n">ext</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Now we can index the array as desired, we&#39;re cutting out 5 in y, and 2 in x</span>
+<span class="nb">print</span> <span class="n">data_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[[</span> <span class="mf">0.86692303</span>  <span class="mf">0.80678135</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.83312052</span>  <span class="mf">0.76854318</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.77341086</span>  <span class="mf">0.80276382</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.80539584</span>  <span class="mf">0.78261763</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">0.78274417</span>  <span class="mf">0.82206035</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="not-replacing">
+<h2>Not Replacing<a class="headerlink" href="#not-replacing" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>imrename - can use command line utilities or the Python <code class="docutils literal"><span class="pre">os</span></code>
+package for this functionality.</li>
+<li>imdelete - can use command line utilities or the Python <code class="docutils literal"><span class="pre">os</span></code>
+package for this functionality.</li>
+<li>imtile - <strong>may</strong> replace infuture</li>
+<li>sections - IRAF utility function</li>
+<li>imgets - see <a class="reference external" href="#hselect">**images.imutil.hselect**</a></li>
+<li>minmax - see <a class="reference external" href="#imstat">**images.imutil.imstat**</a></li>
+</ul>
+<p>For questions or comments please see <a class="reference external" href="https://github.com/spacetelescope/stak">our github
+page</a>. We encourage and
+appreciate user feedback.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="images.imfilter.html">images.imfilter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.imgeom.html">images.imgeom</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">images.imutil</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#chpixtype">chpixtype</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hedit">hedit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hselect">hselect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imarith-imdivide">imarith - imdivide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imcopy">imcopy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imfunction-imexpr">imfunction - imexpr</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imheader">imheader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imhistogram">imhistogram</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imreplace">imreplace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imslice">imslice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imstack">imstack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imstatistics">imstatistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imsum">imsum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listpixels">listpixels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#not-replacing">Not Replacing</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.fitsio.html">tables.fitsio</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="noao.imred.crutil.html">noao.imred.crutil</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="notebook_index.html">Jupyter Notebook Index</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="notebook_index.html#index">Index</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="images.imgeom.html"
+                        title="previous chapter">images.imgeom</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tables.fitsio.html"
+                        title="next chapter">tables.fitsio</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/images.imutil.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+      
+<form action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="_sources/images.imutil.rst.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, Sara Ogaz, Justin Ely.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.5.1. &nbsp;
+  </p>
+</footer>
+  </body>
+</html>
