@@ -1,0 +1,11 @@
+name: stak
+channels:
+  - http://ssb.stsci.edu/astroconda
+dependencies:
+  - numpy
+  - scipy
+  - astropy
+  - numpydoc
+  - nbconvert >= 4.2.0
+  - pip:
+    - git+https://github.com/spacetelescope/stsci_sphinx_theme.git#egg=stsci_rtd_theme
