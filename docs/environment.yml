@@ -8,4 +8,6 @@ dependencies:
   - numpydoc
   - nbconvert >= 4.2.0
   - pip:
+    - sphinx_rtd_theme
     - git+https://github.com/spacetelescope/stsci_rtd_theme.git#egg=stsci_rtd_theme
+
