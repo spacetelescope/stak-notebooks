@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>noao.imred.crutil &mdash; The STAK Project 0.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/stsci.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="The STAK Project 0.0.0 documentation" href="index.html"/>
+        <link rel="next" title="Jupyter Notebook Index" href="notebook_index.html"/>
+        <link rel="prev" title="tables.fitsio" href="tables.fitsio.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+            <a href="index.html" class="icon icon-home"> The STAK Project
+            
+            <img src="_static/stsci_pri_combo_mark_white.png" class="logo" />
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.0
+              </div>
+            
+          
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+  
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="images.imfilter.html">images.imfilter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.imgeom.html">images.imgeom</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.imutil.html">images.imutil</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tables.fitsio.html">tables.fitsio</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">noao.imred.crutil</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cosmicrays">cosmicrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#craverage">craverage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crfix">crfix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crgrow">crgrow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crmedian">crmedian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crnebula">crnebula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#not-replacing">Not Replacing</a></li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="notebook_index.html">Jupyter Notebook Index</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="notebook_index.html#index">Index</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="images.imfilter.html">images.imfilter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="images.imgeom.html">images.imgeom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="images.imutil.html">images.imutil</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">noao.imred.crutil</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cosmicrays">cosmicrays</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#craverage">craverage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crfix">crfix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crgrow">crgrow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crmedian">crmedian</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crnebula">crnebula</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#not-replacing">Not Replacing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tables.fitsio.html">tables.fitsio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">The STAK Project</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>noao.imred.crutil</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/noao.imred.crutil.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="noao-imred-crutil">
+<h1>noao.imred.crutil<a class="headerlink" href="#noao-imred-crutil" title="Permalink to this headline">¶</a></h1>
+<p>The noao.imred.crutil package contains various algorithims for finding
+and replacing comsic rays in single images or image sets.</p>
+<div class="section" id="notes">
+<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="Work in progress" src="_images/150pxblueconstuc.png" />
+</div>
+<p>Contents:</p>
+<ul class="simple">
+<li><a class="reference external" href="#cosmicrays">cosmicrays</a></li>
+<li><a class="reference external" href="#craverage">craverage</a></li>
+<li><a class="reference external" href="#crfix">crfix</a></li>
+<li><a class="reference external" href="#crgrow">crgrow</a></li>
+<li><a class="reference external" href="#crmedian">crmedian</a></li>
+<li><a class="reference external" href="#crnebula">crnebula</a></li>
+</ul>
+</div>
+<div class="section" id="cosmicrays">
+<h2>cosmicrays<a class="headerlink" href="#cosmicrays" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="Work in progress" src="_images/150pxblueconstuc.png" />
+</div>
+</div>
+<div class="section" id="craverage">
+<h2>craverage<a class="headerlink" href="#craverage" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="Work in progress" src="_images/150pxblueconstuc.png" />
+</div>
+</div>
+<div class="section" id="crfix">
+<h2>crfix<a class="headerlink" href="#crfix" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="Work in progress" src="_images/150pxblueconstuc.png" />
+</div>
+</div>
+<div class="section" id="crgrow">
+<h2>crgrow<a class="headerlink" href="#crgrow" title="Permalink to this headline">¶</a></h2>
+<p><strong>Please review the `Notes &lt;#notes&gt;`__ section above before running any
+examples in this notebook</strong></p>
+<p>The crgrow replacement uses the <code class="docutils literal"><span class="pre">skimage.morphology</span></code> package to grow
+the values in any numpy array. The dilation task is a wrapper around
+<code class="docutils literal"><span class="pre">scipy.ndimage.grey_dilation</span></code>. You can insert any kernal type where
+<code class="docutils literal"><span class="pre">disk</span></code> is called in this example.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Standard Imports</span>
+<span class="kn">from</span> <span class="nn">skimage.morphology</span> <span class="k">import</span> <span class="n">disk</span><span class="p">,</span><span class="n">dilation</span>
+
+<span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change this value to your desired data file</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/id0k16pdq_blv_tmp.fits&#39;</span>
+
+<span class="c1"># Read in your fits file, when using a fits file, the bytesway call is required to</span>
+<span class="c1"># make sure your arry data type is correct.</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;update&#39;</span><span class="p">)</span>
+<span class="n">dq1</span> <span class="o">=</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">byteswap</span><span class="p">()</span><span class="o">.</span><span class="n">newbyteorder</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+
+<span class="c1"># Dilation used to grow the CR flags</span>
+<span class="n">grownDQ</span> <span class="o">=</span> <span class="n">dilation</span><span class="p">(</span><span class="n">dq1</span><span class="p">,</span> <span class="n">disk</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Re-assign the changed array to our original fits file and close the file to save.</span>
+<span class="n">hdu</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">grownDQ</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="crmedian">
+<h2>crmedian<a class="headerlink" href="#crmedian" title="Permalink to this headline">¶</a></h2>
+<p><strong>Please review the `Notes &lt;#notes&gt;`__ section above before running any
+examples in this notebook</strong></p>
+<p>The crmedian task is a way to indentify and replace cosmic rays in a
+single image by detecting pixels that deviate a statistically
+significant amount from the median by comparing to a median filtered
+version of the image. The indentfied cosmic rays can then be replaced by
+the median filtered value. A similar algorithim has been used in
+<a class="reference external" href="http://ccdproc.readthedocs.io/en/latest/api/ccdproc.cosmicray_median.html#ccdproc.cosmicray_median">ccdproc.cosmicray_median</a>.
+In <code class="docutils literal"><span class="pre">ccdproc.cosmicray_median</span></code> you also have the option of using an
+error array. If none is provided the standard deviation of the data is
+used.</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Astronomy Specific Imports</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="k">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="k">import</span> <span class="n">units</span>
+<span class="kn">from</span> <span class="nn">ccdproc</span> <span class="k">import</span> <span class="n">cosmicray_median</span><span class="p">,</span> <span class="n">fits_ccddata_reader</span>
+</pre></div>
+</div>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Change these values to your desired data files</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="s1">&#39;/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits&#39;</span>
+
+<span class="c1"># First we need to pull out the science arrays to create CCDData objects</span>
+<span class="c1"># Our acutal unit is electrons/sec, this is not accepted by the current</span>
+<span class="c1"># set of units</span>
+<span class="n">image_data</span> <span class="o">=</span> <span class="n">fits_ccddata_reader</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">hdu</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">units</span><span class="o">.</span><span class="n">electron</span><span class="o">/</span><span class="n">units</span><span class="o">.</span><span class="n">s</span><span class="p">,</span> <span class="n">hdu_uncertainty</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">error_data</span> <span class="o">=</span> <span class="n">image_data</span><span class="o">.</span><span class="n">uncertainty</span><span class="o">.</span><span class="n">array</span>
+
+<span class="c1"># Now we run cosmicray_median, since we input a CCDData type, a CCDData type is returned</span>
+<span class="c1"># If a numpy.ndarray if the input data type, it will return a numpy.ndarray</span>
+<span class="n">newdata</span> <span class="o">=</span> <span class="n">cosmicray_median</span><span class="p">(</span><span class="n">image_data</span><span class="p">,</span> <span class="n">error_image</span><span class="o">=</span><span class="n">error_data</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">mbox</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rbox</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">gbox</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">INFO</span><span class="p">:</span> <span class="n">using</span> <span class="n">the</span> <span class="n">unit</span> <span class="n">electron</span> <span class="o">/</span> <span class="n">s</span> <span class="n">passed</span> <span class="n">to</span> <span class="n">the</span> <span class="n">FITS</span> <span class="n">reader</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">the</span> <span class="n">unit</span> <span class="n">ELECTRONS</span><span class="o">/</span><span class="n">S</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">FITS</span> <span class="n">file</span><span class="o">.</span> <span class="p">[</span><span class="n">ccdproc</span><span class="o">.</span><span class="n">ccddata</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="crnebula">
+<h2>crnebula<a class="headerlink" href="#crnebula" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="Work in progress" src="_images/150pxblueconstuc.png" />
+</div>
+</div>
+<div class="section" id="not-replacing">
+<h2>Not Replacing<a class="headerlink" href="#not-replacing" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>crcombine - see <strong>ctio.immatch.imcombine, work in progress</strong></li>
+<li>credit - see <strong>images.tv.imedit, work in progress</strong></li>
+</ul>
+<p>For questions or comments please see <a class="reference external" href="https://github.com/spacetelescope/stak">our github
+page</a>. We encourage and
+appreciate user feedback.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="notebook_index.html" class="btn btn-neutral float-right" title="Jupyter Notebook Index" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tables.fitsio.html" class="btn btn-neutral" title="tables.fitsio" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Sara Ogaz, Justin Ely.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

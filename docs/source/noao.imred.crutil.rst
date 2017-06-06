@@ -59,7 +59,7 @@ the values in any numpy array. The dilation task is a wrapper around
 ``scipy.ndimage.grey_dilation``. You can insert any kernal type where
 ``disk`` is called in this example.
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     from skimage.morphology import disk,dilation
@@ -67,7 +67,7 @@ the values in any numpy array. The dilation task is a wrapper around
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: ipython2
+.. code:: python
 
     # Change this value to your desired data file
     test_data = '/eng/ssb/iraf_transition/test_data/id0k16pdq_blv_tmp.fits'
@@ -102,14 +102,14 @@ In ``ccdproc.cosmicray_median`` you also have the option of using an
 error array. If none is provided the standard deviation of the data is
 used.
 
-.. code:: ipython2
+.. code:: python
 
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy import units
     from ccdproc import cosmicray_median, fits_ccddata_reader
 
-.. code:: ipython2
+.. code:: python
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'

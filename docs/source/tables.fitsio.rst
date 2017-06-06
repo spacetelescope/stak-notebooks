@@ -32,7 +32,7 @@ The catfits task was used to quickly produce a catalog of fits headers
 from a file list. In the below example we provide the summary catalog
 provided by ``astropy.io.fits``.
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import glob
@@ -40,7 +40,7 @@ provided by ``astropy.io.fits``.
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: ipython2
+.. code:: python
 
     # Change these values to your desired data files, glob will capture all wildcard matches
     test_data = glob.glob('/eng/ssb/iraf_transition/test_data/*.fits')
@@ -171,11 +171,11 @@ Below we show an example of running this task in a python session. You
 may or may not need to byteswap your image data depending on which
 system it was originally written on.
 
-.. code:: ipython2
+.. code:: python
 
     from stsci.tools import readgeis
 
-.. code:: ipython2
+.. code:: python
 
     filename = '/eng/ssb/iraf_transition/test_data/x31g0108t.c0h'
     hdulist = readgeis.readgeis(filename)

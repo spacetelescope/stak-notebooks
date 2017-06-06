@@ -50,7 +50,7 @@ Contents:
 -  `fit1d <#fit1d>`__
 -  `fit1d <#fit1d>`__
 
-.. code:: ipython2
+.. code:: python
 
     # Temporarily change default colormap to viridis
     import matplotlib.pyplot as plt
@@ -70,7 +70,7 @@ The boxcar convolution does a boxcar smoothing with a given box size,
 and applies this running average to an array. Here we show a 2-D example
 using ``Box2DKernel``, which is convient for square box sizes.
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -84,7 +84,7 @@ using ``Box2DKernel``, which is convient for square box sizes.
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: python
 
     # grab subsection of fits images
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -96,7 +96,7 @@ using ``Box2DKernel``, which is convient for square box sizes.
     # perform convolution
     result = ap_convolve(my_arr, box_kernel, normalize_kernel=True)
 
-.. code:: ipython2
+.. code:: python
 
     plt.imshow(box_kernel, interpolation='none', origin='lower')
     plt.title('Kernel')
@@ -108,7 +108,7 @@ using ``Box2DKernel``, which is convient for square box sizes.
 .. image:: images.imfilter_files/images.imfilter_11_0.png
 
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     pmin,pmax = 10, 200
@@ -140,7 +140,7 @@ of your own creation. Here we show a simple example of a rectangular
 kernel applied to a 10 by 10 array using the
 ``astropy.convolution.convolve`` function
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -153,7 +153,7 @@ kernel applied to a 10 by 10 array using the
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: python
 
     # grab subsection of fits images
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -169,7 +169,7 @@ kernel applied to a 10 by 10 array using the
     # perform convolution
     result = ap_convolve(my_arr, my_kernel, normalize_kernel=True, boundary='wrap')
 
-.. code:: ipython2
+.. code:: python
 
     plt.imshow(my_kernel, interpolation='none', origin='lower')
     plt.title('Kernel')
@@ -181,7 +181,7 @@ kernel applied to a 10 by 10 array using the
 .. image:: images.imfilter_files/images.imfilter_18_0.png
 
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     pmin,pmax = 10, 200
@@ -202,7 +202,7 @@ kernel applied to a 10 by 10 array using the
 
 Here is an example using masking with ``scipy.convolve``
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -215,7 +215,7 @@ Here is an example using masking with ``scipy.convolve``
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: python
 
     # grab subsection of fits images
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -227,7 +227,7 @@ Here is an example using masking with ``scipy.convolve``
     # perform convolution
     result = sp_convolve(my_arr, my_kernel, mode='wrap')
 
-.. code:: ipython2
+.. code:: python
 
     plt.imshow(my_kernel, interpolation='none', origin='lower')
     plt.title('Kernel')
@@ -239,7 +239,7 @@ Here is an example using masking with ``scipy.convolve``
 .. image:: images.imfilter_files/images.imfilter_23_0.png
 
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     pmin,pmax = 10, 200
@@ -271,7 +271,7 @@ to your data array. The ``Gaussian2DKernel`` size is defined slightly
 differently from the IRAF version:
 http://docs.astropy.org/en/stable/api/astropy.convolution.Gaussian2DKernel.html#astropy.convolution.Gaussian2DKernel
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -285,7 +285,7 @@ http://docs.astropy.org/en/stable/api/astropy.convolution.Gaussian2DKernel.html#
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: python
 
     # grab subsection of fits images
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -308,7 +308,7 @@ http://docs.astropy.org/en/stable/api/astropy.convolution.Gaussian2DKernel.html#
 
 
 
-.. code:: ipython2
+.. code:: python
 
     plt.imshow(gauss_kernel, interpolation='none', origin='lower')
     plt.title('Kernel')
@@ -320,7 +320,7 @@ http://docs.astropy.org/en/stable/api/astropy.convolution.Gaussian2DKernel.html#
 .. image:: images.imfilter_files/images.imfilter_30_0.png
 
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     pmin,pmax = 10, 200
@@ -352,7 +352,7 @@ a subset of footprints. For the ``scipy.ndimage.filter.laplace``
 function we will be using, you can feed any footprint in as an array to
 create your kernel.
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -366,7 +366,7 @@ create your kernel.
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: python
 
     # grab subsection of fits images
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -379,7 +379,7 @@ create your kernel.
     # perform scipy convolution
     result = sp_convolve(my_arr, laplace_kernel)
 
-.. code:: ipython2
+.. code:: python
 
     plt.imshow(laplace_kernel, interpolation='none', origin='lower')
     plt.title('Kernel')
@@ -391,7 +391,7 @@ create your kernel.
 .. image:: images.imfilter_files/images.imfilter_37_0.png
 
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     a = axes[0].imshow(my_arr,interpolation='none', origin='lower',vmin=0, vmax=70)
@@ -420,7 +420,7 @@ any examples in this notebook \*\*
 Apply a median filter to your data array. We will use the
 ``scipy.ndimage.filters.median_filter`` function.
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -433,7 +433,7 @@ Apply a median filter to your data array. We will use the
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: python
 
     # create test array
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -443,7 +443,7 @@ Apply a median filter to your data array. We will use the
     # apply median filter
     filtered = median_filter(my_arr,size=(3,4))
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     pmin,pmax = 10, 200
@@ -466,7 +466,7 @@ For a ring median filter we can supply a more specific footprint to the
 ``median_filter`` function. You can easily generate this footprint using
 the ``astroimtools`` library
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -482,7 +482,7 @@ the ``astroimtools`` library
     
     #depreciation warning, is fixed already in the dev version, not sure when this is getting pushed
 
-.. code:: ipython2
+.. code:: python
 
     # create test array
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -494,7 +494,7 @@ the ``astroimtools`` library
     # apply median filter
     filtered = median_filter(my_arr, footprint=fp)
 
-.. code:: ipython2
+.. code:: python
 
     plt.imshow(fp, interpolation='none', origin='lower')
     plt.title('Annulus Footprint')
@@ -506,7 +506,7 @@ the ``astroimtools`` library
 .. image:: images.imfilter_files/images.imfilter_48_0.png
 
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     pmin,pmax = 10, 200
@@ -538,7 +538,7 @@ The mode calculation equation used in the mode and rmode IRAF tasks
 ``scipy.ndimage.generic_filter`` function. The equation was used as an
 approximation for a mode calculation.
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -551,7 +551,7 @@ approximation for a mode calculation.
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: python
 
     def mode_func(in_arr):
         f = 3.0*np.median(in_arr) - 2.0*np.mean(in_arr)
@@ -559,7 +559,7 @@ approximation for a mode calculation.
 
 For a box footprint:
 
-.. code:: ipython2
+.. code:: python
 
     # create test array
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -569,7 +569,7 @@ For a box footprint:
     # apply mode filter
     filtered = generic_filter(my_arr,mode_func,size=5)
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     pmin,pmax = 10, 200
@@ -590,7 +590,7 @@ For a box footprint:
 
 For a ring footprint:
 
-.. code:: ipython2
+.. code:: python
 
     # Standard Imports
     import numpy as np
@@ -604,7 +604,7 @@ For a ring footprint:
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: python
 
     # create test array
     test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -616,7 +616,7 @@ For a ring footprint:
     # apply mode filter
     filtered = generic_filter(my_arr,mode_func,footprint=fp)
 
-.. code:: ipython2
+.. code:: python
 
     plt.imshow(fp, interpolation='none', origin='lower')
     plt.title('Annulus Footprint')
@@ -628,7 +628,7 @@ For a ring footprint:
 .. image:: images.imfilter_files/images.imfilter_61_0.png
 
 
-.. code:: ipython2
+.. code:: python
 
     fig, axes = plt.subplots(nrows=1, ncols=2)
     pmin,pmax = 10, 200
