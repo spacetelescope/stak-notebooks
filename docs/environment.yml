@@ -1,4 +1,4 @@
-name: stak
+name: stak-notebooks
 channels:
   - http://ssb.stsci.edu/astroconda
 dependencies:
