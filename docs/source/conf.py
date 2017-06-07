@@ -35,12 +35,16 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 import stsci_rtd_theme
 
+
+def setup(app):
+    app.add_stylesheet("stsci.css")
+
 extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
 
-# Add any paths that contain templates here, relative to this directory.
+# Add any paths fthat contain templates here, relative to this directory.
 #templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
