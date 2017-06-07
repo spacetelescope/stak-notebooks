@@ -36,8 +36,6 @@ sys.path.insert(0, os.path.abspath('../..'))
 import stsci_rtd_theme
 
 
-def setup(app):
-    app.add_stylesheet("stsci.css")
 
 extensions = [
     'sphinx.ext.ifconfig',
@@ -402,4 +400,5 @@ def move_notebook_rst():
 
 
 def setup(app):
+    app.add_stylesheet("stsci.css")
     app.connect('builder-inited', notebooks_to_rst)
