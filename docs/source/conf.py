@@ -38,8 +38,7 @@ import stsci_rtd_theme
 
 
 extensions = [
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode',
+    'sphinx.ext.ifconfig'
 ]
 
 # Add any paths fthat contain templates here, relative to this directory.
