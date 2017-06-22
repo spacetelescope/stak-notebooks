@@ -1,5 +1,5 @@
 .. image:: https://readthedocs.org/projects/stak-notebooks/badge/?version=latest
-:target: http://stak-notebooks.readthedocs.io/en/latest/?badge=latest
+    :target: http://stak-notebooks.readthedocs.io/en/latest/?badge=latest
 
 
 # stak-notebooks
