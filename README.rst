@@ -3,7 +3,8 @@
 
 
 
-# stak-notebooks
+
 Notebooks for STAK project
+==========================
 
 STAK code repo: https://github.com/spacetelescope/stak
