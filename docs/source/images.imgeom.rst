@@ -10,6 +10,10 @@ and interpolation tasks.
 Notes
 -----
 
+**For questions or comments please see** `our github
+page <https://github.com/spacetelescope/stak>`__. **We encourage and
+appreciate user feedback.**
+
 .. figure:: static/150pxblueconstuc.png
    :alt: Work in progress
 
@@ -34,8 +38,8 @@ Contents:
 
 -  `blkavg <#blkavg>`__
 -  `blkrep <#blkrep>`__
--  `im3dtran - imtranspose <#im3dtran>`__
--  `imshift - shiftlines <#imshift>`__
+-  `im3dtran-imtranspose <#im3dtran-imtranspose>`__
+-  `imshift-shiftlines <#imshift-shiftlines>`__
 -  `magnify <#magnify>`__
 -  `rotate <#rotate>`__
 
@@ -44,8 +48,8 @@ Contents:
 blkavg
 ------
 
-**Please review the `Notes <#notes>`__ section above before running any
-examples in this notebook**
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The blkavg task takes in an arbitrary dimensioned image and preforms a
 block average across the requested box size. We can preform the same
@@ -56,7 +60,7 @@ block filter.
 
 Just added to ccdproc.. wrapper around astropy functions
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -64,7 +68,7 @@ Just added to ccdproc.. wrapper around astropy functions
     # Astronomy Specific Imports
     from astropy.nddata.utils import block_reduce
 
-.. code:: python
+.. code:: ipython2
 
     data = np.arange(128).reshape(8, 4, 4)
     block_reduce(data, [2,2,2], func=np.mean)
@@ -93,13 +97,13 @@ Just added to ccdproc.. wrapper around astropy functions
 blkrep
 ------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The talks ``blkrep`` is used to block replicate an n-dimensional image.
 Astropy has the equivalent function ``block_replicate``.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -107,7 +111,7 @@ Astropy has the equivalent function ``block_replicate``.
     # Astronomy Specific Imports
     from astropy.nddata.utils import block_replicate
 
-.. code:: python
+.. code:: ipython2
 
     # test data
     my_arr = np.array(([[0., 1.], [2., 3.]]))
@@ -143,19 +147,22 @@ Astropy has the equivalent function ``block_replicate``.
 
 
 
-im3dtran - imtranspose
-----------------------
+im3dtran-imtranspose
+--------------------
+
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 Tasks used to transpose images.
 `numpy.transpose <https://docs.scipy.org/doc/numpy/reference/generated/numpy.transpose.html>`__
 can handle any number of dimensions.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
 
-.. code:: python
+.. code:: ipython2
 
     in_array = np.arange(15).reshape(5,3)
     out_array = np.transpose(in_array)
@@ -182,14 +189,11 @@ can handle any number of dimensions.
 
 
 
-imshift - shiftlines
---------------------
+imshift-shiftlines
+------------------
 
-**for this might want to copy this over to imshift, reference that
-entry**
-
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The task imshift can shift an image in x and y by float values and will
 use interpolation to create the output image. Shiftlines preformed
@@ -199,13 +203,13 @@ where you can shift in any axis of your image. See the
 `Notes <#notes>`__ at the top of the notebook for fitting and boundary
 options.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
     from scipy.ndimage import shift
 
-.. code:: python
+.. code:: ipython2
 
     # Don't forget that Python uses (y,x) format when specifiying shifts
     in_array = np.arange(25).reshape(5,5)
@@ -238,8 +242,8 @@ options.
 magnify
 -------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The task magnify takes an image and magnifies the image by the desired
 amount, using a chosen iterpolation. The interpolation options
@@ -249,13 +253,13 @@ spine3, sinc, lsinc, and drizzle. We will be using
 as a python equivalent. For this task, the available interpolation
 options are nearest, and spline0-5 fits.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
     from scipy.ndimage import zoom
 
-.. code:: python
+.. code:: ipython2
 
     # Don't forget that Python uses (y,x) format when specifiying magnification
     in_array = np.arange(25).reshape(5,5)
@@ -286,8 +290,8 @@ options are nearest, and spline0-5 fits.
 rotate
 ------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The task rotate is used to rotate and shift images. We will only cover
 rotation here, for shifting please see `shiftlines <#shiftlines>`__. We
@@ -299,13 +303,13 @@ we will use
 
 Rotation using interpolation:
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
     from scipy.ndimage import rotate
 
-.. code:: python
+.. code:: ipython2
 
     in_array = np.arange(25).reshape(5,5)
     # Rotate by 60 degrees
@@ -337,12 +341,12 @@ Rotation using interpolation:
 
 Rotation in increments of 90 degrees:
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
 
-.. code:: python
+.. code:: ipython2
 
     in_array = np.arange(25).reshape(5,5)
     # Rotate by 270 degrees
@@ -377,10 +381,6 @@ Rotation in increments of 90 degrees:
 Not Replacing
 -------------
 
--  imlintran - see `**images.imgeom.magnify** <#magnify>`__,
-   `**images.imgeom.rotate** <#rotate>`__, and
-   `**images.imgeom.imshift** <#imshift>`__
-
-For questions or comments please see `our github
-page <https://github.com/spacetelescope/stak>`__. We encourage and
-appreciate user feedback.
+-  imlintran - see `images.imgeom.magnify <#magnify>`__,
+   `images.imgeom.rotate <#rotate>`__, and
+   `images.imgeom.imshift <#imshift>`__

@@ -10,6 +10,10 @@ and replacing comsic rays in single images or image sets.
 Notes
 -----
 
+**For questions or comments please see** `our github
+page <https://github.com/spacetelescope/stak>`__. **We encourage and
+appreciate user feedback.**
+
 .. figure:: static/150pxblueconstuc.png
    :alt: Work in progress
 
@@ -51,15 +55,15 @@ crfix
 crgrow
 ------
 
-**Please review the `Notes <#notes>`__ section above before running any
-examples in this notebook**
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The crgrow replacement uses the ``skimage.morphology`` package to grow
 the values in any numpy array. The dilation task is a wrapper around
 ``scipy.ndimage.grey_dilation``. You can insert any kernal type where
 ``disk`` is called in this example.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     from skimage.morphology import disk,dilation
@@ -67,7 +71,7 @@ the values in any numpy array. The dilation task is a wrapper around
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Change this value to your desired data file
     test_data = '/eng/ssb/iraf_transition/test_data/id0k16pdq_blv_tmp.fits'
@@ -89,8 +93,8 @@ the values in any numpy array. The dilation task is a wrapper around
 crmedian
 --------
 
-**Please review the `Notes <#notes>`__ section above before running any
-examples in this notebook**
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The crmedian task is a way to indentify and replace cosmic rays in a
 single image by detecting pixels that deviate a statistically
@@ -102,14 +106,14 @@ In ``ccdproc.cosmicray_median`` you also have the option of using an
 error array. If none is provided the standard deviation of the data is
 used.
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy import units
     from ccdproc import cosmicray_median, fits_ccddata_reader
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
@@ -143,9 +147,6 @@ crnebula
 Not Replacing
 -------------
 
--  crcombine - see **ctio.immatch.imcombine, work in progress**
--  credit - see **images.tv.imedit, work in progress**
+-  crcombine - see ctio.immatch.imcombine, **work in progress**
+-  credit - see images.tv.imedit, **work in progress**
 
-For questions or comments please see `our github
-page <https://github.com/spacetelescope/stak>`__. We encourage and
-appreciate user feedback.
