@@ -17,14 +17,17 @@ Image Manipulation:
   :maxdepth: 1
 
   images.imfilter.rst
+  images.imfit.rst
   images.imgeom.rst
   images.imutil.rst
+  images.tv.rst
 
 Fits Tools:
 
 .. toctree::
   :maxdepth: 1
 	     
+  stsdas.toolbox.headers.rst
   tables.fitsio.rst
   
 Cosmic Ray Rejections:
@@ -33,6 +36,16 @@ Cosmic Ray Rejections:
   :maxdepth: 1
 
   noao.imred.crutil.rst
+
+
+General Tools:
+
+.. toctree::
+  :maxdepth: 1
+
+  lists.rst
+
+
   
 Index
 -----

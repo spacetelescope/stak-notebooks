@@ -10,14 +10,18 @@ header editing and image arithimetic.
 Notes
 -----
 
+**For questions or comments please see** `our github
+page <https://github.com/spacetelescope/stak>`__. **We encourage and
+appreciate user feedback.**
+
 Contents:
 
 -  `chpixtype <#chpixtype>`__
 -  `hedit <#hedit>`__
 -  `hselect <#hselect>`__
--  `imarith/imdivide <#imarith>`__
+-  `imarith-imdivide <#imarith-imdivide>`__
 -  `imcopy <#imcopy>`__
--  `imfunction/imexpr <#imfunction>`__
+-  `imfunction-imexpr <#imfunction-imexpr>`__
 -  `imheader <#imheader>`__
 -  `imhistogram <#imhistogram>`__
 -  `imreplace <#imreplace>`__
@@ -32,15 +36,15 @@ Contents:
 chpixtype
 ---------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 Chpixtype is a task that allows you to change the pixel type of a fits
 image. There is built in functionality in ``astropy.io.fits`` to preform
 this task with the ``scale`` method. Below you will find a table that
 translates the chpixtype newpixtype options into their equivalent
-``numpy``/``astropy`` type
-(http://docs.scipy.org/doc/numpy/user/basics.types.html).
+`numpy/astropy
+type <http://docs.scipy.org/doc/numpy/user/basics.types.html>`__.
 
 **Type Conversions**
 
@@ -60,12 +64,12 @@ translates the chpixtype newpixtype options into their equivalent
 | ``double``   | ``float64``          |
 +--------------+----------------------+
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -73,7 +77,7 @@ translates the chpixtype newpixtype options into their equivalent
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Change this value to your desired data file, here were creating a filename
     # for our new changed data
@@ -96,8 +100,8 @@ translates the chpixtype newpixtype options into their equivalent
 hedit
 -----
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The hedit task allows users to edit an image header. This functioanlity
 is covered in ``astropy.io.fits``. Take note that to make changes to a
@@ -105,12 +109,12 @@ fits file, you must use the ``mode='update'`` keyword in the
 ``fits.open`` call. Below you'll find examples of editing a keyword if
 it does/doesn't exist, and how to delete keywords from the header.
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Change this value to your desired data file
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
@@ -137,8 +141,8 @@ it does/doesn't exist, and how to delete keywords from the header.
 hselect
 -------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 hselect is used to pull out specific header keywords. You can provide
 any filename string as you would in IRAF and it will be exapanded
@@ -147,12 +151,12 @@ filter files. We will be using the ``stak`` package ``Hselect`` class.
 The output table is an ``astropy.table`` object and stored in the
 ``table`` attribute.
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from stak import Hselect
 
-.. code:: python
+.. code:: ipython2
 
     # Create Hselect object
     myList = Hselect("/eng/ssb/iraf_transition/test_data/jcz*", "BUNIT,TIME-OBS", extension="0,1,2,3")
@@ -198,7 +202,7 @@ The output table is an ``astropy.table`` object and stored in the
 
 
 
-.. code:: python
+.. code:: ipython2
 
     # Create Hselect object using expression parsing
     myList2 = Hselect("/eng/ssb/iraf_transition/test_data/jcz*", "BUNIT", extension="0,1,2,3",
@@ -219,11 +223,11 @@ The output table is an ``astropy.table`` object and stored in the
 
 
 
-imarith - imdivide
-------------------
+imarith-imdivide
+----------------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 Imarith and imdivide both provide functionality to apply basic operators
 to whole image arrays. This task can be achieved with basic
@@ -235,12 +239,12 @@ an assignment operator in python (``+=``,\ ``-=``,\ ``/=``,\ ``*=``).
 See http://www.tutorialspoint.com/python/python\_basic\_operators.htm
 for more details
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Basic operands (+,-,/,*)
     # Change these values to your desired data files
@@ -276,19 +280,19 @@ for more details
 imcopy
 ------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 Imcopy allows users to copy a fits image to a new file. We can
 accomplish this using ``astropy.io.fits`` by saving our fits file to a
 new filename.
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired filenames
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
@@ -301,29 +305,29 @@ new filename.
 
 
 
-imfunction - imexpr
--------------------
+imfunction-imexpr
+-----------------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 Imfunction will apply a function to the image pixel values in an image
 array. Imexpr gives you similiar functionality with the added capability
 to combine different images using a user created expression. We can
-accomplish this using the built in funcitonality of the ``numpy``
-library (http://docs.scipy.org/doc/numpy/reference/routines.math.html)
+accomplish this using the built in funcitonality of the `numpy
+library <http://docs.scipy.org/doc/numpy/reference/routines.math.html>`__
 
 If there is a particular function you would like to apply to your image
 array that you cannot find in the ``numpy`` library you can use the
 ``np.vectorize`` function, which can make any python function apply to
-each element of your array. But keep in mind that ``np.vectorize`` is
-esentially looping over the array, and may not be the most efficient
-method
-(http://docs.scipy.org/doc/numpy/reference/generated/numpy.vectorize.html).
+each element of your array. But keep in mind that
+`np.vectorize <http://docs.scipy.org/doc/numpy/reference/generated/numpy.vectorize.html>`__
+is esentially looping over the array, and may not be the most efficient
+method.
 
 Example using exsisting numpy function:
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -331,7 +335,7 @@ Example using exsisting numpy function:
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
@@ -352,7 +356,7 @@ Example using exsisting numpy function:
 
 Example using user defined function and ``np.vectorize``:
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
@@ -381,14 +385,14 @@ Example using user defined function and ``np.vectorize``:
 imheader
 --------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 The imheader task allows the user to list header parameters for a list
 of images. Here we can use the ``astropy`` convenience function,
 ``fits.getheader()``
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -397,7 +401,7 @@ of images. Here we can use the ``astropy`` convenience function,
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files, glob will capture all wildcard matches
     test_data = glob.glob('/eng/ssb/iraf_transition/test_data/iczgs3y*')
@@ -837,16 +841,16 @@ of images. Here we can use the ``astropy`` convenience function,
 imhistogram
 -----------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 Imhistogram will plot a customized histogram of the provided image data.
 To make a histogram in Python we are going to use matplotlibs ``hist``
-function. See the ``hist`` documentation for options to change the
-histogram type, scaling, bin sizes, and more
-(http://matplotlib.org/api/pyplot\_api.html)
+function. See the ``hist``
+`documentation <http://matplotlib.org/api/pyplot_api.html>`__ for
+options to change the histogram type, scaling, bin sizes, and more.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -858,7 +862,7 @@ histogram type, scaling, bin sizes, and more
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
@@ -882,15 +886,15 @@ histogram type, scaling, bin sizes, and more
 imreplace
 ---------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 We can use simple ``numpy`` array manipulation to replicate imreplace.
 For details on how to grow the boolean array for replacement see crgrow,
-or the ```skimage.dilation``
+or the `skimage.dilation
 documentation <http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?highlight=dilation#skimage.morphology.dilation>`__.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -898,7 +902,7 @@ documentation <http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?h
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
@@ -930,22 +934,22 @@ documentation <http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?h
 imslice
 -------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 Imslice can take a 3-D datacube fits image and return multiple 2D images
 sliced through the chosen dimension. Keep in mind for the python
 equivalent workflow that the header file from the original input image
 will be used for all output images, including WCS information. We will
 be using
-```numpy.split`` <https://docs.scipy.org/doc/numpy/reference/generated/numpy.split.html#numpy.split>`__.
+`numpy.split <https://docs.scipy.org/doc/numpy/reference/generated/numpy.split.html#numpy.split>`__.
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Pull image data array and image header
     orig_hdu = fits.open('/eng/ssb/iraf_transition/test_data/imstack_out.fits')
@@ -976,15 +980,15 @@ be using
 imstack
 -------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 imstack can take multiple fits images and stack the data, writing out a
 new file where the fits data is 1-dimension higher then the input
 images. Here we show that manipulation using the ``astropy`` library and
-```numpy.stack`` <https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html#numpy.stack>`__.
+`numpy.stack <https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html#numpy.stack>`__.
 
-.. code:: python
+.. code:: ipython2
 
     # Standard Imports
     import numpy as np
@@ -992,7 +996,7 @@ images. Here we show that manipulation using the ``astropy`` library and
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Pull two image data arrays and image header
     header1 = fits.getheader('/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits',ext=1)
@@ -1020,8 +1024,8 @@ images. Here we show that manipulation using the ``astropy`` library and
 imstatistics
 ------------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 We will use the ``astropy.stats.sigma_clipped_stats`` function here,
 which has some wider capabilites then the imstatistics function. Please
@@ -1029,13 +1033,13 @@ see the ``stats`` `package
 documentation <http://docs.astropy.org/en/stable/api/astropy.stats.sigma_clipped_stats.html>`__
 for details on the advanced usage .
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy import stats
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
@@ -1056,22 +1060,23 @@ for details on the advanced usage .
 imsum
 -----
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 We will be using the ``ccdproc`` ``Combiner`` class here. Keep in mind
 that the original fits header is not retained in the ``CCDData`` object.
-Please see the documentation for more details
-(http://ccdproc.readthedocs.io/en/latest/ccdproc/image\_combination.html).
+Please see the `ccdproc
+documentation <http://ccdproc.readthedocs.io/en/latest/ccdproc/image_combination.html>`__
+for more details.
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy import units
     from ccdproc import CCDData, Combiner
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files
     test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
@@ -1119,8 +1124,8 @@ Please see the documentation for more details
 listpixels
 ----------
 
-\*\* Please review the `Notes <#notes>`__ section above before running
-any examples in this notebook \*\*
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
 
 listpixels was used to list an indexed section of a FITs data array.
 This is easy to do using ``astropy``, but keep in mind that Python
@@ -1128,12 +1133,12 @@ indexs from zero, and with the y-axis leading, i.e. [y,x]. You also want
 to end the cut with the pixel *after* the end pixel. So to get 1-10 in x
 and 5-15 in y, you will index like so: array[4:15,0:10]
 
-.. code:: python
+.. code:: ipython2
 
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: python
+.. code:: ipython2
 
     # Change these values to your desired data files
     test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
@@ -1165,9 +1170,5 @@ Not Replacing
    package for this functionality.
 -  imtile - **may** replace infuture
 -  sections - IRAF utility function
--  imgets - see `**images.imutil.hselect** <#hselect>`__
--  minmax - see `**images.imutil.imstat** <#imstat>`__
-
-For questions or comments please see `our github
-page <https://github.com/spacetelescope/stak>`__. We encourage and
-appreciate user feedback.
+-  imgets - see `images.imutil.hselect <#hselect>`__
+-  minmax - see `images.imutil.imstatistics <#imstatistics>`__
