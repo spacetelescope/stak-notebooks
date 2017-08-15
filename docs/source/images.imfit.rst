@@ -49,7 +49,7 @@ Contents:
 
 
 fit1d-lineclean
-~~~~~~~~~~~~~~~
+---------------
 
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
@@ -180,7 +180,7 @@ implementation of lineclean.
 
 
 imsurfit
-~~~~~~~~
+--------
 
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**

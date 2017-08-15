@@ -649,10 +649,14 @@ For a ring footprint:
 .. image:: images.imfilter_files/images.imfilter_62_0.png
 
 
- ## Not Replacing
+
+
+
+
+Not Replacing
+-------------
 
 -  runmed - see **images.imutil.imsum**
 -  fmode - see `images.imfilter.mode <#mode-rmode>`__
 -  fmedian - see `images.imfilter.median <#median-rmedian>`__
 -  gradient - **may** replace in future
-
