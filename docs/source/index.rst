@@ -22,6 +22,7 @@ Image Manipulation:
   images.imutil.rst
   images.tv.rst
 
+  
 Fits Tools:
 
 .. toctree::
@@ -29,7 +30,17 @@ Fits Tools:
 	     
   stsdas.toolbox.headers.rst
   tables.fitsio.rst
+  tables.ttools.rst
+
   
+Photometry Tools:
+
+.. toctree::
+  :maxdepth: 1
+
+  noao.digiphot.daophot.rst
+
+ 
 Cosmic Ray Rejections:
 
 .. toctree::
@@ -44,6 +55,7 @@ General Tools:
   :maxdepth: 1
 
   lists.rst
+  utilities.rst
 
 
   

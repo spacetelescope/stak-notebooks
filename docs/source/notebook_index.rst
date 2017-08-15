@@ -16,6 +16,9 @@ Index
   images.imutil.rst
   images.tv.rst
   lists.rst
+  noao.digiphot.daophot.rst
   noao.imred.crutil.rst
   stsdas.toolbox.headers.rst
   tables.fitsio.rst
+  tables.ttools.rst
+  utilities.rst
