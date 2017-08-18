@@ -55,6 +55,9 @@ General Tools:
   :maxdepth: 1
 
   lists.rst
+  noao.rst
+  stsdas.analysis.statistics.rst
+  stsdas.toolbox.tools.rst
   utilities.rst
 
 
