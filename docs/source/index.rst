@@ -21,13 +21,17 @@ Image Manipulation:
   images.imgeom.rst
   images.imutil.rst
   images.tv.rst
+  stsdas.analysis.fitting.rst
+  stsdas.toolbox.imgtools.rst
+  stsdas.toolbox.imgtools.mstools.rst
 
   
 Fits Tools:
 
 .. toctree::
   :maxdepth: 1
-	     
+
+  fitsutil.rst
   stsdas.toolbox.headers.rst
   tables.fitsio.rst
   tables.ttools.rst
@@ -49,13 +53,14 @@ Cosmic Ray Rejections:
   noao.imred.crutil.rst
 
 
-General Tools:
+Other / General Tools:
 
 .. toctree::
   :maxdepth: 1
 
   lists.rst
   noao.rst
+  stsdas.analysis.nebular.rst
   stsdas.analysis.statistics.rst
   stsdas.toolbox.tools.rst
   utilities.rst

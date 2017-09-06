@@ -1043,10 +1043,10 @@ for details on the advanced usage .
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
-    sci1 = fits.getdata(test_data,ext=1)
+    sci1 = fits.getdata(test_data, ext=1)
     
     # The sigma_clipped_stats function returns the mean, median, and stddev respectively
-    output = stats.sigma_clipped_stats(sci1,sigma=2.0,iters=3)
+    output = stats.sigma_clipped_stats(sci1, sigma=2.0, iters=3)
     print output
 
 

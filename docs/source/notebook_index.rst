@@ -10,6 +10,7 @@ Index
 .. toctree::
   :maxdepth: 2
 
+  fitsutil.rst
   images.imfilter.rst
   images.imfit.rst
   images.imgeom.rst
@@ -19,8 +20,12 @@ Index
   noao.rst
   noao.digiphot.daophot.rst
   noao.imred.crutil.rst
+  stsdas.analysis.fitting.rst
+  stsdas.analysis.nebular.rst
   stsdas.analysis.statistics.rst
   stsdas.toolbox.headers.rst
+  stsdas.toolbox.imgtools.rst
+  stsdas.toolbox.imgtools.mstools.rst
   stsdas.toolbox.tools.rst
   tables.fitsio.rst
   tables.ttools.rst
