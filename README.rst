@@ -1,7 +1,9 @@
 .. image:: https://readthedocs.org/projects/stak-notebooks/badge/?version=latest
     :target: http://stak-notebooks.readthedocs.io/en/latest/?badge=latest
 
-
+.. image:: https://img.shields.io/badge/powered%20by-STScI-blue.svg?colorA=707170&colorB=3e8ddd&style=flat
+    :target: http://www.stsci.edu
+    :alt: Powered by STScI Badge
 
 
 Notebooks for STAK project
