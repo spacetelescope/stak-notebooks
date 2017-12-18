@@ -1,5 +1,6 @@
+name: stak-notebooks
+type: sphinx
 python:
    setup_py_install: false
-
 conda:
     file: docs/environment.yml
