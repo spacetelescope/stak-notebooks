@@ -8,8 +8,15 @@
 
 Notebooks for STAK project
 ==========================
-This repository houses the STAK Jupyter notebooks.  For the STAK code repo and more information, go here: https://github.com/spacetelescope/stak.  Readthedocs page can be found here: http://stak-notebooks.readthedocs.io/en/latest/
+This repository houses the STAK Jupyter notebooks.  For the STAK code repo and more information, go here: https://github.com/spacetelescope/stak.  Readthedocs page can be found here: http://stak-notebooks.readthedocs.io/en/latest/.
 
+Useful Resources
+================
+Usage of the Jupyter notebooks requires some prior knowledge of Jupyter and Astropy FITS I/O.
+
+If you are new to Jupyter Notebooks here is a beginner's guide: https://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/.
+
+If you are new to working with FITS files in Python we highly recommend working through the examples in the Astropy FITS I/O documentation: http://docs.astropy.org/en/stable/io/fits/.
 
 Contributing
 ============
