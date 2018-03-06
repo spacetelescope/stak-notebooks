@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 Contents:
 
 -  `base2dec-dec2base <#base2dec-dec2base>`__
@@ -44,7 +50,7 @@ hexidecimal, and binary.
 -  `hex
    function <https://docs.python.org/3.6/library/functions.html#hex>`__
 
-.. code:: ipython2
+.. code:: ipython3
 
     # base 16 to integer
     a = int("b1", base=16)
@@ -80,12 +86,12 @@ be replicated using
 little bit of `set
 maniputaion <https://docs.python.org/3/tutorial/datastructures.html#sets>`__
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import os
 
-.. code:: ipython2
+.. code:: ipython3
 
     full_filepaths1 = []
     full_filepaths2 = []
@@ -139,12 +145,12 @@ function <https://docs.python.org/3.6/library/os.path.html#os.path.split>`__
 and the built in `String split
 method <https://docs.python.org/3.6/library/stdtypes.html#str.split>`__.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import os
 
-.. code:: ipython2
+.. code:: ipython3
 
     # code goes here
     my_filepath = "/home/user/snowball/stars.txt"

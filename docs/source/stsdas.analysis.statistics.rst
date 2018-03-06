@@ -4,7 +4,7 @@
 stsdas.analysis.statistics
 ==========================
 
-The statictics package contains statistical analysis tasks.
+The statistics package contains statistical analysis tasks.
 
 Notes
 -----
@@ -13,11 +13,20 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
+Many of the tasks below are documented in their respective library
+documentation. Please see the links provided for example usage.
+
 Contents:
 
 -  `bhkmethod <#bhkmethod>`__
 -  `buckleyjames-kmestimate <#buckleyjames-kmestimate>`__
--  `coxharzard <#coxharzard>`__
+-  `coxhazard <#coxhazard>`__
 -  `kolmov <#kolmov>`__
 -  `spearman <#spearman>`__
 -  `twosampt <#twosampt>`__
@@ -37,24 +46,24 @@ correlation coefficient. We show a short example here taken from the
 `scipy.stats.kendalltau <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kendalltau.html>`__
 documentation.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     from scipy import stats
 
-.. code:: ipython2
+.. code:: ipython3
 
     x1 = [12, 2, 1, 12, 2]
     x2 = [1, 4, 7, 1, 0]
     tau, p_value = stats.kendalltau(x1, x2)
     print("tau: {}".format(tau))
-    print("p_value: {}".format(tau))
+    print("p_value: {}".format(p_value))
 
 
 .. parsed-literal::
 
-    tau: -0.471404520791
-    p_value: -0.471404520791
+    tau: -0.4714045207910316
+    p_value: 0.2827454599327748
 
 
 
@@ -72,16 +81,16 @@ fitter <http://lifelines.readthedocs.io/en/latest/Quickstart.html#kaplan-meier-a
 
 
 
-coxharzard
-----------
+coxhazard
+---------
 
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
 The coxhazard task is used to compute the correlation probability by
-Cox's proportional hazard model. The ``lifelines`` package contains
-`this fitter
-here <https://lifelines.readthedocs.io/en/latest/Survival%20Regression.html#cox-s-proportional-hazard-model>`__.
+Cox's proportional hazard model. See an example of this fitter in the
+`lifelines
+package <https://lifelines.readthedocs.io/en/latest/Survival%20Regression.html#cox-s-proportional-hazard-model>`__.
 
 
 
@@ -106,15 +115,15 @@ spearman
 any examples in this notebook**
 
 The spearman task is used to compute regression coefficients by Scmitt's
-method. ``Scipy`` contains a version of `this
-task <https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.spearmanr.html#scipy.stats.spearmanr>`__.
+method. ``Scipy`` contains a version of this task, see `documentation
+here <https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.spearmanr.html#scipy.stats.spearmanr>`__.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     from scipy import stats
 
-.. code:: ipython2
+.. code:: ipython3
 
     rho, pvalue = stats.spearmanr([1,2,3,4,5],[5,6,7,8,7])
     print("rho: {}".format(rho))
@@ -123,8 +132,8 @@ task <https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.stats.sp
 
 .. parsed-literal::
 
-    rho: 0.820782681668
-    p-value: 0.0885870053135
+    rho: 0.8207826816681233
+    p-value: 0.08858700531354381
 
 
 

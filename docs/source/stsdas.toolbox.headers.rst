@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 Many of the headers tasks can be replaced with utilities in ``astropy``,
 as seen below.
 
@@ -53,13 +59,13 @@ For more detais on a more advanced differ result using
 ``astropy.io.fits.Differs`` directly, see the `API
 doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy.io.fits import printdiff
 
-.. code:: ipython2
+.. code:: ipython3
 
     file1 = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
     file2 = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
@@ -449,24 +455,28 @@ file using Python's build in i/o functionality and the
 
 **check, do we need to trim newlines?**
 
-.. code:: ipython2
+.. code:: ipython3
 
+    # Standard Imports
+    import shutil
+    
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: ipython2
+.. code:: ipython3
 
-    # open our text file and fits file objects
+    # open our text file and fits file objects, we're going to make a copy of a fits file, and edit the copy
     my_file = open('/eng/ssb/iraf_transition/test_data/history_info.txt', 'r')
-    my_fits = fits.open('/eng/ssb/iraf_transition/test_data/stfhist.fits', mode='append')
+    shutil.copyfile('/eng/ssb/iraf_transition/test_data/stfhist.fits','stfhist_copy.fits')
+    test_data = fits.open('/eng/ssb/iraf_transition/test_data/stfhist.fits', mode='append')
     
     # loop through lines in text file and write to fits file
     # here we add the HISTORY lines to the zeroth header
     for line in my_file:
-        my_fits[0].header.add_history(line.strip('\n'))
+        test_data[0].header.add_history(line.strip('\n'))
         
     # make sure to close your fits file after the edits are done
-    my_fits.close()
+    test_data.close()
 
 
 

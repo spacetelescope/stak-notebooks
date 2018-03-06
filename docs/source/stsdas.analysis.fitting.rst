@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 The stsdas.analysis.fitting package is used to do various types of 1D
 and 2D fitting. Fitting has been well developed in Python with the
 `Scipy <https://docs.scipy.org/doc/scipy/reference/>`__ and

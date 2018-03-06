@@ -8,6 +8,16 @@ corresponds to the title of the notebook.  Putting together these tutorial
 notebooks is an ongoing task, `feedback <http://stak.userecho.com/>`_ and
 `contributions <https://github.com/spacetelescope/stak>`_ are welcome.
 
+If you are new to Python or Astropy, we recommend starting with the
+introduction page to see some Python and Astropy information that will be used
+extensively in these tutorials.
+
+.. toctree::
+  :maxdepth: 2
+	     
+  Introduction.rst
+
+
 Contents
 ========
 

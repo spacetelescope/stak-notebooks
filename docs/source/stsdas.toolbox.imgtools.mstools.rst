@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 The imgtools.mstools package contains tasks for working with STIS,
 NICMOS, ACS, and WFC3 data. Some tasks are 'extensions" of existing
 tasks in the STSDAS system, and support other instruments/file formats
@@ -63,7 +69,7 @@ Tasks for image combination are currently being developed in the
 page <https://ccdproc.readthedocs.io/en/latest/#>`__ for more details or
 the **images.imutil.imsum** task for a short usage example.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import glob
@@ -73,12 +79,12 @@ the **images.imutil.imsum** task for a short usage example.
     from astropy.io import fits
     from stsci.tools.bitmask import bitfield_to_boolean_mask
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Get the data
     test_data = glob.glob('/eng/ssb/iraf_transition/test_data/mscombine/*_blv_tmp.fits')
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Create masked arrays
     masked_arrays_ext1, masked_arrays_ext2, masked_arrays_ext4, masked_arrays_ext5 = [], [], [], []
@@ -95,13 +101,13 @@ the **images.imutil.imsum** task for a short usage example.
                 masked_arrays_ext4.append(np.ma.masked_array(hdulist[4].data, mask=mask_ext6))
                 masked_arrays_ext5.append(np.ma.masked_array(hdulist[5].data, mask=mask_ext6))
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Average-combine SCI arrays
     comb_ext1 = np.ma.mean(masked_arrays_ext1, axis=0).data
     comb_ext4 = np.ma.mean(masked_arrays_ext4, axis=0).data
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Propoagate uncertainties for ERR arrays, divide by zero expected
     weight_image_ext1 = np.zeros((2051, 4096))
@@ -120,19 +126,19 @@ the **images.imutil.imsum** task for a short usage example.
 
 .. parsed-literal::
 
-    /Users/ogaz/miniconda2/envs/irafdev2/lib/python2.7/site-packages/ipykernel_launcher.py:10: RuntimeWarning: divide by zero encountered in divide
+    /Users/ogaz/miniconda2/envs/irafdev3/lib/python3.6/site-packages/ipykernel_launcher.py:10: RuntimeWarning: divide by zero encountered in true_divide
       # Remove the CWD from sys.path while we load stuff.
-    /Users/ogaz/miniconda2/envs/irafdev2/lib/python2.7/site-packages/ipykernel_launcher.py:11: RuntimeWarning: divide by zero encountered in divide
+    /Users/ogaz/miniconda2/envs/irafdev3/lib/python3.6/site-packages/ipykernel_launcher.py:11: RuntimeWarning: divide by zero encountered in true_divide
       # This is added back by InteractiveShellApp.init_path()
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Create empty DQ arrays
     comb_ext3 = np.zeros((2051, 4096))
     comb_ext6 = np.zeros((2051, 4096))
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Build and save the combined file, using the first final for the header
     hdu0 = fits.PrimaryHDU(header=fits.getheader(test_data[0], 0))
@@ -143,7 +149,7 @@ the **images.imutil.imsum** task for a short usage example.
     hdu5 = fits.ImageHDU(comb_ext5, header=fits.getheader(test_data[0], 4))
     hdu6 = fits.ImageHDU(comb_ext6, header=fits.getheader(test_data[0], 5))
     hdulist = fits.HDUList([hdu0, hdu1, hdu2, hdu3, hdu4, hdu5, hdu6])
-    hdulist.writeto('/eng/ssb/iraf_transition/test_data/mscombine/test.fits', overwrite=True)
+    hdulist.writeto('mscombine_test.fits', overwrite=True)
 
 
 
@@ -159,20 +165,22 @@ Quality extensions. Here we show an example of the ``stsci.tools``
 `bitfield\_to\_boolean\_mask <https://github.com/spacetelescope/stsci.tools/blob/master/lib/stsci/tools/bitmask.py>`__
 function.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy import stats
     from stsci.tools.bitmask import bitfield_to_boolean_mask
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    # multiple reads file
+    #test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
     hdulist = fits.open(test_data)
     
-    # Make mask, using bits 32 and 4
+    # Make mask, using bit flags 32 and 4
     boolean_mask = bitfield_to_boolean_mask(hdulist[3].data,"~4,128")
     
     # The sigma_clipped_stats function returns the mean, median, and stddev respectively

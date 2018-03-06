@@ -14,6 +14,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 Many of the tasks in the this package are no longer in common usage and
 are not covered here. If there is a task you would like to request
 please contact the `STAK
@@ -36,7 +42,7 @@ The catfits task was used to quickly produce a catalog of fits headers
 from a file list. In the below example we provide the summary catalog
 provided by ``astropy.io.fits``.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import glob
@@ -44,7 +50,7 @@ provided by ``astropy.io.fits``.
     # Astronomy Specific Imports
     from astropy.io import fits
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Change these values to your desired data files, glob will capture all wildcard matches
     test_data = glob.glob('/eng/ssb/iraf_transition/test_data/*.fits')
@@ -239,18 +245,18 @@ Below we show an example of running this task in a python session. You
 may or may not need to byteswap your image data depending on which
 system it was originally written on.
 
-.. code:: ipython2
+.. code:: ipython3
 
     from stsci.tools import readgeis
 
-.. code:: ipython2
+.. code:: ipython3
 
     filename = '/eng/ssb/iraf_transition/test_data/x31g0108t.c0h'
     hdulist = readgeis.readgeis(filename)
     hdulist[1].data = hdulist[1].data.byteswap()
     del hdulist[1].header['CD1_1']
     del hdulist[1].header['CD2_2']
-    hdulist.writeto(filename.replace('.c0h','.fits'), clobber=True)
+    hdulist.writeto('stwfits_out.fits', overwrite = True)
 
 
 .. parsed-literal::
@@ -272,14 +278,6 @@ system it was originally written on.
     =  '.byteswap()' method.          =
     ===================================
     
-
-
-.. parsed-literal::
-
-    WARNING: AstropyDeprecationWarning: The NumCode class attribute is deprecated and may be removed in a future version.
-            Use the module level constant BITPIX2DTYPE instead. [astropy.utils.decorators]
-    /Users/ogaz/miniconda2/envs/irafdev/lib/python2.7/site-packages/stsci.tools-3.4.11-py2.7.egg/stsci/tools/readgeis.py:250: RuntimeWarning: invalid value encountered in isnan
-      (numpy.any(numpy.isnan(ext_dat)) or numpy.any(numpy.isinf(ext_dat))):
 
 
 
