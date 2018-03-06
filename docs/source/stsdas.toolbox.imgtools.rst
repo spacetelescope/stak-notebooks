@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 The various image tasks found in the stsdas.toolbox.imgtools package
 have been replaced in the `Numpy <https://docs.scipy.org/doc/numpy/>`__
 and `Astropy <http://docs.astropy.org/en/stable/>`__ libraries.
@@ -46,12 +52,12 @@ along with a slew of `other numpy bit
 functions <https://docs.scipy.org/doc/numpy/reference/routines.bitwise.html>`__.
 Below we show examples of ``bitwise_and`` and ``bitwise_or``.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
 
-.. code:: ipython2
+.. code:: ipython3
 
     a = np.array([1,4,10])
     b = np.array([1,0,8])
@@ -81,12 +87,12 @@ Iminsert is used to insert a small image into a larger image. This is
 easy to do with the Numpy array indexing after you've read in your
 images with ``Astropy.io.fits``. Below we'll show a quick array example.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
 
-.. code:: ipython2
+.. code:: ipython3
 
     # generate test arrays
     my_array = np.random.rand(7,7)
@@ -133,12 +139,12 @@ or the
 functions and choosing which dimensions you wish to collapse. Below we
 show an example using ``numpy.average``.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
 
-.. code:: ipython2
+.. code:: ipython3
 
     # build random test array
     my_array = np.random.rand(10,10,3)

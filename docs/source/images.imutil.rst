@@ -4,8 +4,8 @@
 images.imutil
 =============
 
-The images.imutil package provides general fits image tools such as
-header editing and image arithimetic.
+The images.imutil package provides general FITS image tools such as
+header editing and image arithmetic.
 
 Notes
 -----
@@ -13,6 +13,12 @@ Notes
 **For questions or comments please see** `our github
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
+
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
 
 Contents:
 
@@ -39,7 +45,7 @@ chpixtype
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-Chpixtype is a task that allows you to change the pixel type of a fits
+Chpixtype is a task that allows you to change the pixel type of a FITS
 image. There is built in functionality in ``astropy.io.fits`` to preform
 this task with the ``scale`` method. Below you will find a table that
 translates the chpixtype newpixtype options into their equivalent
@@ -66,11 +72,6 @@ type <http://docs.scipy.org/doc/numpy/user/basics.types.html>`__.
 
 .. code:: ipython3
 
-    # Astronomy Specific Imports
-    from astropy.io import fits
-
-.. code:: ipython3
-
     # Standard Imports
     import numpy as np
     
@@ -82,18 +83,36 @@ type <http://docs.scipy.org/doc/numpy/user/basics.types.html>`__.
     # Change this value to your desired data file, here were creating a filename
     # for our new changed data
     orig_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
-    new_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_newdtype_flt.fits'
+    new_data = 'iczgs3ygq_newdtype_flt.fits'
     
-    # Read in your fits file
+    # Read in your FITS file
     hdu = fits.open(orig_data)
     
-    # Edit the datatype
+    # Print info about FITS file
+    hdu.info()
+    
+    # Edit the datatype for the first sci extension
     hdu[1].scale(type='int32')
     
     # Save changed hdu object to new file
-    # The clobber argument tells the writeto method to overwrite if file already exists
-    hdu.writeto(new_data, clobber=True)
+    # The overwrite argument tells the writeto method to overwrite if file already exists
+    hdu.writeto(new_data, overwrite=True)
     hdu.close()
+
+
+.. parsed-literal::
+
+    Filename: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     266   ()      
+      1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
+      2  ERR           1 ImageHDU        51   (1014, 1014)   float32   
+      3  DQ            1 ImageHDU        43   (1014, 1014)   int16   
+      4  SAMP          1 ImageHDU        37   (1014, 1014)   int16   
+      5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
+      6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
+    <class 'astropy.io.fits.hdu.hdulist.HDUList'>
+
 
 
 
@@ -105,12 +124,21 @@ any examples in this notebook**
 
 The hedit task allows users to edit an image header. This functioanlity
 is covered in ``astropy.io.fits``. Take note that to make changes to a
-fits file, you must use the ``mode='update'`` keyword in the
-``fits.open`` call. Below you'll find examples of editing a keyword if
-it does/doesn't exist, and how to delete keywords from the header.
+FITS file, you must use the ``mode='update'`` keyword in the
+``fits.open`` call. The default mode for ``fits.open`` is ``readonly``.
+Below you'll find examples of editing a keyword if it does/doesn't
+exist, and how to delete keywords from the header. Also provided is an
+example of updating multiple files at once using the `convience function
+setval <http://docs.astropy.org/en/stable/io/fits/api/files.html#setval>`__.
+
+For examples on printing/viewing header keywords please see
+`hselect <#hselect>`__
 
 .. code:: ipython3
 
+    # Standard Imports
+    from glob import glob
+    
     # Astronomy Specific Imports
     from astropy.io import fits
 
@@ -119,10 +147,10 @@ it does/doesn't exist, and how to delete keywords from the header.
     # Change this value to your desired data file
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
     
-    # Open fits file, include the mode='update' keyword
+    # Open FITS file, include the mode='update' keyword
     hdu = fits.open(test_data, mode='update')
     
-    # Simple header change, will add keyword if it doesn't not exist
+    # Simple header change, will add keyword if it doesn't exist
     hdu[0].header['MYKEY1'] = 'Editing this keyword'
     
     # Only add keyword if it does not already exist:
@@ -133,16 +161,341 @@ it does/doesn't exist, and how to delete keywords from the header.
     if 'MYKEY2' in hdu[0].header:
         del hdu[0].header['MYKEY2']
         
-    # Close fits file, this will save your changes
+    # Close FITS file, this will save your changes
     hdu.close()
+
+Below we will show an example of how to update a keyword in multiple
+FITS files using the Astropy convenience function
+`astropy.io.fits.setval <http://docs.astropy.org/en/stable/io/fits/api/files.html#setval>`__
+and the `glob <https://docs.python.org/3/library/glob.html>`__ function.
+``Astropy.io.fits.setval`` will add the keyword if it does not already
+exist.
+
+.. code:: ipython3
+
+    # Change this value to your desired search
+    data_list = glob('/eng/ssb/iraf_transition/test_data/hedit/*.fits')
+    
+    # Now we loop over the list of file and use the setval function to update keywords
+    # Here we update the keyword MYKEY1 value to the integer 5.
+    for filename in data_list:
+        fits.setval(filename, 'MYKEY1', value=5)
 
 
 
 hselect
 -------
 
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
+The hselect task allows users to search for keyword values in the FITS
+headers. This functionality has been replaced by the `CCDProc
+ImageFileCollection
+class <http://ccdproc.readthedocs.io/en/stable/api/ccdproc.ImageFileCollection.html>`__.
+This class stores the header keyword values in an `Astropy Table
+object <http://docs.astropy.org/en/stable/table/index.html#module-astropy.table>`__.
+There is also an executable script provided by Astropy called
+`fitsheader <http://docs.astropy.org/en/stable/io/fits/usage/scripts.html#module-astropy.io.fits.scripts.fitsheader>`__.
+You'll find examples of both below.
+
+If you wish to save your output to a text file, please see the `Astropy
+Table Documentation <http://docs.astropy.org/en/stable/table/io.html>`__
+and the `Astropy Unified I/O
+page <http://docs.astropy.org/en/stable/io/unified.html>`__.
+
+.. code:: ipython3
+
+    # Astronomy Specific Imports
+    from ccdproc import ImageFileCollection
+
+.. code:: ipython3
+
+    # first we make the ImageFileCollection object
+    collec = ImageFileCollection('/eng/ssb/iraf_transition/test_data', 
+                                 keywords=["filetype","date","exptime","filter"],
+                                 glob_include="icz*.fits", ext=0)
+    
+    # header keywords values are stored in an Astropy Table in the summary attribute 
+    out_table = collec.summary
+    out_table
+
+
+
+
+.. raw:: html
+
+    &lt;Table masked=True length=3&gt;
+    <table id="table4542238616" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>file</th><th>filetype</th><th>date</th><th>exptime</th><th>filter</th></tr></thead>
+    <thead><tr><th>str27</th><th>str3</th><th>str10</th><th>float64</th><th>str5</th></tr></thead>
+    <tr><td>iczgs3y5q_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>652.937744</td><td>F125W</td></tr>
+    <tr><td>iczgs3ygq_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>602.937317</td><td>F140W</td></tr>
+    <tr><td>iczgs3ygq_newdtype_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>602.937317</td><td>F140W</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
+    # Now we can filter our table based on keyword values using Python bitwise operators
+    filtered_table = out_table[(out_table['exptime'] > 602) & (out_table['filter'] == 'F140W')]
+    filtered_table
+
+
+
+
+.. raw:: html
+
+    &lt;Table masked=True length=2&gt;
+    <table id="table4542100368" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>file</th><th>filetype</th><th>date</th><th>exptime</th><th>filter</th></tr></thead>
+    <thead><tr><th>str27</th><th>str3</th><th>str10</th><th>float64</th><th>str5</th></tr></thead>
+    <tr><td>iczgs3ygq_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>602.937317</td><td>F140W</td></tr>
+    <tr><td>iczgs3ygq_newdtype_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>602.937317</td><td>F140W</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
+    # Now let's extract the filename list from our filtered table into a python List object
+    filelist = filtered_table['file'].data
+    print(filelist)
+    
+    for filename in filelist:
+        print(filename)
+        # Do your analysis here
+
+
+.. parsed-literal::
+
+    ['iczgs3ygq_flt.fits' 'iczgs3ygq_newdtype_flt.fits']
+    iczgs3ygq_flt.fits
+    iczgs3ygq_newdtype_flt.fits
+
+
+
+
+Also available is the Astropy executable script fitsheader. Fitsheader
+can be run from the command line.
+
+.. code:: ipython3
+
+    # the "!" character tells the notebook to run this command as if it were in a terminal window
+    !fitsheader --help
+
+
+.. parsed-literal::
+
+    usage: fitsheader [-h] [-e HDU] [-k KEYWORD] [-t [FORMAT]] [-c]
+                      filename [filename ...]
+    
+    Print the header(s) of a FITS file. Optional arguments allow the desired
+    extension(s), keyword(s), and output format to be specified. Note that in the
+    case of a compressed image, the decompressed header is shown by default.
+    
+    positional arguments:
+      filename              path to one or more files; wildcards are supported
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -e HDU, --extension HDU
+                            specify the extension by name or number; this argument
+                            can be repeated to select multiple extensions
+      -k KEYWORD, --keyword KEYWORD
+                            specify a keyword; this argument can be repeated to
+                            select multiple keywords; also supports wildcards
+      -t [FORMAT], --table [FORMAT]
+                            print the header(s) in machine-readable table format;
+                            the default format is "ascii.fixed_width" (can be
+                            "ascii.csv", "ascii.html", "ascii.latex", "fits", etc)
+      -c, --compressed      for compressed image data, show the true header which
+                            describes the compression rather than the data
+
+
+.. code:: ipython3
+
+    # print out only the keyword names that match FILE* or NAXIS*
+    !fitsheader --keyword FILE* --keyword NAXIS* /eng/ssb/iraf_transition/test_data/hedit/*.fits
+
+
+.. parsed-literal::
+
+    # HDU 0 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    FILENAME= 'jczgx1ppq_flc.fits' / name of file                                   
+    FILETYPE= 'SCI      '          / type of data found in data file                
+    NAXIS   =                    0                                                  
+    
+    # HDU 1 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 2 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 3 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 4 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 5 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 6 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 7 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 8 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 9 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 10 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 11 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 12 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 13 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 14 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 15 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                  455 / length of dimension 1                          
+    NAXIS2  =                   14 / length of dimension 2                          
+    # HDU 0 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    FILENAME= 'jczgx1q1q_flc.fits' / name of file                                   
+    FILETYPE= 'SCI      '          / type of data found in data file                
+    NAXIS   =                    0                                                  
+    
+    # HDU 1 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 2 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 3 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 4 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 5 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 6 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2                                                  
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    
+    # HDU 7 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 8 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 9 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 10 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 11 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 12 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 13 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 14 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 15 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                  455 / length of dimension 1                          
+    NAXIS2  =                   14 / length of dimension 2                          
+
+
+.. code:: ipython3
+
+    # print out only the first extension and keyword names that match FILE* or NAXIS*
+    !fitsheader --extension 0 --keyword FILE* --keyword NAXIS* /eng/ssb/iraf_transition/test_data/hedit/*.fits
+
+
+.. parsed-literal::
+
+    # HDU 0 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    FILENAME= 'jczgx1ppq_flc.fits' / name of file                                   
+    FILETYPE= 'SCI      '          / type of data found in data file                
+    NAXIS   =                    0                                                  
+    # HDU 0 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    FILENAME= 'jczgx1q1q_flc.fits' / name of file                                   
+    FILETYPE= 'SCI      '          / type of data found in data file                
+    NAXIS   =                    0                                                  
+
 
 
 
@@ -173,30 +526,67 @@ for more details
     # Change these values to your desired data files
     test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
     test_data2 = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
-    output_data = '/eng/ssb/iraf_transition/test_data/imarith_out.fits'
+    output_data = 'imarith_out.fits'
+    output_data2 = 'imarith_new.fits'
     
-    # Open fits file
+    
+    # Open FITS file
     hdu1 = fits.open(test_data1)
     hdu2 = fits.open(test_data2)
     
-    # Here we add hdu2-ext1 to hdu1-ext1 by using the shortcute += operator
+    # Print information about the FITS file we opened
+    hdu1.info()
+    hdu2.info()
+    
+    # Here we add hdu2-ext1 to hdu1-ext1 by using the shortcut += operator
     hdu1[1].data += hdu2[1].data
     
     # If you are dividing and need to avoid zeros in the image use indexing
-    indx_zeros = [hdu2[4].data == 0]
-    indx_nonzeros = [hdu2[4].data != 0]
+    indx_zeros = hdu2[1].data == 0
+    indx_nonzeros = hdu2[1].data != 0
+    
     # Set this value as you would the divzero parameter in imarith
+    # Here we're working with the error arrays of the image
     set_zeros = 999.9
-    hdu1[4].data[indx_nonzeros] /= hdu2[4].data[indx_nonzeros]
-    hdu1[4].data[indx_zeros] = 999.9
+    hdu1[2].data[indx_nonzeros] /= hdu2[2].data[indx_nonzeros]
+    hdu1[2].data[indx_zeros] = 999.9
     
     # Save your new file
-    # The clobber argument tells the writeto method to overwrite if file already exists
-    hdu1.writeto(output_data, clobber=True)
+    # The overwrite argument tells the writeto method to overwrite if file already exists
+    hdu1.writeto(output_data, overwrite=True)
+    
+    # If you want to save you updated array to a new file with just the updated image array 
+    # we can repackage the extension into a new HDUList
+    image_array = hdu1[1].data
+    new_hdu = fits.PrimaryHDU(image_array)
+    new_hdu.writeto(output_data2, overwrite=True)
     
     # Close hdu files
     hdu1.close()
     hdu2.close()
+
+
+.. parsed-literal::
+
+    Filename: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     266   ()      
+      1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
+      2  ERR           1 ImageHDU        51   (1014, 1014)   float32   
+      3  DQ            1 ImageHDU        43   (1014, 1014)   int16   
+      4  SAMP          1 ImageHDU        37   (1014, 1014)   int16   
+      5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
+      6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
+    Filename: /eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     265   ()      
+      1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
+      2  ERR           1 ImageHDU        51   (1014, 1014)   float32   
+      3  DQ            1 ImageHDU        43   (1014, 1014)   int16   
+      4  SAMP          1 ImageHDU        37   (1014, 1014)   int16   
+      5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
+      6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
+
 
 
 
@@ -206,8 +596,8 @@ imcopy
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-Imcopy allows users to copy a fits image to a new file. We can
-accomplish this using ``astropy.io.fits`` by saving our fits file to a
+Imcopy allows users to copy a FITS image to a new file. We can
+accomplish this using ``astropy.io.fits`` by saving our FITS file to a
 new filename.
 
 Imcopy will also make a cutout of an image and save the cutout to a new
@@ -230,27 +620,27 @@ Simple example of a file copy
 
     # Change these values to your desired filenames
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
-    output_data = '/eng/ssb/iraf_transition/test_data/imcopy_out.fits'
+    output_data = 'imcopy_out.fits'
     
     hdulist = fits.open(test_data)
-    # The clobber argument tells the writeto method to overwrite if file already exists
+    # The overwrite argument tells the writeto method to overwrite if file already exists
     hdulist.writeto(output_data, overwrite=True)
     hdulist.close()
 
-Example using a new cutout, here we will take a 100x100 pixel cutout
-from all image extensions centered at x:200, y:300
+Example using a new cutout, here we will take a 50x50 pixel cutout from
+all image extensions centered at x:200, y:300
 
 .. code:: ipython3
 
     # Change these values to your desired filenames
     test_data = '/eng/ssb/iraf_transition/test_data/jcw505010_drz.fits'
-    output_data = '/eng/ssb/iraf_transition/test_data/imcopy_cutout_out.fits'
+    output_data = 'imcopy_cutout_out.fits'
     
     hdulist = fits.open(test_data)
     
     # Create iterable list of tuples to feed into Cutout2D, 
     # seperate list for extensions with wcs, as feeding the wcs 
-    # back into the fits file takes more work.
+    # back into the FITS file takes more work.
     ext_list = [1,2]
     for ext in ext_list:
         orig_wcs = wcs.WCS(hdulist[ext].header)
@@ -274,7 +664,7 @@ Imfunction will apply a function to the image pixel values in an image
 array. Imexpr gives you similiar functionality with the added capability
 to combine different images using a user created expression. We can
 accomplish this using the built in funcitonality of the `numpy
-library <http://docs.scipy.org/doc/numpy/reference/routines.math.html>`__
+library <http://docs.scipy.org/doc/numpy/reference/routines.math.html>`__.
 
 If there is a particular function you would like to apply to your image
 array that you cannot find in the ``numpy`` library you can use the
@@ -298,7 +688,7 @@ Example using exsisting numpy function:
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
-    output_data = '/eng/ssb/iraf_transition/test_data/imfunction_out.fits'
+    output_data = 'imfunction_out.fits'
     
     # Here we use the cosine function as an example
     hdu = fits.open(test_data)
@@ -309,7 +699,7 @@ Example using exsisting numpy function:
     hdu[1].data = np.cos(hdu[1].data)
     
     # Now save out to a new file, and close the original file, changes will
-    # not be applied to the oiginal fits file.
+    # not be applied to the oiginal FITS file.
     hdu.writeto(output_data, overwrite=True)
     hdu.close()
 
@@ -319,7 +709,7 @@ Example using user defined function and ``np.vectorize``:
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
-    output_data = '/eng/ssb/iraf_transition/test_data/imfunction2_out.fits'
+    output_data = 'imfunction2_out.fits'
     
     # Here we use the following custom function as an example
     def my_func(x):
@@ -328,14 +718,14 @@ Example using user defined function and ``np.vectorize``:
     # Now we open our file, and vectorize our function
     hdu = fits.open(test_data)
     sci = hdu[1].data
-    vcos = np.vectorize(my_func)
+    vector_func = np.vectorize(my_func)
     
     # When you call your new function, make sure to reassign the array to
     # the new values if the original function is not changing values in place
-    hdu[1].data = vcos(hdu[1].data)
+    hdu[1].data = vector_func(hdu[1].data)
     
     # Now save out to a new file, and close the original file, changes will
-    # not be applied to the oiginal fits file.
+    # not be applied to the oiginal FITS file.
     hdu.writeto(output_data, overwrite=True)
     hdu.close()
 
@@ -366,9 +756,11 @@ of images. Here we can use the ``astropy`` convenience function,
     test_data = glob.glob('/eng/ssb/iraf_transition/test_data/iczgs3y*')
     
     for filename in test_data:
-        # Pull the header from extension 1
+        # Pull the header from extension 1 using FITS convenience function.
+        # To access multiple header it's better to use the fits.open() function.
         head = fits.getheader(filename, ext=1)
-        print repr(head)
+        # Using repr function to format output
+        print(repr(head))
 
 
 .. parsed-literal::
@@ -804,7 +1196,7 @@ imhistogram
 any examples in this notebook**
 
 Imhistogram will plot a customized histogram of the provided image data.
-To make a histogram in Python we are going to use matplotlibs ``hist``
+To make a histogram in Python we are going to use Matplotlib's ``hist``
 function. See the ``hist``
 `documentation <http://matplotlib.org/api/pyplot_api.html>`__ for
 options to change the histogram type, scaling, bin sizes, and more.
@@ -826,18 +1218,23 @@ options to change the histogram type, scaling, bin sizes, and more.
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
     
-    # Pull out the first science array, we also need to flatten the data before sending it to hist
+    # Pull out the first science array, we also need to flatten the data to a 
+    # 1D array before sending it to hist
     sci1 = fits.getdata(test_data,ext=1)
     sci1f = sci1.flatten()
     
     # Now we can plot our histogram, using some of the optional keywords in hist
     # The hist function returns the values of the histogram bins (n), the edges
     # of the bins (obins), and the patches used to create the histogram
+    fig = plt.figure()
     n, obins, patches = plt.hist(sci1f,bins=100,range=(0,2))
+    
+    # Save resulting figure to png file
+    fig.savefig('hist.png')
 
 
 
-.. image:: images.imutil_files/images.imutil_48_0.png
+.. image:: images.imutil_files/images.imutil_58_0.png
 
 
 
@@ -848,9 +1245,10 @@ imreplace
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-We can use simple ``numpy`` array manipulation to replicate imreplace.
-For details on how to grow the boolean array for replacement see crgrow,
-or the `skimage.dilation
+Imreplace is used to replace array sections with a constant. We can use
+simple ``numpy`` array manipulation to replicate imreplace. For details
+on how to grow the boolean array for replacement see crgrow, or the
+`skimage.dilation
 documentation <http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?highlight=dilation#skimage.morphology.dilation>`__.
 
 .. code:: ipython3
@@ -865,23 +1263,61 @@ documentation <http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?h
 
     # Change these values to your desired data files
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    out_file = 'imreplace_out.fits'
     
-    # Pull out the first science array, make boolean mask with your requirements
+    # Pull out the first science array
     hdu = fits.open(test_data)
     sci1 = hdu[1].data
-    hdu.close()
-    mask1 = np.logical_and(sci1>0.5, sci1<0.6)
+    
+    print("cutout of array before replacements:")
+    print(sci1[50:55, 50:55])
+    
+    # Make boolean mask with your requirements, here we produce a boolean mask 
+    # where all array elements with values >0.5 and <0.6 are set to True.
+    mask1 = np.logical_and(sci1>0.8, sci1<0.82)
     
     # Use mask to replace values
-    sci1[mask1] = 999
+    sci1[mask1] = 99
     
-    # We can also use numpy where to pull out index numbers
-    mask2 = np.where(sci1 > 1000)
-    print mask2
+    print("\ncoutout of array after replacements:")
+    print(sci1[50:55, 50:55])
+    
+    # Take updated array and write out new FITS file
+    hdu[1].data = sci1
+    hdu.writeto(out_file, overwrite=True)
+    
+    # Close FITS file
+    hdu.close()
 
 
 .. parsed-literal::
 
+    cutout of array before replacements:
+    [[ 0.89118606  0.87640154  0.81239933  0.77495182  0.80048275]
+     [ 0.83939391  0.79715788  0.71130604  0.83452195  0.74553812]
+     [ 0.82984501  0.82536161  0.82937354  0.82661521  0.80760878]
+     [ 0.88277584  0.78050691  0.85906219  0.80846858  0.8092978 ]
+     [ 0.85532236  0.73028219  0.81455106  0.76300722  0.85437953]]
+    
+    coutout of array after replacements:
+    [[  0.89118606   0.87640154  99.           0.77495182  99.        ]
+     [  0.83939391   0.79715788   0.71130604   0.83452195   0.74553812]
+     [  0.82984501   0.82536161   0.82937354   0.82661521  99.        ]
+     [  0.88277584   0.78050691   0.85906219  99.          99.        ]
+     [  0.85532236   0.73028219  99.           0.76300722   0.85437953]]
+
+
+.. code:: ipython3
+
+    # We can also use numpy where to pull out index numbers
+    mask2 = np.where(sci1 > 1000)
+    print("Index values where sci1 is > 1,000")
+    print(mask2)
+
+
+.. parsed-literal::
+
+    Index values where sci1 is > 1,000
     (array([ 474,  474,  606,  607,  607,  607,  608,  608,  608,  608,  609,
             609,  609,  609,  610,  610,  610,  804,  804,  809,  809,  810,
             883,  883, 1002, 1013]), array([455, 456, 285, 284, 285, 286, 284, 285, 286, 287, 284, 285, 286,
@@ -896,7 +1332,7 @@ imslice
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-Imslice can take a 3-D datacube fits image and return multiple 2D images
+Imslice can take a 3-D datacube FITS image and return multiple 2D images
 sliced through the chosen dimension. Keep in mind for the python
 equivalent workflow that the header file from the original input image
 will be used for all output images, including WCS information. We will
@@ -905,6 +1341,9 @@ be using
 
 .. code:: ipython3
 
+    # Standard Imports
+    import numpy as np
+    
     # Astronomy Specific Imports
     from astropy.io import fits
 
@@ -912,26 +1351,46 @@ be using
 
     # Pull image data array and image header
     orig_hdu = fits.open('/eng/ssb/iraf_transition/test_data/imstack_out.fits')
+    
+    print("Here's the extensions in our input file:")
+    orig_hdu.info()
+    
     header1 = orig_hdu[0].header
     image1 = orig_hdu[0].data
     orig_hdu.close()
     
+    print("\noriginal array - the dimension order is listed " +
+          "in reverse order \nnow that we have read the array into a numpy array:")
+    print(image1.shape)
+    
     # Slice images easily by using numpy.split, which returns a list of the output arrays
+    # THen numpy.squeeze is used to remove the extra length one dimensions left over from
+    # numpy.split.
     arr_list = np.split(image1, 2)
-    print("final shape of a slice is:")
+    arr_list = np.squeeze(arr_list)
+    print("\nfinal shape of a slice is:")
     print(arr_list[0].shape)
     
-    # Now we can write this new array into a new fits files by packing it back into an HDU object
+    # Now we can write this new array into a new FITS files by packing it back into an HDU object
     hdu1 = fits.PrimaryHDU(arr_list[0],header1)
-    hdu1.writeto('/eng/ssb/iraf_transition/test_data/imslice_out1.fits', clobber=True)
+    hdu1.writeto('imslice_out1.fits', overwrite=True)
     hdu2 = fits.PrimaryHDU(arr_list[1],header1)
-    hdu2.writeto('/eng/ssb/iraf_transition/test_data/imslice_out2.fits', clobber=True)
+    hdu2.writeto('imslice_out2.fits', overwrite=True)
 
 
 .. parsed-literal::
 
+    Here's the extensions in our input file:
+    Filename: /eng/ssb/iraf_transition/test_data/imstack_out.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  SCI           1 PrimaryHDU     199   (4096, 2048, 2)   float32   
+    
+    original array - the dimension order is listed in reverse order 
+    now that we have read the array into a numpy array:
+    (2, 2048, 4096)
+    
     final shape of a slice is:
-    (1, 2048, 4096)
+    (2048, 4096)
 
 
 
@@ -942,8 +1401,8 @@ imstack
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-imstack can take multiple fits images and stack the data, writing out a
-new file where the fits data is 1-dimension higher then the input
+imstack can take multiple FITS images and stack the data, writing out a
+new file where the FITS data is 1-dimension higher then the input
 images. Here we show that manipulation using the ``astropy`` library and
 `numpy.stack <https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html#numpy.stack>`__.
 
@@ -957,7 +1416,7 @@ images. Here we show that manipulation using the ``astropy`` library and
 
 .. code:: ipython3
 
-    # Pull two image data arrays and image header
+    # Pull two image data arrays and an image header
     header1 = fits.getheader('/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits',ext=1)
     image1 = fits.getdata('/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits')
     image2 = fits.getdata('/eng/ssb/iraf_transition/test_data/jczgx1q1q_flc.fits')
@@ -967,9 +1426,9 @@ images. Here we show that manipulation using the ``astropy`` library and
     print("final shape is:")
     print(outstack.shape)
     
-    # Now we can write this new array into a new fits file by packing it back into an HDU object
+    # Now we can write this new array into a new FITS file by packing it back into an HDU object
     hdu = fits.PrimaryHDU(outstack,header1)
-    hdu.writeto('/eng/ssb/iraf_transition/test_data/imstack_out.fits', clobber=True)
+    hdu.writeto('imstack_out.fits', overwrite=True)
 
 
 .. parsed-literal::
@@ -990,10 +1449,14 @@ We will use the ``astropy.stats.sigma_clipped_stats`` function here,
 which has some wider capabilites then the imstatistics function. Please
 see the ``stats`` `package
 documentation <http://docs.astropy.org/en/stable/api/astropy.stats.sigma_clipped_stats.html>`__
-for details on the advanced usage .
+for details on the advanced usage. We also use some Numpy functions for
+additional statistics.
 
 .. code:: ipython3
 
+    # Standard Imports
+    import numpy as np
+    
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy import stats
@@ -1005,13 +1468,35 @@ for details on the advanced usage .
     sci1 = fits.getdata(test_data, ext=1)
     
     # The sigma_clipped_stats function returns the mean, median, and stddev respectively
-    output = stats.sigma_clipped_stats(sci1, sigma=2.0, iters=3)
-    print output
+    # To more closely replicate the IRAF version that is using n-1 in it's calculations
+    # we use the std_ddof parameter
+    output = stats.sigma_clipped_stats(sci1, sigma=3.0, iters=3, std_ddof=1)
+    print("mean, median, standard deviation:")
+    print(output)
+    
+    # To see the min and max of an array we can use numpy.min and numpy.max
+    array_min = np.min(sci1)
+    array_max = np.max(sci1)
+    print("\nmin, max")
+    print("{}, {}".format(array_min, array_max))
+    
+    # To find out how many pixels are greater then a particular value we can use numpy.where
+    where_result = np.where(sci1 > 1000)
+    count = len(where_result[0])
+    print("\nNumber of pixels above 1,000:")
+    print(count)
 
 
 .. parsed-literal::
 
-    (0.82121155347072006, 0.81694626808166504, 0.058198063937460652)
+    mean, median, standard deviation:
+    (0.82595410841884809, 0.81768394, 0.074634554991261454)
+    
+    min, max
+    -4007.712890625, 27569.6015625
+    
+    Number of pixels above 1,000:
+    26
 
 
 
@@ -1022,8 +1507,9 @@ imsum
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
+Imsum is used to compute the sum, average, or mean of a set of images.
 We will be using the ``ccdproc`` ``Combiner`` class here. Keep in mind
-that the original fits header is not retained in the ``CCDData`` object.
+that the original FITS header is not retained in the ``CCDData`` object.
 Please see the `ccdproc
 documentation <http://ccdproc.readthedocs.io/en/latest/ccdproc/image_combination.html>`__
 for more details.
@@ -1042,7 +1528,7 @@ for more details.
     test_data2 = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
     
     # First we need to pull out the science arrays to create CCDData objects
-    # Our acutal unit is electrons/sec, this is not accepted by the current
+    # Our actual unit is electrons/sec, this is not accepted by the current
     # set of units
     cdata1 = CCDData.read(test_data1, hdu=1, unit=units.electron/units.s)
     cdata2 = cdata1.copy()
@@ -1056,13 +1542,13 @@ for more details.
     
     # And finally to combine...
     final_combine = combiner.average_combine()
-    print final_combine.data
+    print(final_combine.data)
 
 
 .. parsed-literal::
 
-    INFO: using the unit electron / s passed to the FITS reader instead of the unit ELECTRONS/S in the FITS file. [ccdproc.ccddata]
-    INFO: using the unit electron / s passed to the FITS reader instead of the unit ELECTRONS/S in the FITS file. [ccdproc.ccddata]
+    INFO: using the unit electron / s passed to the FITS reader instead of the unit ELECTRONS/S in the FITS file. [astropy.nddata.ccddata]
+    INFO: using the unit electron / s passed to the FITS reader instead of the unit ELECTRONS/S in the FITS file. [astropy.nddata.ccddata]
     [[  0.87720111   0.82106587   0.79521415 ...,   3.87308204   7.41545987
         9.01969481]
      [  0.89028609   0.7884455    0.8240625  ...,   0.86163342   4.53510189
@@ -1086,11 +1572,13 @@ listpixels
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-listpixels was used to list an indexed section of a FITs data array.
-This is easy to do using ``astropy``, but keep in mind that Python
-indexs from zero, and with the y-axis leading, i.e. [y,x]. You also want
-to end the cut with the pixel *after* the end pixel. So to get 1-10 in x
-and 5-15 in y, you will index like so: array[4:15,0:10]
+Listpixels was used to list an indexed section of a FITS data array.
+This is easy to do using ``astropy``, but **keep in mind that Python
+indexes from zero, and with the y-axis leading, i.e. [y,x]**. You also
+want to end the cut with the pixel *after* the end pixel. So to get 1-10
+in x and 5-15 in y, you will index like so: array[4:15,0:10]. To see
+listpixels results for more then one file, you will need to loop over a
+list of files, see information about Python loops `here <>`__.
 
 .. code:: ipython3
 
@@ -1099,14 +1587,15 @@ and 5-15 in y, you will index like so: array[4:15,0:10]
 
 .. code:: ipython3
 
-    # Change these values to your desired data files
+    # Change this value to your desired data files
     test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
     
-    # To quickly pull out the data array you can use the astropy convience fucntion
+    # To quickly pull out the data array you can use the astropy convenience function
     data_arr = fits.getdata(test_data1,ext=1)
     
-    # Now we can index the array as desired, we're cutting out 5 in y, and 2 in x
-    print data_arr[0:5,0:2]
+    # Now we can index the array as desired
+    # We're cutting out 5 in y, and 2 in x
+    print(data_arr[0:5,0:2])
 
 
 .. parsed-literal::

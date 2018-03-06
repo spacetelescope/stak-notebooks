@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 Observatory is the only task on the top noao module level. See the
 Python example below.
 
@@ -29,12 +35,12 @@ and
 `here <http://docs.astropy.org/en/stable/api/astropy.coordinates.EarthLocation.html#astropy.coordinates.EarthLocation>`__
 for more information.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.coordinates import EarthLocation
 
-.. code:: ipython2
+.. code:: ipython3
 
     EarthLocation.of_site('Apache Point Observatory')
 

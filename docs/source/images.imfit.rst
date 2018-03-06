@@ -13,9 +13,15 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 The fitting and replacement functionality of images.imfit can be
-replaced using tools avialable in
-`Astropy <http://docs.astropy.org/en/stable/modeling/>`__, and
+replaced using tools available in
+`Astropy <http://docs.astropy.org/en/stable/modeling/>`__ and
 `Scipy <https://docs.scipy.org/doc/scipy/reference/interpolate.html>`__.
 Please see the linked doc pages for more details. These fitting
 functions have a lot more options and function types then what was
@@ -38,7 +44,7 @@ Contents:
 -  `fit1d-lineclean <#fit1d-lineclean>`__
 -  `imsurfit <#imsurfit>`__
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Temporarily change default colormap to viridis
     import matplotlib.pyplot as plt
@@ -62,10 +68,10 @@ You'll find many more models defined in the ``astropy.models`` library
 `here <http://docs.astropy.org/en/stable/modeling/#module-astropy.modeling>`__
 
 Below we show one example using a Legendre 1D fit, and another example
-using a linar spine. For the linear spline example we will go over an
+using a linear spine. For the linear spline example we will go over an
 implementation of lineclean.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
@@ -78,7 +84,7 @@ implementation of lineclean.
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Fitting - Legendre1D
     # This example is taken in part from examples on the Astropy Modeling documentation
@@ -100,19 +106,24 @@ implementation of lineclean.
     plt.legend(loc=2)
 
 
+.. parsed-literal::
+
+    WARNING: Model is linear in parameters; consider using linear fitting methods. [astropy.modeling.fitting]
+
+
 
 
 .. parsed-literal::
 
-    <matplotlib.legend.Legend at 0x116319110>
+    <matplotlib.legend.Legend at 0x11a7a4908>
 
 
 
 
-.. image:: images.imfit_files/images.imfit_10_1.png
+.. image:: images.imfit_files/images.imfit_10_2.png
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Fitting - Spline1
     # This example is taken in part from examples on the Astropy Modeling documentation
@@ -136,7 +147,7 @@ implementation of lineclean.
 
 .. parsed-literal::
 
-    <matplotlib.legend.Legend at 0x11d96c110>
+    <matplotlib.legend.Legend at 0x11a889b38>
 
 
 
@@ -144,9 +155,9 @@ implementation of lineclean.
 .. image:: images.imfit_files/images.imfit_11_1.png
 
 
-.. code:: ipython2
+.. code:: ipython3
 
-    # Value Replacement - Spline 1
+    # Fitting and replacement of outlier values - Spline 1
     
     # Fit array
     fit_data = spl1(x)
@@ -157,7 +168,7 @@ implementation of lineclean.
     boolean_array = [np.absolute(residuals) > sigma]
     y[boolean_array] = fit_data[boolean_array]
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Plot solution
     plt.plot(x, y, 'ko', label='Data')
@@ -169,7 +180,7 @@ implementation of lineclean.
 
 .. parsed-literal::
 
-    <matplotlib.legend.Legend at 0x11dc43a10>
+    <matplotlib.legend.Legend at 0x11a9950f0>
 
 
 
@@ -191,7 +202,7 @@ shown above in the `lineclean <#fit1d>`__ example. We use the
 ``Polynomial2D`` ``astropy.modeling`` example here to showcase the usage
 of models not found in this IRAF library.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
@@ -203,7 +214,7 @@ of models not found in this IRAF library.
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Fitting - Polynomial2D
     # This example is taken from the Astropy Modeling documentation
@@ -211,7 +222,7 @@ of models not found in this IRAF library.
     # Generate fake data
     np.random.seed(0)
     y, x = np.mgrid[:128, :128]
-    z = 2. * x ** 2 - 0.5 * x ** 2 + 1.5 * x * y - 1.
+    z = 2. * x ** 2 - 0.5 * y ** 2 + 1.5 * x * y - 1.
     z += np.random.normal(0., 0.1, z.shape) * 50000.
     
     # Fit the data using astropy.modeling
@@ -234,16 +245,21 @@ of models not found in this IRAF library.
     plt.title("Residual")
 
 
+.. parsed-literal::
+
+    WARNING: Model is linear in parameters; consider using linear fitting methods. [astropy.modeling.fitting]
+
+
 
 
 .. parsed-literal::
 
-    <matplotlib.text.Text at 0x101ef5a50>
+    <matplotlib.text.Text at 0x119e94ac8>
 
 
 
 
-.. image:: images.imfit_files/images.imfit_18_1.png
+.. image:: images.imfit_files/images.imfit_18_2.png
 
 
 

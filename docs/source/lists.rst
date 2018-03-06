@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 The simple tasks in this package are already covered by ``Astropy`` or
 other Python built-ins
 
@@ -30,18 +36,18 @@ lintran
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-The lintran task will linear transfrom a list of coordinates. There are
+The lintran task will linear transform a list of coordinates. There are
 various tasks in the `numpy linear algebra
 package <https://docs.scipy.org/doc/numpy/reference/routines.linalg.html>`__
-that can used to achieve this in Python. Below is a simple example of a
-90 degree rotation.
+that can be used to achieve this in Python. Below is a simple example of
+a 90 degree rotation.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
 
-.. code:: ipython2
+.. code:: ipython3
 
     # 90 degree rotation counterclockwise
     x_points = np.array([1,4,5,7,3])
@@ -53,13 +59,13 @@ that can used to achieve this in Python. Below is a simple example of a
     new_points = np.linalg.inv(a).dot(points)
     
     print("new x values: {}".format(new_points[0]))
-    print("new xyvalues: {}".format(new_points[1]))
+    print("new y values: {}".format(new_points[1]))
 
 
 .. parsed-literal::
 
     new x values: [ 4.  5.  2.  2.  4.]
-    new xyvalues: [-1. -4. -5. -7. -3.]
+    new y values: [-1. -4. -5. -7. -3.]
 
 
 
@@ -75,12 +81,12 @@ raverage computes the running average and standard deviation for a
 in numpy (source:
 http://www.rigtorp.se/2011/01/01/rolling-statistics-numpy.html).
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
 
-.. code:: ipython2
+.. code:: ipython3
 
     # code goes here
     def rolling_window(a, window):
@@ -129,8 +135,8 @@ table-unique
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-The table task task a list of text and transfers it to a table. We will
-show an example of this using `Astropy
+The table task a list of text and transfers it to a table. We will show
+an example of this using `Astropy
 Tables <http://docs.astropy.org/en/stable/table/>`__ and a text file
 with return seperated values. There are various parameters for reading
 in ascii files, documentation `found
@@ -140,12 +146,12 @@ apply a unique requirement, and save the list back out to a file, as in
 the IRAF task unique. More information on going to and from ``Astropy``
 ``Tables`` see:
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table, unique
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Read text file into table
     text_file = '/eng/ssb/iraf_transition/test_data/table.txt'
@@ -167,14 +173,14 @@ the IRAF task unique. More information on going to and from ``Astropy``
     star6
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Run unique and print table
     out_table = unique(tab)
     out_table.pprint()
     
     # Save results to new text file
-    out_table.write("/eng/ssb/iraf_transition/test_data/out_table.txt",format='ascii')
+    out_table.write("out_table.txt",format='ascii')
 
 
 .. parsed-literal::
@@ -203,4 +209,3 @@ Not Replacing
 -  tokens - deprecated
 -  words - deprecated, see Python's built in `file
    reader <https://docs.python.org/3.6/tutorial/inputoutput.html>`__
-

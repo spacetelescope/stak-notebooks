@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 Many of the table tools in this package are easily accesible with the
 `Astropy Table <http://docs.astropy.org/en/stable/table/>`__ object.
 Here we will show the ``Astropy`` ``Table`` equiavlent of the ttools
@@ -31,7 +37,6 @@ Contents:
 -  `tdiffer <#tdiffer>`__
 -  `texpand <#texpand>`__
 -  `thhistogram <#thistogram>`__
--  `thselect <#thselect>`__
 -  `tiimage-titable-tximage-txtable <#tiimage-titable-tximage-txtable>`__
 -  `tinfo-tlcol-tprint <#tinfo-tlcol-tprint>`__
 -  `tintegrate <#tintegrate>`__
@@ -43,7 +48,7 @@ Contents:
 -  `tsort <#tsort>`__
 -  `tstat <#tstat>`__
 
-.. code:: ipython2
+.. code:: ipython3
 
     #Here we import the example table we will be using from a text file:
     from astropy.table import Table
@@ -58,7 +63,7 @@ Contents:
 .. raw:: html
 
     &lt;Table length=5&gt;
-    <table id="table4567453456" class="table-striped table-bordered table-condensed">
+    <table id="table4540188768" class="table-striped table-bordered table-condensed">
     <thead><tr><th>Name</th><th>Animal</th><th>age</th><th>weight(lbs)</th></tr></thead>
     <thead><tr><th>str7</th><th>str9</th><th>int64</th><th>float64</th></tr></thead>
     <tr><td>Fluffy</td><td>cat</td><td>5</td><td>6.5</td></tr>
@@ -86,7 +91,7 @@ more details see the `Table construction
 documentation <http://docs.astropy.org/en/stable/table/construct_table.html>`__.
 Tabim is used to copy a column back to a table, show below.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
@@ -94,7 +99,7 @@ Tabim is used to copy a column back to a table, show below.
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Create test array and flatten
     image_array=np.random.rand(6,6)
@@ -158,12 +163,12 @@ we show the ``Astropy Table`` equivalent using indexing. See the
 Table <http://docs.astropy.org/en/stable/table/modify_table.html>`__
 documentation for more details.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     ex_table['weight(lbs)'][4]=1.5
     ex_table
@@ -201,12 +206,12 @@ file is read into a table, the header information is saved in the meta
 data as an ``Ordered Dictionary``. Below we show you how to pull values
 from the table data, and meta data.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Pulling values out of a table
     column=ex_table['Name']
@@ -230,7 +235,7 @@ from the table data, and meta data.
     guineapig
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Pulling values out of the meta data
     fits_file = '/eng/ssb/iraf_transition/test_data/08b18470j_imp.fits'
@@ -257,7 +262,7 @@ Taextract and tainsert are used to copy scalar columns to array entries,
 and vice versa. We will show how to store an array in an
 ``Astropy Table`` from a ``list`` of scalars.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
@@ -265,7 +270,7 @@ and vice versa. We will show how to store an array in an
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     scalar_list = [4,5,6,7,8,9]
     
@@ -302,12 +307,12 @@ Tcalc is used to perform arithmetic operations on table columns. This
 can be done automaticaly with any compatible data types. A new
 ``Column`` object will be returned.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     out = ex_table['age'] + ex_table['weight(lbs)']
     out
@@ -340,13 +345,13 @@ tchcol is used to change the column name, format or units. This can be
 done easily with ``Astropy Tables``, and the `Astropy
 Units <http://docs.astropy.org/en/stable/units/>`__ module.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
     import astropy.units as u
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Set filename, read in file
     filename = "/eng/ssb/iraf_transition/test_data/table2.txt"
@@ -422,23 +427,23 @@ documentation. For more details on ``Table`` object copying see the
 reference <http://docs.astropy.org/en/stable/table/construct_table.html#copy-versus-reference>`__
 doc section.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Make a copy of our example table
     tab_copy = ex_table.copy()
     
     # Save as ASCII
-    outfile = '/eng/ssb/iraf_transition/test_data/copy_table.txt'
-    tab_copy.write(outfile, format='ascii')
+    outfile = 'copy_table.txt'
+    tab_copy.write(outfile, format='ascii', overwrite=True)
     
     # Same method call to write to FITS
-    outfits = '/eng/ssb/iraf_transition/test_data/copy_table.fits'
-    tab_copy.write(outfits)
+    outfits = 'copy_table.fits'
+    tab_copy.write(outfits, overwrite=True)
 
 
 
@@ -463,12 +468,12 @@ provided rules. This can be done by building a customized loop over the
 input table. Below we show a simple example, but this can be easily
 modified to fit the users needs.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # change a animal type of 'cat' or 'snake' to guineapig
     new_table = ex_table.copy()
@@ -507,7 +512,7 @@ and a `Numpy
 histogram <https://docs.scipy.org/doc/numpy/reference/generated/numpy.histogram.html>`__
 available for generating the histogram data.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
@@ -516,7 +521,7 @@ available for generating the histogram data.
     import matplotlib.pyplot as plt
     %matplotlib inline
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Using the weight column of our example table
     n, bins, patches = plt.hist(ex_table['weight(lbs)'].data)
@@ -530,35 +535,6 @@ available for generating the histogram data.
 .. image:: tables.ttools_files/tables.ttools_54_0.png
 
 
-
-
-thselect
---------
-
-**Please review the** `Notes <#notes>`__ **section above before running
-any examples in this notebook**
-
-Thselect, which selects table keywords satisfying an expression, can be
-replicated using `Python boolean
-expressions <https://docs.python.org/3.6/library/stdtypes.html>`__ and
-the built in row iterator in ``Astropy Tables``.
-
-.. code:: ipython2
-
-    # Astronomy Specific Imports
-    from astropy.table import Table
-
-.. code:: ipython2
-
-    # Iterate over the rows, check for name and age, print animal if found
-    for row in ex_table:
-        if row['Name'] == 'Fluffy' and row['age'] == 5:
-            print(row['Animal'])
-
-
-.. parsed-literal::
-
-    cat
 
 
 
@@ -576,7 +552,7 @@ show a short example of storing a 3-D array in an ``Astropy`` Table. The
 rest of the functionality is the same as the general table
 funcitonality.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
@@ -584,7 +560,7 @@ funcitonality.
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Storing a 2-D arrays in one column of a table
     arr1 = np.random.rand(60,90)
@@ -636,12 +612,12 @@ any examples in this notebook**
 Tinfo, tlcol and tprint were all used to display information about the
 table. Below we show the ``Astropy Table`` equivalents.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # For tinfo and tlcol
     print(ex_table.info)
@@ -659,7 +635,7 @@ table. Below we show the ``Astropy Table`` equivalents.
     
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # For tprint
     ex_table.pprint()
@@ -690,7 +666,7 @@ function <https://docs.scipy.org/doc/numpy/reference/generated/numpy.trapz.html>
 As we have shown how to extract an array from a Table in various other
 tasks in this notebook we will only cover the integration step here.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
@@ -698,7 +674,7 @@ tasks in this notebook we will only cover the integration step here.
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Setup array, here you would pull from a table
     x = [1, 2, 3, 4, 6]
@@ -727,12 +703,12 @@ package, see `join docs
 here <http://docs.astropy.org/en/stable/table/operations.html#join>`__
 for more details. We take the examples shown here from the Astropy docs.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table, join
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Setup tables
     optical = Table.read("""name    obs_date    mag_b  mag_v
@@ -744,7 +720,7 @@ for more details. We take the examples shown here from the Astropy docs.
                             M31     1999-01-05  43.1
                             M82     2012-10-29  45.0""", format='ascii')
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Default inner join, default key column to set of columns that are common to both tables.
     opt_xray = join(optical, xray)
@@ -758,7 +734,7 @@ for more details. We take the examples shown here from the Astropy docs.
      M82 2012-10-29  16.2  15.2  45.0
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Left join
     print(join(optical, xray, join_type='left'))
@@ -773,7 +749,7 @@ for more details. We take the examples shown here from the Astropy docs.
      M82 2012-10-29  16.2  15.2  45.0
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Right join, with only name field as key
     print(join(optical, xray, join_type='right', keys='name'))
@@ -788,7 +764,7 @@ for more details. We take the examples shown here from the Astropy docs.
     NGC3516         --    --    -- 2011-11-11  42.1
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Outer join
     print(join(optical, xray, join_type='outer'))
@@ -820,14 +796,14 @@ of Astropy. This example is taken from the `Coordinates
 notebook <http://www.astropy.org/astropy-tutorials/Coordinates.html>`__,
 see the notebook for more details.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
     from astropy.coordinates import SkyCoord
     from astropy import units as u
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Open table files
     file1 = '/eng/ssb/iraf_transition/test_data/HCG7_SDSS_photo.dat'
@@ -854,12 +830,12 @@ tasks <http://docs.astropy.org/en/stable/table/operations.html>`__ for
 this, ``vstack`` and ``hstack``. We take these examples from the Astropy
 table docs.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table, vstack, hstack
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Setup tables
     obs1 = Table.read("""name    obs_date    mag_b  logLx
@@ -888,7 +864,7 @@ table docs.
         M82 2012-10-30    --  45.0
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Setup tables
     t1 = Table.read("""a   b    c
@@ -944,12 +920,12 @@ method <http://docs.astropy.org/en/stable/table/operations.html#filtering>`__,
 but the user will still need to write a custom filtering function to
 provide to ``filter``.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # For adding rows we give the new table an initial column setup, 
     # copied from the original table through the dtype keyword
@@ -968,7 +944,7 @@ provide to ``filter``.
      Jhope  snake   5         1.5
 
 
-.. code:: ipython2
+.. code:: ipython3
 
     # For adding columns we start with an empty new table
     table2 = Table()
@@ -1003,7 +979,7 @@ method <http://docs.astropy.org/en/stable/table/modify_table.html>`__.
 You can even sort by more then one column. Sorting is inplace so in this
 example we make a copy of the table first.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
@@ -1011,7 +987,7 @@ example we make a copy of the table first.
     # Astronomy Specific imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # sorting
     sorted_table = ex_table.copy()
@@ -1042,7 +1018,7 @@ tstat gives you the mean, standard deviation, minimum and maximum of a
 column. This can be done by feeding the desired columns into standard
 ``Numpy`` and built-in Python functions.
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Standard Imports
     import numpy as np
@@ -1050,7 +1026,7 @@ column. This can be done by feeding the desired columns into standard
     # Astronomy Specific Imports
     from astropy.table import Table
 
-.. code:: ipython2
+.. code:: ipython3
 
     # Mean
     mean = np.mean(ex_table['weight(lbs)'])
@@ -1092,7 +1068,7 @@ Not Replacing
    See `Astropy FITS <http://docs.astropy.org/en/stable/io/fits/>`__
    documentation.
 -  keyselect - Copy selected image header keywords to sdas table. See
-   **images.imtuil**
+   **images.imutil**
 -  parkey - Put an IRAF parameter into an image or table header keyword.
    See `Astropy FITS <http://docs.astropy.org/en/stable/io/fits/>`__
    documentation.
@@ -1113,7 +1089,8 @@ Not Replacing
    Tables <http://docs.astropy.org/en/stable/table/index.html>`__
    documentation or `partab <#partab>`__.
 -  thedit - Edit or print table header keywords. See
-   `tabpar <#tabpar>`__.
+   **images.imutil.hedit**
+-  thselect - Print table keyword values. See **images.imutil.hselect**
 -  tlinear - Use linear regression to fit one or two table columns. See
    **images.imfit.fit1d**
 -  tproduct - Form the Cartesian product of two tables. See

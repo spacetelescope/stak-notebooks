@@ -13,6 +13,12 @@ Notes
 page <https://github.com/spacetelescope/stak>`__. **We encourage and
 appreciate user feedback.**
 
+**Most of these notebooks rely on basic knowledge of the Astropy FITS
+I/O module. If you are unfamiliar with this module please see the**
+`Astropy FITS I/O user
+documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
+using this documentation**.
+
 The nebular package has been replaced in Python by the PyNeb package,
 documentation can be found `here <http://pythonhosted.org/PyNeb/>`__,
 with a `homepage here <http://www.iac.es/proyecto/PyNeb/>`__. In this
