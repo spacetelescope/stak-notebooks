@@ -85,8 +85,9 @@ for more information. More kernel shapes are also listed on this page.
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
     out_file = 'crgrow.fits'
     
-    # Read in your fits file, when using a fits file, the byteswap call is required to
-    # make sure your array data type is correct when the dilation function is used.
+    # Read in your fits file, when using some fits file, the byteswap call is required to
+    # make sure your array data type is correct when the dilation function is used. This
+    # may be due to a bug in the dilation funciton.
     # For this example we will work with the 3rd extensions, the DQ array
     hdu = fits.open(test_data,mode='update')
     hdu.info()

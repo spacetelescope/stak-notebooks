@@ -50,12 +50,12 @@ hdiff
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-The hdiff task will take two FITS headers. This functionality has been
-replaced and improved upon in ``astropy`` with the
-``astropy.io.fits.Differs`` class, which can be easily called with the
-`printdiff convenience
+The hdiff task will take two FITS headers and report the differences
+between them. This functionality has been replaced and improved upon in
+``astropy`` with the ``astropy.io.fits.Differs`` class, which can be
+easily called with the `printdiff convenience
 function <http://docs.astropy.org/en/stable/io/fits/api/files.html#printdiff>`__.
-For more detais on a more advanced differ result using
+For more details on a more advanced differ result using
 ``astropy.io.fits.Differs`` directly, see the `API
 doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
 
@@ -449,11 +449,9 @@ stfhistory
 any examples in this notebook**
 
 The stfhistory task will read history information from a text file and
-adds it to an image header. Here we will show how to do this with a FITS
-file using Python's build in i/o functionality and the
+add it to an image header. Here we will show how to do this with a FITS
+file using Python's built in i/o functionality and the
 ``astropy.io.fits`` package.
-
-**check, do we need to trim newlines?**
 
 .. code:: ipython3
 
@@ -468,15 +466,16 @@ file using Python's build in i/o functionality and the
     # open our text file and fits file objects, we're going to make a copy of a fits file, and edit the copy
     my_file = open('/eng/ssb/iraf_transition/test_data/history_info.txt', 'r')
     shutil.copyfile('/eng/ssb/iraf_transition/test_data/stfhist.fits','stfhist_copy.fits')
-    test_data = fits.open('/eng/ssb/iraf_transition/test_data/stfhist.fits', mode='append')
+    test_data = fits.open('stfhist_copy.fits', mode='update')
     
     # loop through lines in text file and write to fits file
     # here we add the HISTORY lines to the zeroth header
     for line in my_file:
         test_data[0].header.add_history(line.strip('\n'))
         
-    # make sure to close your fits file after the edits are done
+    # make sure to close your files after the edits are done
     test_data.close()
+    my_file.close()
 
 
 

@@ -186,6 +186,9 @@ exist.
 hselect
 -------
 
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
+
 The hselect task allows users to search for keyword values in the FITS
 headers. This functionality has been replaced by the `CCDProc
 ImageFileCollection
@@ -508,7 +511,10 @@ any examples in this notebook**
 Imarith and imdivide both provide functionality to apply basic operators
 to whole image arrays. This task can be achieved with basic
 ``astropy.io.fits`` functionality along with ``numpy`` array
-functionality.
+functionality. We show a few examples below. In the first code cell we
+adding and dividing two image arrays together. In the second code cell
+we show how to use a data quality array to decide which image array
+values to replace with zero.
 
 The basic operands (``+``,\ ``-``,\ ``/``,\ ``*``) can all be used with
 an assignment operator in python (``+=``,\ ``-=``,\ ``/=``,\ ``*=``).
@@ -587,6 +593,33 @@ for more details
       5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
       6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
 
+
+.. code:: ipython3
+
+    # Here we show an example of using an HST DQ array to
+    # replace only certain values with zero in an image array
+    
+    # Change these values to your desired data files
+    test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    output_file = 'iczgs3ygq_updated.fits'
+    
+    # Open FITS file
+    hdulist = fits.open(test_data1)
+    
+    # First we should use the DQ array to make a boolean mask
+    DQ_mask = hdulist[3].data > 16384
+    
+    # Now we can use the mask to replace values in the image array
+    # with 0.
+    hdulist[1].data[DQ_mask] = 0
+    
+    # Now we can save out the edited FITS to a new file
+    hdulist.writeto(output_file)
+    
+    # And finally, close the original FITS file
+    # The orignially file will not be updated since we did not
+    # open the file in 'update' mode
+    hdulist.close()
 
 
 
@@ -739,7 +772,10 @@ any examples in this notebook**
 
 The imheader task allows the user to list header parameters for a list
 of images. Here we can use the ``astropy`` convenience function,
-``fits.getheader()``
+``fits.getheader()``. We also show in this example how to save a header
+to a text file, see the `Python file I/O
+documentation <https://docs.python.org/3/tutorial/inputoutput.html>`__
+for more details.
 
 .. code:: ipython3
 
@@ -754,13 +790,20 @@ of images. Here we can use the ``astropy`` convenience function,
 
     # Change these values to your desired data files, glob will capture all wildcard matches
     test_data = glob.glob('/eng/ssb/iraf_transition/test_data/iczgs3y*')
+    out_text = 'imheader_out.txt'
     
     for filename in test_data:
         # Pull the header from extension 1 using FITS convenience function.
         # To access multiple header it's better to use the fits.open() function.
         head = fits.getheader(filename, ext=1)
+        
         # Using repr function to format output
         print(repr(head))
+        
+        # Save header to text file
+        with open(out_text, mode='a') as out_file:
+            out_file.write(repr(head))
+            out_file.write('\n\n')
 
 
 .. parsed-literal::
@@ -1234,7 +1277,7 @@ options to change the histogram type, scaling, bin sizes, and more.
 
 
 
-.. image:: images.imutil_files/images.imutil_58_0.png
+.. image:: images.imutil_files/images.imutil_59_0.png
 
 
 
@@ -1578,7 +1621,8 @@ indexes from zero, and with the y-axis leading, i.e. [y,x]**. You also
 want to end the cut with the pixel *after* the end pixel. So to get 1-10
 in x and 5-15 in y, you will index like so: array[4:15,0:10]. To see
 listpixels results for more then one file, you will need to loop over a
-list of files, see information about Python loops `here <>`__.
+list of files, see information about Python loops
+`here <http://www.pythonforbeginners.com/loops/for-while-and-nested-loops-in-python>`__.
 
 .. code:: ipython3
 

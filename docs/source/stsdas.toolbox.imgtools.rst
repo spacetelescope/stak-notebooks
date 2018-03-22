@@ -95,11 +95,11 @@ images with ``Astropy.io.fits``. Below we'll show a quick array example.
 .. code:: ipython3
 
     # generate test arrays
-    my_array = np.random.rand(7,7)
-    ones = np.array(([1,1,1],[1,1,1],[1,1,1]))
+    my_array = np.random.rand(7,5)
+    ones = np.array(([1,1],[1,1]))
     
     # replace middle 3x3 square with ones
-    my_array[2:5,2:5] = ones
+    my_array[2:4,2:4] = ones
     
     # Print result
     print(my_array)
@@ -107,20 +107,13 @@ images with ``Astropy.io.fits``. Below we'll show a quick array example.
 
 .. parsed-literal::
 
-    [[ 0.23716783  0.49467955  0.17823965  0.17247774  0.39261896  0.63899393
-       0.1590178 ]
-     [ 0.29311263  0.89693848  0.85860996  0.78426103  0.79732931  0.42044396
-       0.18684822]
-     [ 0.48983825  0.34300706  1.          1.          1.          0.31296056
-       0.2697361 ]
-     [ 0.30018196  0.00991694  1.          1.          1.          0.17958182
-       0.90966563]
-     [ 0.89446453  0.74249067  1.          1.          1.          0.23503997
-       0.73016154]
-     [ 0.2939247   0.71674139  0.99701222  0.24283608  0.14886197  0.61169257
-       0.25279554]
-     [ 0.65994208  0.7224029   0.76381896  0.68119012  0.77388175  0.22266843
-       0.77680789]]
+    [[ 0.06888833  0.15088263  0.00241     0.09282496  0.07325408]
+     [ 0.78665832  0.3402431   0.5265134   0.46253075  0.54305974]
+     [ 0.63473001  0.92986634  1.          1.          0.0904689 ]
+     [ 0.2887482   0.50178461  1.          1.          0.78550679]
+     [ 0.07945175  0.12885675  0.06588469  0.63534732  0.62024358]
+     [ 0.53344071  0.2852475   0.03736071  0.30043438  0.97523821]
+     [ 0.10331126  0.52996828  0.51318396  0.47988347  0.7098808 ]]
 
 
 
@@ -147,16 +140,33 @@ show an example using ``numpy.average``.
 .. code:: ipython3
 
     # build random test array
-    my_array = np.random.rand(10,10,3)
+    my_array = np.random.rand(5,4,3)
     
     # reduce third dimension down
     new_array = np.average(my_array, axis=2)
     print(new_array.shape)
+    print(new_array)
+    
+    # reduce second dimension down
+    new_array_2 = np.average(my_array, axis=1)
+    print(new_array_2.shape)
+    print(new_array_2)
 
 
 .. parsed-literal::
 
-    (10, 10)
+    (5, 4)
+    [[ 0.60660306  0.55628564  0.79297796  0.73016308]
+     [ 0.48911929  0.36071454  0.6167648   0.4261005 ]
+     [ 0.47187441  0.21748297  0.92223167  0.64068855]
+     [ 0.14900289  0.70091688  0.51759779  0.29799824]
+     [ 0.85235487  0.79360714  0.60374945  0.40032384]]
+    (5, 3)
+    [[ 0.70389997  0.59038403  0.72023831]
+     [ 0.4937127   0.44684555  0.47896609]
+     [ 0.43435416  0.5368765   0.71797754]
+     [ 0.45942245  0.4114324   0.37828199]
+     [ 0.64567646  0.51639255  0.82545747]]
 
 
 
@@ -169,7 +179,9 @@ any examples in this notebook**
 
 The mkgauss funtionality has been replicated in the Photutils package
 with
-`photutils.datasets.make\_gaussian\_sources <http://photutils.readthedocs.io/en/stable/api/photutils.datasets.make_gaussian_sources.html>`__.
+`photutils.datasets.make\_random\_gaussians\_table <http://photutils.readthedocs.io/en/stable/api/photutils.datasets.make_random_gaussians_table.html#photutils.datasets.make_random_gaussians_table>`__
+and
+`photutils.datasets.make\_gaussian\_sources\_image <http://photutils.readthedocs.io/en/stable/api/photutils.datasets.make_gaussian_sources_image.html#photutils.datasets.make_gaussian_sources_image>`__.
 
 
 
@@ -180,9 +192,9 @@ pixlocate
 any examples in this notebook**
 
 Pixlocate is used to print positions matching a certain value condition.
-This is replicated with the
-`numpy.where <https://docs.scipy.org/doc/numpy/reference/generated/numpy.where.html>`__
-function.
+This is replicated with the ``numpy.where`` function. Please see the
+`documentation <(https://docs.scipy.org/doc/numpy/reference/generated/numpy.where.html)>`__
+for more details and examples.
 
 
 
@@ -193,7 +205,7 @@ rd2xy-xy2rd
 any examples in this notebook**
 
 Rd2xy and xy2rd are used to translate RA/Dec to the pixel coordinate and
-vice-versa. This capability is well covered in the ``Astropy.wcs``
+vice-versa. This capability is well covered in the ``astropy.wcs``
 package. Please see the
 `documentation <http://docs.astropy.org/en/stable/wcs/>`__ for more
 details on usage.

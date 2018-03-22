@@ -19,11 +19,17 @@ I/O module. If you are unfamiliar with this module please see the**
 documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
 using this documentation**.
 
-Many of the table tools in this package are easily accesible with the
+Many of the table tools in this package are easily accessible with the
 `Astropy Table <http://docs.astropy.org/en/stable/table/>`__ object.
-Here we will show the ``Astropy`` ``Table`` equiavlent of the ttools
-tasks. Below we import the example table we will be using. Please run
-this cell before running any of the sections below.
+Here we will show the ``Astropy`` ``Table`` equivalent of the ttools
+tasks. You can also find a lot of useful information about tables and
+more advanced read and write options on the `Unified I/O Astropy
+documentation
+page <http://docs.astropy.org/en/stable/io/unified.html>`__.
+
+Below we import the example table we will be using. **Before using some
+of the examples in this notebook you will need to setup the test table
+by running the code cell below**
 
 Contents:
 
@@ -62,15 +68,15 @@ Contents:
 
 .. raw:: html
 
-    &lt;Table length=5&gt;
-    <table id="table4540188768" class="table-striped table-bordered table-condensed">
-    <thead><tr><th>Name</th><th>Animal</th><th>age</th><th>weight(lbs)</th></tr></thead>
-    <thead><tr><th>str7</th><th>str9</th><th>int64</th><th>float64</th></tr></thead>
-    <tr><td>Fluffy</td><td>cat</td><td>5</td><td>6.5</td></tr>
-    <tr><td>Skippy</td><td>dog</td><td>7</td><td>10.1</td></tr>
-    <tr><td>Potato</td><td>guineapig</td><td>2</td><td>2.5</td></tr>
-    <tr><td>Squeaky</td><td>mouse</td><td>1</td><td>0.75</td></tr>
-    <tr><td>Jhope</td><td>snake</td><td>5</td><td>25.0</td></tr>
+    <i>Table length=5</i>
+    <table id="table90467202944" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>sname</th><th>radius</th><th>fwhm</th></tr></thead>
+    <thead><tr><th>str5</th><th>int64</th><th>float64</th></tr></thead>
+    <tr><td>star1</td><td>10</td><td>6.5</td></tr>
+    <tr><td>star2</td><td>7</td><td>5.1</td></tr>
+    <tr><td>star3</td><td>2</td><td>0.5</td></tr>
+    <tr><td>star4</td><td>1</td><td>0.75</td></tr>
+    <tr><td>star5</td><td>20</td><td>13.0</td></tr>
     </table>
 
 
@@ -85,11 +91,11 @@ imtab-tabim
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-imtab can be used to copy an image to a table column. We can accomplish
-this by first flattening the array, then putting it into a table. For
-more details see the `Table construction
+Imtab can be used to copy an image to a table column. We can accomplish
+this by first flattening the array (2D down to 1D), then putting it into
+a table. For more details see the `Table construction
 documentation <http://docs.astropy.org/en/stable/table/construct_table.html>`__.
-Tabim is used to copy a column back to a table, show below.
+Tabim is used to copy a column back to a table, as show below.
 
 .. code:: ipython3
 
@@ -109,44 +115,46 @@ Tabim is used to copy a column back to a table, show below.
     t = Table([image_array])
     print(t)
     
-    # Now to re-extract the array we have to grab the data and unflatten it.
+    # Now to re-extract the array we have to grab the 
+    # data and unflatten it. The column was given the 
+    # default name of col0 by Table
     extract_array = t['col0'].data.reshape((6,6))
     print(extract_array)
 
 
 .. parsed-literal::
 
-          col0      
-    ----------------
-      0.778737912301
-      0.540657453378
-      0.844846864945
-      0.437430786445
-       0.42531847321
-      0.378941776732
-      0.569759441559
-      0.887288689867
-      0.140683275852
-       0.75117263098
-                 ...
-         0.861420953
-      0.574230666443
-       0.42707825074
-      0.987672488509
-      0.610368735644
-    0.00483079453182
-      0.837378466165
-       0.44437740426
-      0.381211045687
-     0.0859310763191
-     0.0704851730697
+          col0     
+    ---------------
+      0.73498113873
+     0.601683040128
+     0.858365279296
+     0.183850195764
+     0.372479856903
+     0.531179886849
+     0.497759057246
+      0.24850881731
+     0.433906702747
+    0.0199450763848
+                ...
+    0.0908400575378
+     0.448676070596
+     0.275824527206
+     0.276164794467
+     0.193654333786
+     0.830174255037
+     0.581290249067
+     0.754640533974
+     0.651459214252
+     0.435245983443
+      0.75900952991
     Length = 36 rows
-    [[ 0.77873791  0.54065745  0.84484686  0.43743079  0.42531847  0.37894178]
-     [ 0.56975944  0.88728869  0.14068328  0.75117263  0.39693562  0.96491753]
-     [ 0.00303176  0.2884746   0.44517577  0.89533482  0.84799734  0.72115084]
-     [ 0.16727558  0.59748484  0.35737339  0.788007    0.8695291   0.73762861]
-     [ 0.34344701  0.86142095  0.57423067  0.42707825  0.98767249  0.61036874]
-     [ 0.00483079  0.83737847  0.4443774   0.38121105  0.08593108  0.07048517]]
+    [[ 0.73498114  0.60168304  0.85836528  0.1838502   0.37247986  0.53117989]
+     [ 0.49775906  0.24850882  0.4339067   0.01994508  0.4251196   0.53538164]
+     [ 0.8670757   0.38572518  0.39294164  0.34951696  0.53854753  0.8362706 ]
+     [ 0.68752468  0.4442957   0.33628146  0.75661578  0.87014016  0.88223051]
+     [ 0.3725361   0.09084006  0.44867607  0.27582453  0.27616479  0.19365433]
+     [ 0.83017426  0.58129025  0.75464053  0.65145921  0.43524598  0.75900953]]
 
 
 
@@ -157,7 +165,7 @@ partab
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-Partab is used to transfer and IRAF parameter to a table element. Below
+Partab is used to transfer an IRAF parameter to a table element. Below
 we show the ``Astropy Table`` equivalent using indexing. See the
 `Modifying
 Table <http://docs.astropy.org/en/stable/table/modify_table.html>`__
@@ -170,7 +178,7 @@ documentation for more details.
 
 .. code:: ipython3
 
-    ex_table['weight(lbs)'][4]=1.5
+    ex_table['fwhm'][4]=4.5
     ex_table
 
 
@@ -178,15 +186,15 @@ documentation for more details.
 
 .. raw:: html
 
-    &lt;Table length=5&gt;
-    <table id="table4567453456" class="table-striped table-bordered table-condensed">
-    <thead><tr><th>Name</th><th>Animal</th><th>age</th><th>weight(lbs)</th></tr></thead>
-    <thead><tr><th>str7</th><th>str9</th><th>int64</th><th>float64</th></tr></thead>
-    <tr><td>Fluffy</td><td>cat</td><td>5</td><td>6.5</td></tr>
-    <tr><td>Skippy</td><td>dog</td><td>7</td><td>10.1</td></tr>
-    <tr><td>Potato</td><td>guineapig</td><td>2</td><td>2.5</td></tr>
-    <tr><td>Squeaky</td><td>mouse</td><td>1</td><td>0.75</td></tr>
-    <tr><td>Jhope</td><td>snake</td><td>5</td><td>1.5</td></tr>
+    <i>Table length=5</i>
+    <table id="table90467202944" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>sname</th><th>radius</th><th>fwhm</th></tr></thead>
+    <thead><tr><th>str5</th><th>int64</th><th>float64</th></tr></thead>
+    <tr><td>star1</td><td>10</td><td>6.5</td></tr>
+    <tr><td>star2</td><td>7</td><td>5.1</td></tr>
+    <tr><td>star3</td><td>2</td><td>0.5</td></tr>
+    <tr><td>star4</td><td>1</td><td>0.75</td></tr>
+    <tr><td>star5</td><td>20</td><td>4.5</td></tr>
     </table>
 
 
@@ -202,9 +210,9 @@ any examples in this notebook**
 The tabpar task takes a header keyword and moves it to an IRAF
 parameter. Extracting values from an astropy table is straightfoward
 with indexing. Keep in mind the indexing is zero based. When an FITS
-file is read into a table, the header information is saved in the meta
-data as an ``Ordered Dictionary``. Below we show you how to pull values
-from the table data, and meta data.
+file is read into a table, the header information is saved in the
+metadata as an ``Ordered Dictionary``. Below we show you how to pull
+values from the table data, and metadata.
 
 .. code:: ipython3
 
@@ -213,31 +221,33 @@ from the table data, and meta data.
 
 .. code:: ipython3
 
-    # Pulling values out of a table
-    column=ex_table['Name']
+    # Pulling a column out of a table
+    column=ex_table['sname']
     print(column)
-    entry=ex_table['Animal'][2]
+    
+    # Pulling a value out of a table
+    entry=ex_table['radius'][2]
     print('\n')
     print(entry)
 
 
 .. parsed-literal::
 
-      Name 
-    -------
-     Fluffy
-     Skippy
-     Potato
-    Squeaky
-      Jhope
+    sname
+    -----
+    star1
+    star2
+    star3
+    star4
+    star5
     
     
-    guineapig
+    2
 
 
 .. code:: ipython3
 
-    # Pulling values out of the meta data
+    # Pulling values out of the metadata
     fits_file = '/eng/ssb/iraf_transition/test_data/08b18470j_imp.fits'
     fits_table = Table.read(fits_file, hdu=2)
     print(fits_table.meta)
@@ -274,25 +284,33 @@ and vice versa. We will show how to store an array in an
 
     scalar_list = [4,5,6,7,8,9]
     
-    # Change to array
+    # Change to numpy array
     in_arr = np.array(scalar_list)
     
     # Store in table
-    t = Table([[in_arr]])
+    t = Table([in_arr])
     t.pprint()
     
+    print("\n")
+    
     # Now extract array back to scalar list, flatten will take out the extra dimension
-    out_arr = t['col0'][0]
-    out_list = out_arr.tolist()
-    print(out_list)
+    out_arr = t['col0'].data
+    print(out_arr)
 
 
 .. parsed-literal::
 
-    col0 [6]
-    --------
-      4 .. 9
-    [4, 5, 6, 7, 8, 9]
+    col0
+    ----
+       4
+       5
+       6
+       7
+       8
+       9
+    
+    
+    [4 5 6 7 8 9]
 
 
 
@@ -304,8 +322,11 @@ tcalc
 any examples in this notebook**
 
 Tcalc is used to perform arithmetic operations on table columns. This
-can be done automaticaly with any compatible data types. A new
-``Column`` object will be returned.
+can be done automatically with any compatible data types. A new
+``Column`` object will be returned, which you can add back into the
+original Table, or a new Table as desired. See the `Table modification
+documentation <http://docs.astropy.org/en/stable/table/modify_table.html>`__
+for more details.
 
 .. code:: ipython3
 
@@ -314,23 +335,20 @@ can be done automaticaly with any compatible data types. A new
 
 .. code:: ipython3
 
-    out = ex_table['age'] + ex_table['weight(lbs)']
-    out
+    out_column = ex_table['radius'] + ex_table['fwhm']
+    out_column.name = 'radfw'
+    print(out_column)
 
 
+.. parsed-literal::
 
-
-.. raw:: html
-
-    &lt;Column name=&apos;age&apos; dtype=&apos;float64&apos; length=5&gt;
-    <table>
-    <tr><td>11.5</td></tr>
-    <tr><td>17.1</td></tr>
-    <tr><td>4.5</td></tr>
-    <tr><td>1.75</td></tr>
-    <tr><td>6.5</td></tr>
-    </table>
-
+    radfw
+    -----
+     16.5
+     12.1
+      2.5
+     1.75
+     24.5
 
 
 
@@ -350,6 +368,7 @@ Units <http://docs.astropy.org/en/stable/units/>`__ module.
     # Astronomy Specific Imports
     from astropy.table import Table
     import astropy.units as u
+    import numpy as np
 
 .. code:: ipython3
 
@@ -361,52 +380,58 @@ Units <http://docs.astropy.org/en/stable/units/>`__ module.
     print(ed_table.info)
     
     # To add/update units
-    ed_table['weight(lbs)'].unit = u.imperial.lb
+    ed_table['radius'].unit = u.astrophys.pix
     print(ed_table.info)
     
     # To change column name
-    ed_table['weight(lbs)'].name='weight'
+    ed_table['radius'].name='radius(pix)'
     print(ed_table.info)
     
     # To change dtype
-    ed_table['age'].dtype = 'float64'
+    ed_table['radius(pix)'] = ed_table['radius(pix)'].astype(float)
     print(ed_table.info)
+    
+    print(ed_table)
 
 
 .. parsed-literal::
 
     <Table length=5>
-        name     dtype 
-    ----------- -------
-           Name    str7
-         Animal    str9
-            age   int64
-    weight(lbs) float64
+     name   dtype 
+    ------ -------
+     sname    str5
+    radius   int64
+      fwhm float64
+    
+    <Table length=5>
+     name   dtype  unit
+    ------ ------- ----
+     sname    str5     
+    radius   int64  pix
+      fwhm float64     
     
     <Table length=5>
         name     dtype  unit
     ----------- ------- ----
-           Name    str7     
-         Animal    str9     
-            age   int64     
-    weight(lbs) float64   lb
+          sname    str5     
+    radius(pix)   int64  pix
+           fwhm float64     
     
     <Table length=5>
-     name   dtype  unit
-    ------ ------- ----
-      Name    str7     
-    Animal    str9     
-       age   int64     
-    weight float64   lb
+        name     dtype  unit
+    ----------- ------- ----
+          sname    str5     
+    radius(pix) float64  pix
+           fwhm float64     
     
-    <Table length=5>
-     name   dtype  unit
-    ------ ------- ----
-      Name    str7     
-    Animal    str9     
-       age float64     
-    weight float64   lb
-    
+    sname radius(pix) fwhm
+              pix         
+    ----- ----------- ----
+    star1        10.0  6.5
+    star2         7.0  5.1
+    star3         2.0  0.5
+    star4         1.0 0.75
+    star5        20.0 13.0
 
 
 
@@ -426,6 +451,11 @@ documentation. For more details on ``Table`` object copying see the
 `copy versus
 reference <http://docs.astropy.org/en/stable/table/construct_table.html#copy-versus-reference>`__
 doc section.
+
+Please be aware that there are many possible ASCII write formats
+provided by Astropy, `listed
+here <http://docs.astropy.org/en/stable/io/ascii/index.html#supported-formats>`__.
+In this example we use the default basic formatting.
 
 .. code:: ipython3
 
@@ -450,10 +480,58 @@ doc section.
 tdiffer
 -------
 
-Will be available soon in Astropy
+Tdiffer is used to create an output table that is the difference of two
+tables. Astropy has this functionality in the `setdiff
+function <http://docs.astropy.org/en/stable/api/astropy.table.setdiff.html>`__.
 
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
+.. code:: ipython3
+
+    from astropy.table import Table
+    from astropy.table import setdiff
+
+.. code:: ipython3
+
+    # Setup sample tables
+    t1 = Table({'a': [1, 4, 9], 'b': ['c', 'd', 'f']}, names=('a', 'b'))
+    t2 = Table({'a': [1, 5, 9], 'b': ['c', 'b', 'f']}, names=('a', 'b'))
+    
+    print("table 1: \n{}\n".format(t1))
+    print("table 2: \n{}\n".format(t2))
+    
+    # Calculate and print the difference between tables
+    print("table diff t1-t2")
+    print(setdiff(t1, t2))
+    
+    # Same, but t2-t1 instead of t1-t2
+    print("table diff t2-t1")
+    print(setdiff(t2, t1))
+
+
+.. parsed-literal::
+
+    table 1: 
+     a   b 
+    --- ---
+      1   c
+      4   d
+      9   f
+    
+    table 2: 
+     a   b 
+    --- ---
+      1   c
+      5   b
+      9   f
+    
+    table diff t1-t2
+     a   b 
+    --- ---
+      4   d
+    table diff t2-t1
+     a   b 
+    --- ---
+      5   b
+
 
 
 
@@ -475,23 +553,26 @@ modified to fit the users needs.
 
 .. code:: ipython3
 
-    # change a animal type of 'cat' or 'snake' to guineapig
+    # Change star1 and star2 to a raidus of 10
+    # Making a copy of the table for editing
     new_table = ex_table.copy()
+    # Loops over the rows in the table
     for row in new_table:
-        if row[1] in ['cat','snake']:
-            row[1]='guineapig'
+        # here we index the columns with numbers
+        if row[0] in ['star1','star3']:
+            row[1]= 10
     print(new_table)
 
 
 .. parsed-literal::
 
-      Name    Animal  age weight(lbs)
-    ------- --------- --- -----------
-     Fluffy guineapig   5         6.5
-     Skippy       dog   7        10.1
-     Potato guineapig   2         2.5
-    Squeaky     mouse   1        0.75
-      Jhope guineapig   5         1.5
+    sname radius fwhm
+    ----- ------ ----
+    star1     10  6.5
+    star2      7  5.1
+    star3     10  0.5
+    star4      1 0.75
+    star5     20  4.5
 
 
 
@@ -524,15 +605,15 @@ available for generating the histogram data.
 .. code:: ipython3
 
     # Using the weight column of our example table
-    n, bins, patches = plt.hist(ex_table['weight(lbs)'].data)
+    n, bins, patches = plt.hist(ex_table['fwhm'].data)
     
-    plt.xlabel('Weight in lbs')
-    plt.title('Weight of pets')
+    plt.xlabel('fwhm')
+    plt.title('fwhm of stars')
     plt.show()
 
 
 
-.. image:: tables.ttools_files/tables.ttools_54_0.png
+.. image:: tables.ttools_files/tables.ttools_56_0.png
 
 
 
@@ -547,10 +628,9 @@ any examples in this notebook**
 
 Tiimage, titable, tximage, and txtable are all 3-D table functions.
 ``Astropy`` ``Table`` objects can store any dimension ``numpy`` arrays
-in each element, as long as there is consistancy in the column. Below we
-show a short example of storing a 3-D array in an ``Astropy`` Table. The
-rest of the functionality is the same as the general table
-funcitonality.
+in each element, as long as the columns are consistent. Below we show a
+short example of storing a 3-D array in an ``Astropy`` Table. Other
+table functionality behaves the same for 2-D and 3-D table data.
 
 .. code:: ipython3
 
@@ -626,12 +706,11 @@ table. Below we show the ``Astropy Table`` equivalents.
 .. parsed-literal::
 
     <Table length=5>
-        name     dtype 
-    ----------- -------
-           Name    str7
-         Animal    str9
-            age   int64
-    weight(lbs) float64
+     name   dtype 
+    ------ -------
+     sname    str5
+    radius   int64
+      fwhm float64
     
 
 
@@ -643,13 +722,36 @@ table. Below we show the ``Astropy Table`` equivalents.
 
 .. parsed-literal::
 
-      Name    Animal  age weight(lbs)
-    ------- --------- --- -----------
-     Fluffy       cat   5         6.5
-     Skippy       dog   7        10.1
-     Potato guineapig   2         2.5
-    Squeaky     mouse   1        0.75
-      Jhope     snake   5         1.5
+    sname radius fwhm
+    ----- ------ ----
+    star1     10  6.5
+    star2      7  5.1
+    star3      2  0.5
+    star4      1 0.75
+    star5     20  4.5
+
+
+.. code:: ipython3
+
+    # To print a specific subset of the table
+    # Here we pull out the sname and fwhm columns
+    # and rows 1-3
+    ex_table['sname','fwhm'][0:3]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=3</i>
+    <table id="table90634550688" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>sname</th><th>fwhm</th></tr></thead>
+    <thead><tr><th>str5</th><th>float64</th></tr></thead>
+    <tr><td>star1</td><td>6.5</td></tr>
+    <tr><td>star2</td><td>5.1</td></tr>
+    <tr><td>star3</td><td>0.5</td></tr>
+    </table>
+
 
 
 
@@ -794,7 +896,8 @@ This functionality is contained in the `coordinates
 package <http://docs.astropy.org/en/stable/coordinates/matchsep.html>`__
 of Astropy. This example is taken from the `Coordinates
 notebook <http://www.astropy.org/astropy-tutorials/Coordinates.html>`__,
-see the notebook for more details.
+please see the notebook for more details before expanding this example
+to suit your needs.
 
 .. code:: ipython3
 
@@ -815,6 +918,19 @@ see the notebook for more details.
     coo_sdss = SkyCoord(sdss['ra']*u.deg, sdss['dec']*u.deg)
     coo_twomass = SkyCoord(twomass['ra'], twomass['dec'])
     idx_sdss, d2d_sdss, d3d_sdss = coo_twomass.match_to_catalog_sky(coo_sdss)
+    
+    # Print matches
+    print("Matched values by index: \n")
+    print(idx_sdss)
+
+
+.. parsed-literal::
+
+    Matched values by index: 
+    
+    [368 370   6 116 255 454 501  41 174 505  13 515 624 523 338 297 389 294
+     573 539 500 140 622]
+
 
 
 
@@ -927,42 +1043,42 @@ provide to ``filter``.
 
 .. code:: ipython3
 
-    # For adding rows we give the new table an initial column setup, 
+    # For selecting rows we give the new table an initial column setup, 
     # copied from the original table through the dtype keyword
     table1 = Table(dtype=ex_table.dtype)
     for row in ex_table:
-        if row['Name'] == 'Fluffy' or row['age'] == 5:
+        if row['sname'] == 'star4' or row['radius'] == 20:
             table1.add_row(row)
     table1.pprint()
 
 
 .. parsed-literal::
 
-     Name  Animal age weight(lbs)
-    ------ ------ --- -----------
-    Fluffy    cat   5         6.5
-     Jhope  snake   5         1.5
+    sname radius fwhm
+    ----- ------ ----
+    star4      1 0.75
+    star5     20  4.5
 
 
 .. code:: ipython3
 
-    # For adding columns we start with an empty new table
+    # For selecting columns we start with an empty new table
     table2 = Table()
     for col in ex_table.itercols():
-        if col.name in ['Name','Animal']:
+        if col.name in ['sname','fwhm']:
             table2[col.name] = col
     table2.pprint()
 
 
 .. parsed-literal::
 
-      Name    Animal 
-    ------- ---------
-     Fluffy       cat
-     Skippy       dog
-     Potato guineapig
-    Squeaky     mouse
-      Jhope     snake
+    sname fwhm
+    ----- ----
+    star1  6.5
+    star2  5.1
+    star3  0.5
+    star4 0.75
+    star5  4.5
 
 
 
@@ -976,8 +1092,8 @@ any examples in this notebook**
 Tsort, as you would guess, sorts a table. ``Astropy`` ``Table`` objects
 have a built in `sort
 method <http://docs.astropy.org/en/stable/table/modify_table.html>`__.
-You can even sort by more then one column. Sorting is inplace so in this
-example we make a copy of the table first.
+You can even sort by more then one column. Sorting is preformed inplace
+so in this example we make a copy of the table first.
 
 .. code:: ipython3
 
@@ -989,21 +1105,51 @@ example we make a copy of the table first.
 
 .. code:: ipython3
 
-    # sorting
+    # Sorting
     sorted_table = ex_table.copy()
-    sorted_table.sort('Name')
+    sorted_table.sort('radius')
+    sorted_table.pprint()
+    
+    print('\n')
+    
+    # Reverse the sort
+    sorted_table.reverse()
+    sorted_table.pprint()
+    
+    print('\n')
+    
+    # Sort by more then one column
+    sorted_table.sort(['radius','fwhm'])
     sorted_table.pprint()
 
 
 .. parsed-literal::
 
-      Name    Animal  age weight(lbs)
-    ------- --------- --- -----------
-     Fluffy       cat   5         6.5
-      Jhope     snake   5         1.5
-     Potato guineapig   2         2.5
-     Skippy       dog   7        10.1
-    Squeaky     mouse   1        0.75
+    sname radius fwhm
+    ----- ------ ----
+    star4      1 0.75
+    star3      2  0.5
+    star2      7  5.1
+    star1     10  6.5
+    star5     20  4.5
+    
+    
+    sname radius fwhm
+    ----- ------ ----
+    star5     20  4.5
+    star1     10  6.5
+    star2      7  5.1
+    star3      2  0.5
+    star4      1 0.75
+    
+    
+    sname radius fwhm
+    ----- ------ ----
+    star4      1 0.75
+    star3      2  0.5
+    star2      7  5.1
+    star1     10  6.5
+    star5     20  4.5
 
 
 
@@ -1014,41 +1160,44 @@ tstat
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-tstat gives you the mean, standard deviation, minimum and maximum of a
-column. This can be done by feeding the desired columns into standard
-``Numpy`` and built-in Python functions.
+Tstat gives you the mean, standard deviation, minimum and maximum of a
+column. This can be done by using the ``Table`` `info
+function <http://docs.astropy.org/en/stable/table/access_table.html#summary-information>`__,
+with the 'stats' argument.
 
 .. code:: ipython3
 
-    # Standard Imports
-    import numpy as np
-    
     # Astronomy Specific Imports
     from astropy.table import Table
 
 .. code:: ipython3
 
-    # Mean
-    mean = np.mean(ex_table['weight(lbs)'])
-    print(mean)
+    # All column stats
+    ex_table.info('stats')
     
-    # Standard Deviation
-    std = np.std(ex_table['weight(lbs)'])
-    print(std)
-                 
-    # Min and Max
-    mini = min(ex_table['age'])
-    maxi = max(ex_table['age'])
-    print(mini)
-    print(maxi)
+    print("\n")
+    
+    # Specific column stats
+    ex_table['radius'].info('stats')
 
 
 .. parsed-literal::
 
-    4.27
-    3.52584741587
-    1
-    7
+    <Table length=5>
+     name  mean      std      min max
+    ------ ---- ------------- --- ---
+     sname   --            --  --  --
+    radius  8.0 6.84105255059   1  20
+      fwhm 3.47 2.41321362502 0.5 6.5
+    
+    
+    name = radius
+    mean = 8.0
+    std = 6.84105255059
+    min = 1
+    max = 20
+    n_bad = 0
+    length = 5
 
 
 

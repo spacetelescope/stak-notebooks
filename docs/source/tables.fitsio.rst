@@ -234,12 +234,13 @@ stwfits
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-stwfits is used to translate a GEIS, STSDAS tables, or ascii file to an
-standard FITS format. Here we will cover how to convert a GEIS file to a
-FITS files using the ``stsci.tools.readgeis`` function. There are two
-wasy to use this function, through the command line, or through a Python
-session or script. For instructions on running this task on the command
-line see the ``stsci.tools`` `Conversion Utilities
+stwfits is used to translate a GEIS (Generic Edited Information Set),
+STSDAS tables, or ascii file to an standard FITS(Flexible Image
+Transport System) format. Here we will cover how to convert a GEIS file
+to a FITS files using the ``stsci.tools.readgeis`` function. There are
+two ways to use this function, through the command line, or through a
+Python session or script. For instructions on running this task on the
+command line see the ``stsci.tools`` `Conversion Utilities
 documentation <http://ssb.stsci.edu/doc/stsci_python_dev/stsci.tools.doc/html/convert.html>`__.
 Below we show an example of running this task in a python session. You
 may or may not need to byteswap your image data depending on which
