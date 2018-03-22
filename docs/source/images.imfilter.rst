@@ -37,7 +37,9 @@ several advantages: \* can handle NaN values \* improved options for
 boundaries \* provided built in kernels
 
 So when possible, we will be using ``astropy.convolution`` functions in
-this notebook.
+this notebook. The ability to handle NaN values allows us to replicate
+the behavior of the zloreject/zhireject parameter in the imfilter
+package. See the `rmedian <#median-rmedian>`__ entry for an example.
 
 You can select from the following boundary rules in
 ``astropy.convolution``: \* none \* fill \* wrap \* extend
@@ -486,23 +488,26 @@ back out to a FITS file. We will use the
 
 For a ring median filter we can supply a more specific footprint to the
 ``median_filter`` function. You can easily generate this footprint using
-the ``astroimtools`` library
+the ``astropy.convolution`` library. In this example we will also show
+how to use the equivalent of the IRAF zloreject/zhireject parameter. The
+handling of ``numpy`` ``nan`` values is only available with the
+``Astropy`` convolution.
 
 .. code:: ipython3
 
     # Standard Imports
     import numpy as np
-    from scipy.ndimage.filters import median_filter
     
     # Astronomy Specific Imports
     from astropy.io import fits
-    from astroimtools import circular_annulus_footprint
+    from astropy.convolution import convolve as ap_convolve
+    from astropy.convolution import Ring2DKernel
     
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
     %matplotlib inline
     
-    #depreciation warning, is fixed already in the dev version, not sure when this is getting pushed
+    #deprecation warning, is fixed already in the dev version, not sure when this is getting pushed
 
 .. code:: ipython3
 
@@ -511,15 +516,19 @@ the ``astroimtools`` library
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
     
-    # create annulus filter
-    fp = circular_annulus_footprint(10, 12)
+    # create ring filter
+    ringKernel = Ring2DKernel(10,5)
+    
+    # apply a zloreject value by setting certain values to numpy nan
+    my_arr[my_arr < -99] = np.nan
+    
     # apply median filter
-    filtered = median_filter(my_arr, footprint=fp)
+    filtered = ap_convolve(my_arr, ringKernel, normalize_kernel=True)
 
 .. code:: ipython3
 
-    plt.imshow(fp, interpolation='none', origin='lower')
-    plt.title('Annulus Footprint')
+    plt.imshow(ringKernel, interpolation='none', origin='lower')
+    plt.title('Ring Footprint')
     plt.colorbar()
     plt.show()
 
@@ -558,8 +567,9 @@ any examples in this notebook**
 
 The mode calculation equation used in the mode and rmode IRAF tasks
 (3.0\*median - 2.0\*mean) can be recreated using the
-``scipy.ndimage.generic_filter`` function. The equation was used as an
-approximation for a mode calculation.
+`scipy.ndimage.generic\_filter
+function <https://docs.scipy.org/doc/scipy-0.19.0/reference/generated/scipy.ndimage.generic_filter.html>`__.
+The equation was used as an approximation for a mode calculation.
 
 .. code:: ipython3
 
@@ -590,7 +600,7 @@ For a box footprint:
     my_arr = sci1[700:1030,2250:2800]
     
     # apply mode filter
-    filtered = generic_filter(my_arr,mode_func,size=5)
+    filtered = generic_filter(my_arr, mode_func, size=5)
 
 .. code:: ipython3
 
@@ -612,7 +622,7 @@ For a box footprint:
 .. image:: images.imfilter_files/images.imfilter_58_0.png
 
 
-For a ring footprint:
+For a ring footprint (similar to IRAF's rmode):
 
 .. code:: ipython3
 
@@ -638,7 +648,7 @@ For a ring footprint:
     # create annulus filter
     fp = circular_annulus_footprint(5, 9)
     # apply mode filter
-    filtered = generic_filter(my_arr,mode_func,footprint=fp)
+    filtered = generic_filter(my_arr, mode_func, footprint=fp)
 
 .. code:: ipython3
 

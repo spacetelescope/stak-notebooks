@@ -77,9 +77,13 @@ raverage
 any examples in this notebook**
 
 raverage computes the running average and standard deviation for a
-1-dimensional array. We can efficiently do this in Python using strides
-in numpy (source:
-http://www.rigtorp.se/2011/01/01/rolling-statistics-numpy.html).
+1-dimensional array. We can efficiently do this in Python using numpy's
+`convolve
+function <https://docs.scipy.org/doc/numpy-1.14.0/reference/generated/numpy.convolve.html>`__.
+For a more complex but more efficient implementatin of a rolling average
+that will also give you an output standard deviation you can use strides
+in ``numpy`` as seen in `this example
+here <http://www.rigtorp.se/2011/01/01/rolling-statistics-numpy.html>`__.
 
 .. code:: ipython3
 
@@ -88,43 +92,22 @@ http://www.rigtorp.se/2011/01/01/rolling-statistics-numpy.html).
 
 .. code:: ipython3
 
-    # code goes here
-    def rolling_window(a, window):
-        shape = a.shape[:-1] + (a.shape[-1] - window + 1, window)
-        strides = a.strides + (a.strides[-1],)
-        return np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
-    
+    # setup test data
     data = np.arange(20)
-    out_data = np.mean(rolling_window(data,4),-1)
-    out_stddev = np.std(rolling_window(data,4),-1)
-    print(rolling_window(data,5))
+    # kernel size
+    N = 4
+    
+    out_data = np.convolve(data, np.ones((N,))/N, mode='valid')
+    
+    print("original array: {}".format(data))
     print("out_data: {}".format(out_data))
-    print("out_stddev: {}".format(out_stddev))
 
 
 .. parsed-literal::
 
-    [[ 0  1  2  3  4]
-     [ 1  2  3  4  5]
-     [ 2  3  4  5  6]
-     [ 3  4  5  6  7]
-     [ 4  5  6  7  8]
-     [ 5  6  7  8  9]
-     [ 6  7  8  9 10]
-     [ 7  8  9 10 11]
-     [ 8  9 10 11 12]
-     [ 9 10 11 12 13]
-     [10 11 12 13 14]
-     [11 12 13 14 15]
-     [12 13 14 15 16]
-     [13 14 15 16 17]
-     [14 15 16 17 18]
-     [15 16 17 18 19]]
+    original array: [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19]
     out_data: [  1.5   2.5   3.5   4.5   5.5   6.5   7.5   8.5   9.5  10.5  11.5  12.5
       13.5  14.5  15.5  16.5  17.5]
-    out_stddev: [ 1.11803399  1.11803399  1.11803399  1.11803399  1.11803399  1.11803399
-      1.11803399  1.11803399  1.11803399  1.11803399  1.11803399  1.11803399
-      1.11803399  1.11803399  1.11803399  1.11803399  1.11803399]
 
 
 

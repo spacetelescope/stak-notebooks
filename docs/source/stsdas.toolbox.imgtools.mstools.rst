@@ -59,10 +59,9 @@ several ``SCI`` exetensions of HST data while allowing the user to
 reject specified ``DQ`` bits. Additionally, the user could choose to
 combine the stack using the average or the median.
 
-This ``mscombine`` alternative uses the ``bitfield_to_boolean_mask``
-task and ``numpy`` masked arrays to avoid using flagged pixels in the
-``DQ`` array. In this simple example, we average-combine several
-full-frame WFC3/UVIS images.
+This ``mscombine`` alternative uses ``numpy`` masked arrays to avoid
+using flagged pixels in the ``DQ`` array. In this simple example, we
+average-combine several full-frame WFC3/UVIS images.
 
 Tasks for image combination are currently being developed in the
 ``CCDPROC`` package, see the `CCDPROC doc
@@ -82,7 +81,7 @@ the **images.imutil.imsum** task for a short usage example.
 .. code:: ipython3
 
     # Get the data
-    test_data = glob.glob('/eng/ssb/iraf_transition/test_data/mscombine/*_blv_tmp.fits')
+    test_data = glob.glob('/eng/ssb/iraf_transition/test_data/mscombine/nnicpw4*_blv_tmp.fits')
 
 .. code:: ipython3
 
@@ -91,15 +90,15 @@ the **images.imutil.imsum** task for a short usage example.
     for filename in test_data:
         with fits.open(filename) as hdulist:
             
-                # For UVIS chip 2
-                mask_ext3 = np.invert(bitfield_to_boolean_mask(hdulist[3].data, ignore_flags=0))
-                masked_arrays_ext1.append(np.ma.masked_array(hdulist[1].data, mask=mask_ext3))
-                masked_arrays_ext2.append(np.ma.masked_array(hdulist[2].data, mask=mask_ext3))
+            # For UVIS chip 2, using DQ flags 32 and 64 (96 bitflag)
+            mask_ext3 = np.bitwise_and(hdulist[3].data, 96) != 0
+            masked_arrays_ext1.append(np.ma.masked_array(hdulist[1].data, mask=mask_ext3))
+            masked_arrays_ext2.append(np.ma.masked_array(hdulist[2].data, mask=mask_ext3))
     
-                # For UVIS chip 1            
-                mask_ext6 = np.invert(bitfield_to_boolean_mask(hdulist[6].data, ignore_flags=0))
-                masked_arrays_ext4.append(np.ma.masked_array(hdulist[4].data, mask=mask_ext6))
-                masked_arrays_ext5.append(np.ma.masked_array(hdulist[5].data, mask=mask_ext6))
+            # For UVIS chip 1            
+            mask_ext6 = np.bitwise_and(hdulist[6].data, 96) != 0
+            masked_arrays_ext4.append(np.ma.masked_array(hdulist[4].data, mask=mask_ext6))
+            masked_arrays_ext5.append(np.ma.masked_array(hdulist[5].data, mask=mask_ext6))
 
 .. code:: ipython3
 
@@ -159,45 +158,66 @@ msstatistics
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
 
-The msstatictics task is similiar to images.imutil.imstatistics, but
-with the added capability to mask using HST bit masking in the Data
-Quality extensions. Here we show an example of the ``stsci.tools``
-`bitfield\_to\_boolean\_mask <https://github.com/spacetelescope/stsci.tools/blob/master/lib/stsci/tools/bitmask.py>`__
-function.
+The msstatictics task is similar to images.imutil.imstatistics, but with
+the added capability to mask using an HST DQ array. Below we show an
+example of this using multiple files and the
+`sigma\_clipped\_stats <http://docs.astropy.org/en/stable/api/astropy.stats.sigma_clipped_stats.html>`__
+function. For more examples on array statistics please see the
+images.imutil.imstatistics notebook entry.
 
 .. code:: ipython3
 
+    # Standard Imports
+    import glob
+    import numpy as np
+    
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy import stats
-    from stsci.tools.bitmask import bitfield_to_boolean_mask
 
 .. code:: ipython3
 
-    # Change these values to your desired data files
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
-    # multiple reads file
-    #test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
-    hdulist = fits.open(test_data)
+    # Change these values to your desired data file list
+    # loop over multiple files, make filelist
+    test_files = glob.glob('/eng/ssb/iraf_transition/test_data/i*_flt.fits')
     
-    # Make mask, using bit flags 32 and 4
-    boolean_mask = bitfield_to_boolean_mask(hdulist[3].data,"~4,128")
+    for filename in test_files:
+        #test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
+        hdulist = fits.open(filename)
     
-    # The sigma_clipped_stats function returns the mean, median, and stddev respectively
-    mean, median, std = stats.sigma_clipped_stats(hdulist[1].data, mask=boolean_mask, sigma=2.0, iters=3)
-    print("mean: {}".format(mean))
-    print("median: {}".format(median))
-    print("standard deviation: {}".format(std))
+        # Make mask using Python bitmath, using bit flags 32 and 4
+        # Add the values of the flags you would like to mask, and use
+        # that value in the np.bitwise_and call.
+        boolean_mask = np.bitwise_and(hdulist[3].data, 36) != 0
     
-    # Close fits file
-    hdulist.close()
+        # The sigma_clipped_stats function returns the mean, median, and stddev respectively
+        mean, median, std = stats.sigma_clipped_stats(hdulist[1].data, mask=boolean_mask, sigma=2.0, iters=3)
+        print("Stats for file: {}".format(filename))
+        print("mean: {}".format(mean))
+        print("median: {}".format(median))
+        print("standard deviation: {}\n".format(std))
+    
+        # Close fits file
+        hdulist.close()
 
 
 .. parsed-literal::
 
-    mean: 2.05237880697
-    median: 0.847149193287
-    standard deviation: 2.83607972172
+    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
+    mean: 0.820129451464822
+    median: 0.8166738748550415
+    standard deviation: 0.05532484610965952
+    
+    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3ygq_newdtype_flt.fits
+    mean: 1.0
+    median: 1.0
+    standard deviation: 0.0
+    
+    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
+    mean: 0.7803241408189818
+    median: 0.7780539989471436
+    standard deviation: 0.049491070357460455
+    
 
 
 
