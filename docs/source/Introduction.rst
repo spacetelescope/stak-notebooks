@@ -36,7 +36,7 @@ changes to the file. This could include saving out intermediate steps to
 new files, if the user so desires. While this may take a few more lines
 of code to open and close files, you gain the major advantage of
 flexibility, customization and freedom, as well as potentially more
-efficient I/O. Often times the increase in the number of lines of code
+efficient I/O. Oftentimes the increase in the number of lines of code
 allows the user to be more explicit about what the code is doing,
 instead of relying on complex parameter files and black box code. If a
 user finds themselves running the same code numerous time and would find
@@ -45,9 +45,9 @@ function in a Python file and it will be ready to import and use in any
 local Python session.
 
 Particularly useful for this kind of scientific workflow is the `Jupyter
-Notebooks <https://jupyter-notebook.readthedocs.io/en/stable/>`__. This
+Notebook <https://jupyter-notebook.readthedocs.io/en/stable/>`__. This
 tool allows users to run fully interactive Python sessions with the
-ability to save the code that was run, it's screen output, the order it
+ability to save the code that was run, its screen output, the order it
 was run in, and other helpful tools. If you are new to Python, we highly
 recommend taking advantage of this tool. All STAK notebooks were written
 in Jupyter Notebooks. This means the user can downloads these notebooks
@@ -82,8 +82,8 @@ an
 and a
 `BinTableHDU <http://docs.astropy.org/en/stable/io/fits/api/tables.html#astropy.io.fits.BinTableHDU>`__.
 As you would expect, the PrimaryHDU object contains the primary header,
-the ImageHDU object contains an image array and it's associated header,
-and a BinTableHDU object contains a binary table and it's associated
+the ImageHDU object contains an image array and its associated header,
+and a BinTableHDU object contains a binary table and its associated
 header.
 
 The next level of objects are the individual header and data objects.
@@ -99,7 +99,7 @@ how to extract and work with these objects using a FITS file containing
 image data. For more information on table data see the `Astropy FITS
 Table
 tutorial <http://www.astropy.org/astropy-tutorials/FITS-tables.html>`__.
-For more detailed coverage of the avaialbe tools in the Astropy FITS
+For more detailed coverage of the available tools in the Astropy FITS
 module see the `narrative documentation
 page <http://docs.astropy.org/en/stable/io/fits/>`__.
 
@@ -202,18 +202,21 @@ opened in the default readonly mode, it will **not** be updated when
 closed.
 
 We can also use the ``writeto`` method to save the ``HDUObject`` to a
-new file.
+new file. ``writeto`` will close the new file for you.
 
 ``writeto`` will also save to the original file if you provide it with
-the original filename, and use the ``overwrite=True`` parameter.
+the original filename, and use the ``overwrite=True`` parameter. In this
+case, the original file handling object will still need to be closed at
+some point in the session.
 
-**No matter which mode you used to open the FITS file, you should still
-call the close method to close the open FITS file, writeto does not
-close the file.**
+**No matter which mode you used to open a FITS file, you should still
+call the close method to close the open FITS file. Even if you use
+writeto to write to the original file, you still need to close the file
+handler you used to open the file.**
 
 .. code:: ipython3
 
-    # Save using the writeto method to a new file
+    # Save using the writeto method to a new file, writeto will close the new file for you
     HDUList_object.writeto("acsdata_new.fits")
     
     # Save using the writeto method, overwriting the original file
@@ -222,7 +225,7 @@ close the file.**
 .. code:: ipython3
 
     # Save to same file using close
-    # We show this last because we need to close the file, even after using a writeto
+    # We show this last because we need to close the original copy of the file we opened, even after using a writeto
     HDUList_object.close()
 
 IRAF/IDL to Python Gotchas
@@ -244,9 +247,9 @@ reversed, ``[y, x]``.
 index 0
 ~~~~~~~
 
-IRAF indexes begin at 1 whereas Python and IDL both index arrays both
-start at zero. So to pull out the first element of a 1-dimensional array
-you would use ``array[0]``. To pull out the lower left corner of a
+IRAF indexes begin at 1 whereas Python and IDL both index arrays
+starting at zero. So to pull out the first element of a 1-dimensional
+array you would use ``array[0]``. To pull out the lower left corner of a
 2-dimensional array you would use ``array[0,0]``.
 
 slicing
@@ -265,6 +268,14 @@ The default origin location for ``matplotlib`` plots (a common Python
 plotting library) will be in the upper-left. To change this to the lower
 left (common for images) you can use the ``origin=lower`` parameter in
 the ``imshow`` call as follows: ``plt.imshow(..., origin='lower')``.
+
+close your files!
+~~~~~~~~~~~~~~~~~
+
+Almost any file handling object you open in Python (and this included a
+FITS file opened with the Astropy open function!) will need to be closed
+in your Python session with the appropriate close command. See above
+section for examples.
 
 Links and Resources
 -------------------
