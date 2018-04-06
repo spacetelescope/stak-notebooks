@@ -51,6 +51,12 @@ mirror \* wrap
 Below we change the matplotlib colormap to ``viridis``. This is
 temporarily changing the colormap setting in the matplotlib rc file.
 
+**Important Note to Users:** There are some differences in algorithms
+between some of the IRAF and Python Interpolations. Proceed with care if
+you are comparing prior IRAF results to Python results. For more details
+on this issue see the `filed Github
+issue <https://github.com/spacetelescope/stak-notebooks/issues/75>`__.
+
 Contents:
 
 -  `boxcar <#boxcar>`__

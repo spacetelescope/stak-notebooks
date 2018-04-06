@@ -20,15 +20,12 @@ I/O module. If you are unfamiliar with this module please see the**
 documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
 using this documentation**.
 
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
-
 **General Note about this package:**
 
 The tasks in this IRAF package include support for WCS updates after the
-image manipulations are preformed. We are currently working on the
-replacements for these WCS capabilities. For the moment we have included
-the array manipulation part of these tasks in this notebook.
+image manipulations are preformed. Efforst in the community are ongoing
+for these WCS capabilities. For the moment we have included the array
+manipulation part of these tasks in this notebook.
 
 **Boundary Condition and Interpolation Options:**
 
@@ -39,6 +36,12 @@ spline-0 is nearest and spline-1 is linear.
 
 The boundary condition options for IRAF and ``scipy`` are the same:
 nearest, wrap, reflect, and constant.
+
+**Important Note to Users:** There are some differences in algorithms
+between some of the IRAF and Python Interpolations. Proceed with care if
+you are comparing prior IRAF results to Python results. For more details
+on this issue see the `filed Github
+issue <https://github.com/spacetelescope/stak-notebooks/issues/75>`__.
 
 Contents:
 
