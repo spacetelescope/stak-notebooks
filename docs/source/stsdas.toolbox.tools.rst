@@ -25,7 +25,6 @@ Contents:
 -  `ddiff <#ddiff>`__
 -  `epoch-tepoch <#epoch-tepoch>`__
 -  `fparse <#fparse>`__
--  `newredshift <#newredshift>`__
 -  `tprecess <#tprecess>`__
 
 
@@ -213,17 +212,6 @@ method <https://docs.python.org/3.6/library/stdtypes.html#str.split>`__.
 
 
 
-newredshift
------------
-
-**Please review the** `Notes <#notes>`__ **section above before running
-any examples in this notebook**
-
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
-
-
-
 tprecess
 --------
 
@@ -247,6 +235,7 @@ Not Replacing
 -------------
 
 -  mkapropos - Make the apropos database. Deprecated.
+-  newredshift - Change the redshift of spectra.
 -  uniqfile - Give a file a unique name prior to archiving. Deprecated.
 -  uniqid - Create a unique character string identifier. Deprecated.
 -  uniqname - Create a unique file name for archiving. Deprecated.

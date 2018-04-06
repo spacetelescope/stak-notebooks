@@ -24,23 +24,10 @@ as seen below.
 
 Contents:
 
--  `eheader <#eheader>`__
 -  `hdiff <#hdiff>`__
 -  `stfhistory <#stfhistory>`__
--  `upreffile <#upreffile>`__
 
 
-
-
-
-eheader
--------
-
-**Please review the** `Notes <#notes>`__ **section above before running
-any examples in this notebook**
-
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
 
 
 
@@ -479,23 +466,16 @@ file using Python's built in i/o functionality and the
 
 
 
-upreffile
----------
-
-**Please review the** `Notes <#notes>`__ **section above before running
-any examples in this notebook**
-
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
-
-
-
 
 
 Not Replacing
 -------------
 
+-  eheader - Interactively edit an image header. Deprecated.
 -  groupmod - GEIS header editing. Deprecated, for FITS header editing
    see **images.imutil.hedit**
 -  hcheck - see **images.imutil.hselect**
 -  iminfo - see **images.imutil.imheader**
+-  upreffile - Update calibration reference files names in image
+   headers. See `crds
+   package <https://jwst-crds.stsci.edu/static/users_guide/index.html>`__

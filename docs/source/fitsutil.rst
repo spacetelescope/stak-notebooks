@@ -222,20 +222,6 @@ extension from the original ``HDUList``
 
 .. code:: ipython3
 
-    list=[3,4,5,6,7,7,8]
-    list[:2]+list[5:6]
-
-
-
-
-.. parsed-literal::
-
-    [3, 4, 7]
-
-
-
-.. code:: ipython3
-
     # FITS filenames
     test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
     outfile_1 = 'fxsplit.fits'
@@ -259,7 +245,7 @@ extension from the original ``HDUList``
     
     # Now save a new copy of the original file without that third extension
     edited_hdulist = fits.HDUList([hdulist[0],hdulist[1],hdulist[2],hdulist[4],hdulist[5],hdulist[6]])
-    print(type(edited_hdulist))
+    print(type(hdulist))
     print("\n\nnew FITS file with the 3rd extension taken out:")
     edited_hdulist.info()
     edited_hdulist.writeto(outfile_2, overwrite=True)

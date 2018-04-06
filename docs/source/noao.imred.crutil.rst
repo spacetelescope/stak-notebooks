@@ -20,41 +20,7 @@ I/O module. If you are unfamiliar with this module please see the**
 documentation <http://docs.astropy.org/en/stable/io/fits/>`__ **before
 using this documentation**.
 
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
-
-Contents:
-
--  `cosmicrays <#cosmicrays>`__
--  `craverage <#craverage>`__
--  `crfix <#crfix>`__
--  `crgrow <#crgrow>`__
--  `crmedian <#crmedian>`__
--  `crnebula <#crnebula>`__
-
-
-
-cosmicrays
-----------
-
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
-
-
-
-craverage
----------
-
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
-
-
-
-crfix
------
-
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
+Contents: \* `crgrow <#crgrow>`__ \* `crmedian <#crmedian>`__
 
 
 
@@ -164,16 +130,12 @@ information on usage.
 
 
 
-crnebula
---------
-
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
-
-
-
 Not Replacing
 -------------
 
+-  cosmicrays - Remove cosmic rays using flux ratio algorithm.
+-  craverage - Detect CRs against average and avoid objects.
 -  crcombine - Combine multiple exposures to eliminate cosmic rays.
 -  credit - Interactively edit cosmic rays using an image display.
+-  crfix - Fix cosmic rays in images using cosmic ray masks.
+-  crnebula - Detect and replace cosmic rays in nebular data.

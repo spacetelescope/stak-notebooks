@@ -49,7 +49,6 @@ Contents:
 -  `tjoin <#tjoin>`__
 -  `tmatch <#tmatch>`__
 -  `tmerge <#tmerge>`__
--  `trebin <#trebin>`__
 -  `tselect-tproject-tquery <#tselect-tproject-tquery>`__
 -  `tsort <#tsort>`__
 -  `tstat <#tstat>`__
@@ -69,7 +68,7 @@ Contents:
 .. raw:: html
 
     <i>Table length=5</i>
-    <table id="table90467202944" class="table-striped table-bordered table-condensed">
+    <table id="table90472151528" class="table-striped table-bordered table-condensed">
     <thead><tr><th>sname</th><th>radius</th><th>fwhm</th></tr></thead>
     <thead><tr><th>str5</th><th>int64</th><th>float64</th></tr></thead>
     <tr><td>star1</td><td>10</td><td>6.5</td></tr>
@@ -690,7 +689,8 @@ tinfo-tlcol-tprint
 any examples in this notebook**
 
 Tinfo, tlcol and tprint were all used to display information about the
-table. Below we show the ``Astropy Table`` equivalents.
+table. Below we show the ``Astropy Table`` equivalents, including
+``showtable`` which is callable from the terminal.
 
 .. code:: ipython3
 
@@ -752,6 +752,83 @@ table. Below we show the ``Astropy Table`` equivalents.
     <tr><td>star3</td><td>0.5</td></tr>
     </table>
 
+
+
+.. code:: ipython3
+
+    # To print a table outside of a Python interpreter
+    # Astropy has added the convenience function showtable
+    !showtable --format ascii /eng/ssb/iraf_transition/test_data/table2.txt
+
+
+.. parsed-literal::
+
+    [0;31msname radius fwhm[0m
+    [0;31m----- ------ ----[0m
+    star1     10  6.5
+    star2      7  5.1
+    star3      2  0.5
+    star4      1 0.75
+    star5     20 13.0
+
+
+.. code:: ipython3
+
+    # Here is the showtable help for more details on usage
+    !showtable --help
+
+
+.. parsed-literal::
+
+    usage: showtable [-h] [--format FORMAT] [--more] [--info] [--stats]
+                     [--max-lines MAX_LINES] [--max-width MAX_WIDTH] [--hide-unit]
+                     [--show-dtype] [--delimiter DELIMITER] [--hdu HDU]
+                     [--path PATH] [--table-id TABLE_ID]
+                     filename [filename ...]
+    
+    Print tables from ASCII, FITS, HDF5, VOTable file(s). The tables are read with
+    'astropy.table.Table.read' and are printed with 'astropy.table.Table.pprint'.
+    The default behavior is to make the table output fit onto a single screen
+    page. For a long and wide table this will mean cutting out inner rows and
+    columns. To print **all** the rows or columns use ``--max-lines=-1`` or ``max-
+    width=-1``, respectively. The complete list of supported formats can be found
+    at http://astropy.readthedocs.io/en/latest/io/unified.html#built-in-table-
+    readers-writers
+    
+    positional arguments:
+      filename              path to one or more files
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --format FORMAT       input table format, should be specified if it cannot
+                            be automatically detected
+      --more                use the pager mode from Table.more
+      --info                show information about the table columns
+      --stats               show statistics about the table columns
+    
+    pprint arguments:
+      --max-lines MAX_LINES
+                            maximum number of lines in table output
+                            (default=screen length, -1 for no limit)
+      --max-width MAX_WIDTH
+                            maximum width in table output (default=screen width,
+                            -1 for no limit)
+      --hide-unit           hide the header row for unit (which is shown only if
+                            one or more columns has a unit)
+      --show-dtype          include a header row for column dtypes
+    
+    ASCII arguments:
+      --delimiter DELIMITER
+                            column delimiter string
+    
+    FITS arguments:
+      --hdu HDU             name of the HDU to show
+    
+    HDF5 arguments:
+      --path PATH           the path from which to read the table
+    
+    VOTable arguments:
+      --table-id TABLE_ID   the table to read in
 
 
 
@@ -1006,19 +1083,6 @@ table docs.
 
 
 
-trebin
-------
-
-Trebin allows the user to rebin columns in a table using linear or
-spline interpolation. See the `binning doc
-section <http://docs.astropy.org/en/stable/table/operations.html#binning>`__
-for a subset of this functionality.
-
-.. figure:: static/150pxblueconstuc.png
-   :alt: Work in progress
-
-
-
 tselect-tproject-tquery
 -----------------------
 
@@ -1029,9 +1093,11 @@ Tselect is used to create a new table from selected rows, tproject from
 selected columns, and tquery from a combination of selected rows and
 columns. We show two examples of how to generate a new table from
 selected columns and selected rows. You can combine these two pieces of
-code in either order to get a tquery like result. There is an alternate
-way to do selections if you have already organized your table into
-groups by using the `filter
+code in either order to get a tquery like result. For row filtering we
+combine boolean masks using the `Python bitwise
+operators <https://docs.python.org/3.5/library/stdtypes.html#bitwise-operations-on-integer-types>`__.
+There is an alternate way to do selections if you have already organized
+your table into groups by using the `filter
 method <http://docs.astropy.org/en/stable/table/operations.html#filtering>`__,
 but the user will still need to write a custom filtering function to
 provide to ``filter``.
@@ -1043,13 +1109,13 @@ provide to ``filter``.
 
 .. code:: ipython3
 
-    # For selecting rows we give the new table an initial column setup, 
-    # copied from the original table through the dtype keyword
+    # For selecting rows can use bitwise operators to generate a boolean mask
     table1 = Table(dtype=ex_table.dtype)
-    for row in ex_table:
-        if row['sname'] == 'star4' or row['radius'] == 20:
-            table1.add_row(row)
-    table1.pprint()
+    boolean_mask = (ex_table['sname'] == 'star4') | (ex_table['radius'] == 20)
+    
+    # 
+    subset = ex_table[boolean_mask]
+    subset.pprint()
 
 
 .. parsed-literal::
@@ -1057,16 +1123,14 @@ provide to ``filter``.
     sname radius fwhm
     ----- ------ ----
     star4      1 0.75
-    star5     20  4.5
+    star5     20 13.0
 
 
 .. code:: ipython3
 
-    # For selecting columns we start with an empty new table
-    table2 = Table()
-    for col in ex_table.itercols():
-        if col.name in ['sname','fwhm']:
-            table2[col.name] = col
+    # For selecting columns we can pull the required columns 
+    # out of the original table with the column names
+    table2 = ex_table['sname','fwhm']
     table2.pprint()
 
 
@@ -1078,7 +1142,7 @@ provide to ``filter``.
     star2  5.1
     star3  0.5
     star4 0.75
-    star5  4.5
+    star5 13.0
 
 
 
@@ -1244,6 +1308,10 @@ Not Replacing
    **images.imfit.fit1d**
 -  tproduct - Form the Cartesian product of two tables. See
    `tjoin <#tjoin>`__
+-  Trebin - Allows the user to rebin columns in a table using linear or
+   spline interpolation. See the `Astropy binning doc
+   section <http://docs.astropy.org/en/stable/table/operations.html#binning>`__
+   for a subset of this functionality.
 -  tread - Browse through a table. See `Astropy
    Tables <http://docs.astropy.org/en/stable/table/index.html>`__
    documentation.
