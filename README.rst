@@ -24,5 +24,10 @@ Please open a new `issue <https://github.com/spacetelescope/stak-notebooks/issue
 or new `pull request <https://github.com/spacetelescope/stak-notebooks/pulls>`_
 for bugs, feedback, or new features you would like to see.
 
-If there is an issue you would like to work on, please leave a comment and
-we will be happy to assist. New contributions and contributors are very welcome!
+If there is an issue you would like to work on, please open an issue and
+we will be happy to assist. New contributions and contributors are very welcome! For
+some comprehensive guidlines to contributing on Github, Astropy has a very nice
+write up here: http://docs.astropy.org/en/stable/development/workflow/development_workflow.html.
+But please keep in mind not all repositories on Github will want this contribution workflow.
+If you need some help applying the Astropy contribution guide to this project, we are available for
+questions/guidance.
