@@ -79,12 +79,40 @@ file.
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy.nddata.utils import block_reduce
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90717424048" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change this value to your desired data file, here were creating a filename
     # for our new changed data
-    orig_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    orig_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     new_fits = 'iczgs3ygq_newdtype_flt.fits'
     
     # Read in your fits file
@@ -106,9 +134,9 @@ file.
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits
+    Filename: ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
-      0  PRIMARY       1 PrimaryHDU     270   ()      
+      0  PRIMARY       1 PrimaryHDU     279   ()      
       1  SCI           1 ImageHDU       200   (4096, 2048)   float32   
       2  ERR           1 ImageHDU        56   (4096, 2048)   float32   
       3  DQ            1 ImageHDU        48   (4096, 2048)   int16   

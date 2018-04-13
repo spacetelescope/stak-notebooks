@@ -53,7 +53,7 @@ provided by ``astropy.io.fits``.
 .. code:: ipython3
 
     # Change these values to your desired data files, glob will capture all wildcard matches
-    test_data = glob.glob('/eng/ssb/iraf_transition/test_data/*.fits')
+    test_data = glob.glob('../data/*.fits')
     
     for filename in test_data:
         fits.info(filename)
@@ -61,169 +61,108 @@ provided by ``astropy.io.fits``.
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     266   ()      
-      1  SCI         ImageHDU       140   (1014, 1014)   float32   
-      2  ERR         ImageHDU        51   (1014, 1014)   float32   
-      3  DQ          ImageHDU        43   (1014, 1014)   int16   
-      4  SAMP        ImageHDU        37   (1014, 1014)   int16   
-      5  TIME        ImageHDU        37   (1014, 1014)   float32   
-      6  WCSCORR     BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/iczgs3ygq_newdtype_flt.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     266   ()      
-      1  SCI         ImageHDU       140   (1014, 1014)   int32   
-      2  ERR         ImageHDU        51   (1014, 1014)   float32   
-      3  DQ          ImageHDU        43   (1014, 1014)   int16   
-      4  SAMP        ImageHDU        37   (1014, 1014)   int16   
-      5  TIME        ImageHDU        37   (1014, 1014)   float32   
-      6  WCSCORR     BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     265   ()      
-      1  SCI         ImageHDU       140   (1014, 1014)   float32   
-      2  ERR         ImageHDU        51   (1014, 1014)   float32   
-      3  DQ          ImageHDU        43   (1014, 1014)   int16   
-      4  SAMP        ImageHDU        37   (1014, 1014)   int16   
-      5  TIME        ImageHDU        37   (1014, 1014)   float32   
-      6  WCSCORR     BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/imarith_out.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     266   ()      
-      1  SCI         ImageHDU       140   (1014, 1014)   float32   
-      2  ERR         ImageHDU        51   (1014, 1014)   float32   
-      3  DQ          ImageHDU        43   (1014, 1014)   int16   
-      4  SAMP        ImageHDU        37   (1014, 1014)   int16   
-      5  TIME        ImageHDU        37   (1014, 1014)   float32   
-      6  WCSCORR     BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/x31g0108t.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     112   ()      
-      1  SCI         ImageHDU        28   (256, 256)   float32   
-    Filename: /eng/ssb/iraf_transition/test_data/imfunction2_out.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     266   ()      
-      1  SCI         ImageHDU       140   (1014, 1014)   float64   
-      2  ERR         ImageHDU        51   (1014, 1014)   float32   
-      3  DQ          ImageHDU        43   (1014, 1014)   int16   
-      4  SAMP        ImageHDU        37   (1014, 1014)   int16   
-      5  TIME        ImageHDU        37   (1014, 1014)   float32   
-      6  WCSCORR     BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/jczgx1q1q_flc.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     270   ()      
-      1  SCI         ImageHDU       200   (4096, 2048)   float32   
-      2  ERR         ImageHDU        56   (4096, 2048)   float32   
-      3  DQ          ImageHDU        48   (4096, 2048)   int16   
-      4  SCI         ImageHDU       198   (4096, 2048)   float32   
-      5  ERR         ImageHDU        56   (4096, 2048)   float32   
-      6  DQ          ImageHDU        48   (4096, 2048)   int16   
-      7  D2IMARR     ImageHDU        15   (64, 32)   float32   
-      8  D2IMARR     ImageHDU        15   (64, 32)   float32   
-      9  D2IMARR     ImageHDU        15   (64, 32)   float32   
-     10  D2IMARR     ImageHDU        15   (64, 32)   float32   
-     11  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     12  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     13  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     14  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     15  WCSCORR     BinTableHDU     59   14R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     270   ()      
-      1  SCI         ImageHDU       200   (4096, 2048)   float32   
-      2  ERR         ImageHDU        56   (4096, 2048)   float32   
-      3  DQ          ImageHDU        48   (4096, 2048)   int16   
-      4  SCI         ImageHDU       198   (4096, 2048)   float32   
-      5  ERR         ImageHDU        56   (4096, 2048)   float32   
-      6  DQ          ImageHDU        48   (4096, 2048)   int16   
-      7  D2IMARR     ImageHDU        15   (64, 32)   float32   
-      8  D2IMARR     ImageHDU        15   (64, 32)   float32   
-      9  D2IMARR     ImageHDU        15   (64, 32)   float32   
-     10  D2IMARR     ImageHDU        15   (64, 32)   float32   
-     11  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     12  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     13  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     14  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     15  WCSCORR     BinTableHDU     59   14R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/imcopy_out.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     266   ()      
-      1  SCI         ImageHDU       140   (1014, 1014)   float32   
-      2  ERR         ImageHDU        51   (1014, 1014)   float32   
-      3  DQ          ImageHDU        43   (1014, 1014)   int16   
-      4  SAMP        ImageHDU        37   (1014, 1014)   int16   
-      5  TIME        ImageHDU        37   (1014, 1014)   float32   
-      6  WCSCORR     BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/imfunction_out.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     266   ()      
-      1  SCI         ImageHDU       140   (1014, 1014)   float32   
-      2  ERR         ImageHDU        51   (1014, 1014)   float32   
-      3  DQ          ImageHDU        43   (1014, 1014)   int16   
-      4  SAMP        ImageHDU        37   (1014, 1014)   int16   
-      5  TIME        ImageHDU        37   (1014, 1014)   float32   
-      6  WCSCORR     BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/imslice_out2.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  SCI         PrimaryHDU     199   (4096, 2048, 1)   float32   
-    Filename: /eng/ssb/iraf_transition/test_data/hselect_test.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU       8   (6, 4)   float64   
-      1              ImageHDU         9   (6, 4)   float64   
-      2              ImageHDU         8   (6, 4)   float64   
-    Filename: /eng/ssb/iraf_transition/test_data/imstack_out.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  SCI         PrimaryHDU     199   (4096, 2048, 2)   float32   
-    Filename: /eng/ssb/iraf_transition/test_data/imslice_out1.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  SCI         PrimaryHDU     199   (4096, 2048, 1)   float32   
-    Filename: /eng/ssb/iraf_transition/test_data/tester.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     270   ()      
-      1  SCI         ImageHDU       200   (4096, 2048)   float32   
-      2  ERR         ImageHDU        56   (4096, 2048)   float32   
-      3  DQ          ImageHDU        48   (4096, 2048)   int16   
-      4  SCI         ImageHDU       198   (4096, 2048)   float32   
-      5  ERR         ImageHDU        56   (4096, 2048)   float32   
-      6  DQ          ImageHDU        48   (4096, 2048)   int16   
-      7  D2IMARR     ImageHDU        15   (64, 32)   float32   
-      8  D2IMARR     ImageHDU        15   (64, 32)   float32   
-      9  D2IMARR     ImageHDU        15   (64, 32)   float32   
-     10  D2IMARR     ImageHDU        15   (64, 32)   float32   
-     11  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     12  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     13  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     14  WCSDVARR    ImageHDU        15   (64, 32)   float32   
-     15  WCSCORR     BinTableHDU     59   14R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/jczgx1ppq_rice.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     270   ()      
-      1  SCI         CompImageHDU    200   (4096, 2048)   float32   
-    Filename: /eng/ssb/iraf_transition/test_data/jczgx1ppq_gzip.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     270   ()      
-      1  SCI         CompImageHDU    200   (4096, 2048)   float32   
-    Filename: /eng/ssb/iraf_transition/test_data/fxsplit.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU       4   ()      
-      1  DQ          ImageHDU        43   (1014, 1014)   int16   
-    Filename: /eng/ssb/iraf_transition/test_data/fxinsert.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU       5   (100,)   float64   
-      1  SCI         ImageHDU       200   (4096, 2048)   float32   
-    Filename: /eng/ssb/iraf_transition/test_data/fxdelete.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU     265   ()      
-      1  SCI         ImageHDU       140   (1014, 1014)   float32   
-      2  ERR         ImageHDU        51   (1014, 1014)   float32   
-      3  DQ          ImageHDU        43   (1014, 1014)   int16   
-      4  SAMP        ImageHDU        37   (1014, 1014)   int16   
-      5  TIME        ImageHDU        37   (1014, 1014)   float32   
-      6  WCSCORR     BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/empty.fits
-    No.    Name         Type      Cards   Dimensions   Format
-      0  PRIMARY     PrimaryHDU       4   ()      
+    Filename: ../data/imstack_out.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  SCI           1 PrimaryHDU     199   (4096, 2048, 2)   float32   
+    Filename: ../data/jczgx1ppq_flc.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     279   ()      
+      1  SCI           1 ImageHDU       200   (4096, 2048)   float32   
+      2  ERR           1 ImageHDU        56   (4096, 2048)   float32   
+      3  DQ            1 ImageHDU        48   (4096, 2048)   int16   
+      4  SCI           2 ImageHDU       198   (4096, 2048)   float32   
+      5  ERR           2 ImageHDU        56   (4096, 2048)   float32   
+      6  DQ            2 ImageHDU        48   (4096, 2048)   int16   
+      7  D2IMARR       1 ImageHDU        15   (64, 32)   float32   
+      8  D2IMARR       2 ImageHDU        15   (64, 32)   float32   
+      9  D2IMARR       3 ImageHDU        15   (64, 32)   float32   
+     10  D2IMARR       4 ImageHDU        15   (64, 32)   float32   
+     11  WCSDVARR      1 ImageHDU        15   (64, 32)   float32   
+     12  WCSDVARR      2 ImageHDU        15   (64, 32)   float32   
+     13  WCSDVARR      3 ImageHDU        15   (64, 32)   float32   
+     14  WCSDVARR      4 ImageHDU        15   (64, 32)   float32   
+     15  WCSCORR       1 BinTableHDU     59   14R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
+    Filename: ../data/jczgx1ptq_flc.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     279   ()      
+      1  SCI           1 ImageHDU       200   (4096, 2048)   float32   
+      2  ERR           1 ImageHDU        56   (4096, 2048)   float32   
+      3  DQ            1 ImageHDU        48   (4096, 2048)   int16   
+      4  SCI           2 ImageHDU       198   (4096, 2048)   float32   
+      5  ERR           2 ImageHDU        56   (4096, 2048)   float32   
+      6  DQ            2 ImageHDU        48   (4096, 2048)   int16   
+      7  D2IMARR       1 ImageHDU        15   (64, 32)   float32   
+      8  D2IMARR       2 ImageHDU        15   (64, 32)   float32   
+      9  D2IMARR       3 ImageHDU        15   (64, 32)   float32   
+     10  D2IMARR       4 ImageHDU        15   (64, 32)   float32   
+     11  WCSDVARR      1 ImageHDU        15   (64, 32)   float32   
+     12  WCSDVARR      2 ImageHDU        15   (64, 32)   float32   
+     13  WCSDVARR      3 ImageHDU        15   (64, 32)   float32   
+     14  WCSDVARR      4 ImageHDU        15   (64, 32)   float32   
+     15  WCSCORR       1 BinTableHDU     59   14R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
+    Filename: ../data/jczgx1q1q_flc.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     279   ()      
+      1  SCI           1 ImageHDU       200   (4096, 2048)   float32   
+      2  ERR           1 ImageHDU        56   (4096, 2048)   float32   
+      3  DQ            1 ImageHDU        48   (4096, 2048)   int16   
+      4  SCI           2 ImageHDU       198   (4096, 2048)   float32   
+      5  ERR           2 ImageHDU        56   (4096, 2048)   float32   
+      6  DQ            2 ImageHDU        48   (4096, 2048)   int16   
+      7  D2IMARR       1 ImageHDU        15   (64, 32)   float32   
+      8  D2IMARR       2 ImageHDU        15   (64, 32)   float32   
+      9  D2IMARR       3 ImageHDU        15   (64, 32)   float32   
+     10  D2IMARR       4 ImageHDU        15   (64, 32)   float32   
+     11  WCSDVARR      1 ImageHDU        15   (64, 32)   float32   
+     12  WCSDVARR      2 ImageHDU        15   (64, 32)   float32   
+     13  WCSDVARR      3 ImageHDU        15   (64, 32)   float32   
+     14  WCSDVARR      4 ImageHDU        15   (64, 32)   float32   
+     15  WCSCORR       1 BinTableHDU     59   14R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
+    Filename: ../data/nnicqr34r1q_blv_tmp.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     314   ()      
+      1  SCI           1 ImageHDU        89   (4096, 2051)   float32   
+      2  ERR           1 ImageHDU        45   (4096, 2051)   float32   
+      3  DQ            1 ImageHDU        71   (4096, 2051)   int16   
+      4  SCI           2 ImageHDU        89   (4096, 2051)   float32   
+      5  ERR           2 ImageHDU        45   (4096, 2051)   float32   
+      6  DQ            2 ImageHDU        71   (4096, 2051)   int16   
+    Filename: ../data/nnicqr34rgq_blv_tmp.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     314   ()      
+      1  SCI           1 ImageHDU        89   (4096, 2051)   float32   
+      2  ERR           1 ImageHDU        45   (4096, 2051)   float32   
+      3  DQ            1 ImageHDU        71   (4096, 2051)   int16   
+      4  SCI           2 ImageHDU        89   (4096, 2051)   float32   
+      5  ERR           2 ImageHDU        45   (4096, 2051)   float32   
+      6  DQ            2 ImageHDU        71   (4096, 2051)   int16   
+    Filename: ../data/nnicqr34rvq_blv_tmp.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     314   ()      
+      1  SCI           1 ImageHDU        89   (4096, 2051)   float32   
+      2  ERR           1 ImageHDU        45   (4096, 2051)   float32   
+      3  DQ            1 ImageHDU        71   (4096, 2051)   int16   
+      4  SCI           2 ImageHDU        89   (4096, 2051)   float32   
+      5  ERR           2 ImageHDU        45   (4096, 2051)   float32   
+      6  DQ            2 ImageHDU        71   (4096, 2051)   int16   
+    Filename: ../data/stfhist.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     266   ()      
+      1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
+      2  ERR           1 ImageHDU        51   (1014, 1014)   float32   
+      3  DQ            1 ImageHDU        43   (1014, 1014)   int16   
+      4  SAMP          1 ImageHDU        37   (1014, 1014)   int16   
+      5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
+      6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
+    Filename: ../data/wfc3data_flt.fits
+    No.    Name      Ver    Type      Cards   Dimensions   Format
+      0  PRIMARY       1 PrimaryHDU     265   ()      
+      1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
+      2  ERR           1 ImageHDU        51   (1014, 1014)   float32   
+      3  DQ            1 ImageHDU        43   (1014, 1014)   int16   
+      4  SAMP          1 ImageHDU        37   (1014, 1014)   int16   
+      5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
+      6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
 
 
 
@@ -248,11 +187,15 @@ system it was originally written on.
 
 .. code:: ipython3
 
+    # Standard Imports
+    import glob
+    
+    # Astronomy Specific Imports
     from stsci.tools import readgeis
 
 .. code:: ipython3
 
-    filename = '/eng/ssb/iraf_transition/test_data/x31g0108t.c0h'
+    filename = "../data/x31g0108t.c0h"
     hdulist = readgeis.readgeis(filename)
     hdulist[1].data = hdulist[1].data.byteswap()
     del hdulist[1].header['CD1_1']
@@ -265,7 +208,7 @@ system it was originally written on.
     ===================================
     = WARNING:                        =
     =  Input image:                   =
-    /eng/ssb/iraf_transition/test_data/x31g0108t.c0h[1]
+    ../data/x31g0108t.c0h[1]
     =  had floating point data values =
     =  of NaN and/or Inf.             =
     ===================================

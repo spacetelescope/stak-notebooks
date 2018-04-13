@@ -110,7 +110,7 @@ page <http://docs.astropy.org/en/stable/io/fits/>`__.
 .. code:: ipython3
 
     # Assign filename to the variable test_file
-    test_file = '/eng/ssb/iraf_transition/test_data/wfc3data_flt.fits'
+    test_file = '../data/wfc3data_flt.fits'
 
 Below we will open the FITS file. You can open the file in various
 modes, for this example we will open in update mode. The default mode is
@@ -133,7 +133,7 @@ indexing the HDUList.
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/wfc3data_flt.fits
+    Filename: ../data/wfc3data_flt.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
       0  PRIMARY       1 PrimaryHDU     265   ()      
       1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
@@ -217,10 +217,10 @@ handler you used to open the file.**
 .. code:: ipython3
 
     # Save using the writeto method to a new file, writeto will close the new file for you
-    HDUList_object.writeto("acsdata_new.fits")
+    HDUList_object.writeto("wfc3data_new.fits")
     
     # Save using the writeto method, overwriting the original file
-    HDUList_object.writeto("/eng/ssb/iraf_transition/test_data/acsdata_flt.fits", overwrite=True)
+    HDUList_object.writeto("../data/wfc3data_flt.fits", overwrite=True)
 
 .. code:: ipython3
 

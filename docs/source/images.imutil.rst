@@ -77,12 +77,40 @@ type <http://docs.scipy.org/doc/numpy/user/basics.types.html>`__.
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits to ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits ... [Done]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90597018144" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change this value to your desired data file, here were creating a filename
     # for our new changed data
-    orig_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    orig_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     new_data = 'iczgs3ygq_newdtype_flt.fits'
     
     # Read in your FITS file
@@ -102,16 +130,15 @@ type <http://docs.scipy.org/doc/numpy/user/basics.types.html>`__.
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
+    Filename: ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
-      0  PRIMARY       1 PrimaryHDU     266   ()      
+      0  PRIMARY       1 PrimaryHDU     265   ()      
       1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
       2  ERR           1 ImageHDU        51   (1014, 1014)   float32   
       3  DQ            1 ImageHDU        43   (1014, 1014)   int16   
       4  SAMP          1 ImageHDU        37   (1014, 1014)   int16   
       5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
       6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    <class 'astropy.io.fits.hdu.hdulist.HDUList'>
 
 
 
@@ -141,11 +168,39 @@ For examples on printing/viewing header keywords please see
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90597339880" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change this value to your desired data file
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     
     # Open FITS file, include the mode='update' keyword
     hdu = fits.open(test_data, mode='update')
@@ -174,7 +229,7 @@ exist.
 .. code:: ipython3
 
     # Change this value to your desired search
-    data_list = glob('/eng/ssb/iraf_transition/test_data/hedit/*.fits')
+    data_list = glob('./mastDownload/HST/ICZGS3YGQ/*.fits')
     
     # Now we loop over the list of file and use the setval function to update keywords
     # Here we update the keyword MYKEY1 value to the integer 5.
@@ -208,13 +263,70 @@ page <http://docs.astropy.org/en/stable/io/unified.html>`__.
 
     # Astronomy Specific Imports
     from ccdproc import ImageFileCollection
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid, productFilename="jczgx1ppq_flc.fits")
+    obsid = '2004663554'
+    Observations.download_products(obsid, productFilename="jczgx1ptq_flc.fits")
+    obsid = '2004663556'
+    Observations.download_products(obsid, productFilename="jczgx1q1q_flc.fits")
+    
+    import shutil
+    shutil.move('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits','../data/')
+    shutil.move('./mastDownload/HST/JCZGX1PTQ/jczgx1ptq_flc.fits','../data/')
+    shutil.move('./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits','../data/')
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/JCZGX1PTQ/jczgx1ptq_flc.fits with expected size 167964480.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PTQ/jczgx1ptq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits with expected size 167964480.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. parsed-literal::
+
+    '../data/jczgx1q1q_flc.fits'
+
+
 
 .. code:: ipython3
 
     # first we make the ImageFileCollection object
-    collec = ImageFileCollection('/eng/ssb/iraf_transition/test_data', 
-                                 keywords=["filetype","date","exptime","filter"],
-                                 glob_include="icz*.fits", ext=0)
+    collec = ImageFileCollection('../data/', 
+                                 keywords=["filetype","date","exptime","filter2"],
+                                 glob_include="jcz*.fits", ext=0)
     
     # header keywords values are stored in an Astropy Table in the summary attribute 
     out_table = collec.summary
@@ -225,13 +337,13 @@ page <http://docs.astropy.org/en/stable/io/unified.html>`__.
 
 .. raw:: html
 
-    &lt;Table masked=True length=3&gt;
-    <table id="table4542238616" class="table-striped table-bordered table-condensed">
-    <thead><tr><th>file</th><th>filetype</th><th>date</th><th>exptime</th><th>filter</th></tr></thead>
-    <thead><tr><th>str27</th><th>str3</th><th>str10</th><th>float64</th><th>str5</th></tr></thead>
-    <tr><td>iczgs3y5q_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>652.937744</td><td>F125W</td></tr>
-    <tr><td>iczgs3ygq_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>602.937317</td><td>F140W</td></tr>
-    <tr><td>iczgs3ygq_newdtype_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>602.937317</td><td>F140W</td></tr>
+    <i>Table masked=True length=3</i>
+    <table id="table103576438656" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>file</th><th>filetype</th><th>date</th><th>exptime</th><th>filter2</th></tr></thead>
+    <thead><tr><th>str18</th><th>str3</th><th>str10</th><th>float64</th><th>str5</th></tr></thead>
+    <tr><td>jczgx1ppq_flc.fits</td><td>SCI</td><td>2017-12-03</td><td>578.0</td><td>F814W</td></tr>
+    <tr><td>jczgx1ptq_flc.fits</td><td>SCI</td><td>2017-12-03</td><td>607.0</td><td>F814W</td></tr>
+    <tr><td>jczgx1q1q_flc.fits</td><td>SCI</td><td>2017-12-03</td><td>578.0</td><td>F814W</td></tr>
     </table>
 
 
@@ -239,7 +351,7 @@ page <http://docs.astropy.org/en/stable/io/unified.html>`__.
 .. code:: ipython3
 
     # Now we can filter our table based on keyword values using Python bitwise operators
-    filtered_table = out_table[(out_table['exptime'] > 602) & (out_table['filter'] == 'F140W')]
+    filtered_table = out_table[(out_table['exptime'] < 600) & (out_table['filter2'] == 'F814W')]
     filtered_table
 
 
@@ -247,12 +359,12 @@ page <http://docs.astropy.org/en/stable/io/unified.html>`__.
 
 .. raw:: html
 
-    &lt;Table masked=True length=2&gt;
-    <table id="table4542100368" class="table-striped table-bordered table-condensed">
-    <thead><tr><th>file</th><th>filetype</th><th>date</th><th>exptime</th><th>filter</th></tr></thead>
-    <thead><tr><th>str27</th><th>str3</th><th>str10</th><th>float64</th><th>str5</th></tr></thead>
-    <tr><td>iczgs3ygq_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>602.937317</td><td>F140W</td></tr>
-    <tr><td>iczgs3ygq_newdtype_flt.fits</td><td>SCI</td><td>2016-06-02</td><td>602.937317</td><td>F140W</td></tr>
+    <i>Table masked=True length=2</i>
+    <table id="table103577396000" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>file</th><th>filetype</th><th>date</th><th>exptime</th><th>filter2</th></tr></thead>
+    <thead><tr><th>str18</th><th>str3</th><th>str10</th><th>float64</th><th>str5</th></tr></thead>
+    <tr><td>jczgx1ppq_flc.fits</td><td>SCI</td><td>2017-12-03</td><td>578.0</td><td>F814W</td></tr>
+    <tr><td>jczgx1q1q_flc.fits</td><td>SCI</td><td>2017-12-03</td><td>578.0</td><td>F814W</td></tr>
     </table>
 
 
@@ -270,9 +382,9 @@ page <http://docs.astropy.org/en/stable/io/unified.html>`__.
 
 .. parsed-literal::
 
-    ['iczgs3ygq_flt.fits' 'iczgs3ygq_newdtype_flt.fits']
-    iczgs3ygq_flt.fits
-    iczgs3ygq_newdtype_flt.fits
+    ['jczgx1ppq_flc.fits' 'jczgx1q1q_flc.fits']
+    jczgx1ppq_flc.fits
+    jczgx1q1q_flc.fits
 
 
 
@@ -317,166 +429,250 @@ can be run from the command line.
 .. code:: ipython3
 
     # print out only the keyword names that match FILE* or NAXIS*
-    !fitsheader --keyword FILE* --keyword NAXIS* /eng/ssb/iraf_transition/test_data/hedit/*.fits
+    !fitsheader --keyword FILE* --keyword NAXIS* ../data/*.fits
 
 
 .. parsed-literal::
 
-    # HDU 0 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 0 in ../data/imstack_out.fits:
+    NAXIS   =                    3 / number of array dimensions                     
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    NAXIS3  =                    2                                                  
+    # HDU 0 in ../data/jczgx1ppq_flc.fits:
     FILENAME= 'jczgx1ppq_flc.fits' / name of file                                   
     FILETYPE= 'SCI      '          / type of data found in data file                
-    NAXIS   =                    0                                                  
+    NAXIS   =                    0 / number of data axes                            
     
-    # HDU 1 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 1 in ../data/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 2 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 2 in ../data/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 3 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 3 in ../data/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 4 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 4 in ../data/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 5 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 5 in ../data/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 6 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 6 in ../data/jczgx1ppq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 7 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 7 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 8 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 8 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 9 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 9 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 10 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 10 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 11 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 11 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 12 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 12 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 13 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 13 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 14 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 14 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 15 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 15 in ../data/jczgx1ppq_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                  455 / length of dimension 1                          
     NAXIS2  =                   14 / length of dimension 2                          
-    # HDU 0 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 0 in ../data/jczgx1ptq_flc.fits:
+    FILENAME= 'jczgx1ptq_flc.fits' / name of file                                   
+    FILETYPE= 'SCI      '          / type of data found in data file                
+    NAXIS   =                    0 / number of data axes                            
+    
+    # HDU 1 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
+    
+    # HDU 2 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
+    
+    # HDU 3 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
+    
+    # HDU 4 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
+    
+    # HDU 5 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
+    
+    # HDU 6 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
+    
+    # HDU 7 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 8 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 9 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 10 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 11 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 12 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 13 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 14 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                   64                                                  
+    NAXIS2  =                   32                                                  
+    
+    # HDU 15 in ../data/jczgx1ptq_flc.fits:
+    NAXIS   =                    2 / number of array dimensions                     
+    NAXIS1  =                  455 / length of dimension 1                          
+    NAXIS2  =                   14 / length of dimension 2                          
+    # HDU 0 in ../data/jczgx1q1q_flc.fits:
     FILENAME= 'jczgx1q1q_flc.fits' / name of file                                   
     FILETYPE= 'SCI      '          / type of data found in data file                
-    NAXIS   =                    0                                                  
+    NAXIS   =                    0 / number of data axes                            
     
-    # HDU 1 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 1 in ../data/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 2 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 2 in ../data/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 3 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 3 in ../data/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 4 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 4 in ../data/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 5 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 5 in ../data/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 6 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 4096                                                  
-    NAXIS2  =                 2048                                                  
+    # HDU 6 in ../data/jczgx1q1q_flc.fits:
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     
-    # HDU 7 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 7 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 8 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 8 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 9 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 9 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 10 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 10 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 11 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 11 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 12 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 12 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 13 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 13 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 14 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 14 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                   64                                                  
     NAXIS2  =                   32                                                  
     
-    # HDU 15 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    # HDU 15 in ../data/jczgx1q1q_flc.fits:
     NAXIS   =                    2 / number of array dimensions                     
     NAXIS1  =                  455 / length of dimension 1                          
     NAXIS2  =                   14 / length of dimension 2                          
@@ -485,19 +681,28 @@ can be run from the command line.
 .. code:: ipython3
 
     # print out only the first extension and keyword names that match FILE* or NAXIS*
-    !fitsheader --extension 0 --keyword FILE* --keyword NAXIS* /eng/ssb/iraf_transition/test_data/hedit/*.fits
+    !fitsheader --extension 0 --keyword FILE* --keyword NAXIS* ../data/*.fits
 
 
 .. parsed-literal::
 
-    # HDU 0 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1ppq_flc.fits:
+    # HDU 0 in ../data/imstack_out.fits:
+    NAXIS   =                    3 / number of array dimensions                     
+    NAXIS1  =                 4096                                                  
+    NAXIS2  =                 2048                                                  
+    NAXIS3  =                    2                                                  
+    # HDU 0 in ../data/jczgx1ppq_flc.fits:
     FILENAME= 'jczgx1ppq_flc.fits' / name of file                                   
     FILETYPE= 'SCI      '          / type of data found in data file                
-    NAXIS   =                    0                                                  
-    # HDU 0 in /eng/ssb/iraf_transition/test_data/hedit/jczgx1q1q_flc.fits:
+    NAXIS   =                    0 / number of data axes                            
+    # HDU 0 in ../data/jczgx1ptq_flc.fits:
+    FILENAME= 'jczgx1ptq_flc.fits' / name of file                                   
+    FILETYPE= 'SCI      '          / type of data found in data file                
+    NAXIS   =                    0 / number of data axes                            
+    # HDU 0 in ../data/jczgx1q1q_flc.fits:
     FILENAME= 'jczgx1q1q_flc.fits' / name of file                                   
     FILETYPE= 'SCI      '          / type of data found in data file                
-    NAXIS   =                    0                                                  
+    NAXIS   =                    0 / number of data axes                            
 
 
 
@@ -525,13 +730,58 @@ for more details
 
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615003'
+    Observations.download_products(obsid,productFilename="iczgs3y5q_flt.fits")
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits with expected size 16534080. [astroquery.query]
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103577515960" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Basic operands (+,-,/,*)
     # Change these values to your desired data files
-    test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
-    test_data2 = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
+    test_data1 = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
+    test_data2 = './mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits'
     output_data = 'imarith_out.fits'
     output_data2 = 'imarith_new.fits'
     
@@ -574,7 +824,7 @@ for more details
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
+    Filename: ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
       0  PRIMARY       1 PrimaryHDU     266   ()      
       1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
@@ -583,7 +833,7 @@ for more details
       4  SAMP          1 ImageHDU        37   (1014, 1014)   int16   
       5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
       6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
-    Filename: /eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
+    Filename: ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
       0  PRIMARY       1 PrimaryHDU     265   ()      
       1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
@@ -600,7 +850,7 @@ for more details
     # replace only certain values with zero in an image array
     
     # Change these values to your desired data files
-    test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data1 = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     output_file = 'iczgs3ygq_updated.fits'
     
     # Open FITS file
@@ -646,13 +896,58 @@ page <http://docs.astropy.org/en/stable/nddata/utils.html#cutout-images>`__.
     from astropy import wcs
     from astropy.io import fits
     from astropy.nddata import Cutout2D
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+    obsid = '2004345211'
+    Observations.download_products(obsid,productFilename="jcw505010_drz.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/JCW505010/jcw505010_drz.fits with expected size 219404160.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCW505010/jcw505010_drz.fits with expected size 219404160. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103577397512" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str89</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCW505010/jcw505010_drz.fits</td><td>ERROR</td><td>Downloaded filesize is 219456000,but should be 219404160, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/jcw505010/jcw505010_drz.fits</td></tr>
+    </table>
+
+
 
 Simple example of a file copy
 
 .. code:: ipython3
 
     # Change these values to your desired filenames
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     output_data = 'imcopy_out.fits'
     
     hdulist = fits.open(test_data)
@@ -666,7 +961,7 @@ all image extensions centered at x:200, y:300
 .. code:: ipython3
 
     # Change these values to your desired filenames
-    test_data = '/eng/ssb/iraf_transition/test_data/jcw505010_drz.fits'
+    test_data = './mastDownload/HST/JCW505010/jcw505010_drz.fits'
     output_data = 'imcopy_cutout_out.fits'
     
     hdulist = fits.open(test_data)
@@ -716,11 +1011,44 @@ Example using exsisting numpy function:
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103612267488" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change these values to your desired data files
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     output_data = 'imfunction_out.fits'
     
     # Here we use the cosine function as an example
@@ -741,7 +1069,7 @@ Example using user defined function and ``np.vectorize``:
 .. code:: ipython3
 
     # Change these values to your desired data files
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     output_data = 'imfunction2_out.fits'
     
     # Here we use the following custom function as an example
@@ -785,11 +1113,29 @@ for more details.
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid, productFilename="jczgx1ppq_flc.fits")
+    obsid = '2004663554'
+    Observations.download_products(obsid, productFilename="jczgx1ptq_flc.fits")
+    obsid = '2004663556'
+    Observations.download_products(obsid, productFilename="jczgx1q1q_flc.fits")
+    
+    import shutil
+    shutil.move('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits','../data/')
+    shutil.move('./mastDownload/HST/JCZGX1PTQ/jczgx1ptq_flc.fits','../data/')
+    shutil.move('./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits','../data/')
 
 .. code:: ipython3
 
     # Change these values to your desired data files, glob will capture all wildcard matches
-    test_data = glob.glob('/eng/ssb/iraf_transition/test_data/iczgs3y*')
+    test_data = glob.glob('../data/jczgx*')
     out_text = 'imheader_out.txt'
     
     for filename in test_data:
@@ -809,64 +1155,70 @@ for more details.
 .. parsed-literal::
 
     XTENSION= 'IMAGE   '           / IMAGE extension                                
-    BITPIX  =                  -32                                                  
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 1014                                                  
-    NAXIS2  =                 1014                                                  
+    BITPIX  =                  -32 / number of bits per data pixel                  
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     PCOUNT  =                    0 / required keyword; must = 0                     
     GCOUNT  =                    1 / required keyword; must = 1                     
-    ORIGIN  = 'HSTIO/CFITSIO March 2010'                                            
-    DATE    = '2016-06-02' / date this file was written (yyyy-mm-dd)                
+    ORIGIN  = 'HSTIO/CFITSIO March 2010' / FITS file originator                     
+    DATE    = '2017-12-03' / date this file was written (yyyy-mm-dd)                
     INHERIT =                    T / inherit the primary header                     
     EXTNAME = 'SCI     '           / extension name                                 
     EXTVER  =                    1 / extension version number                       
-    ROOTNAME= 'iczgs3ygq                         ' / rootname of the observation set
-    EXPNAME = 'iczgs3ygq                ' / exposure identifier                     
-    BUNIT   = 'ELECTRONS/S'        / brightness units                               
+    ROOTNAME= 'jczgx1ppq                         ' / rootname of the observation set
+    EXPNAME = 'jczgx1ppq                ' / exposure identifier                     
+    BUNIT   = 'ELECTRONS'          / brightness units                               
+                                                                                    
+                  / WFC CCD CHIP IDENTIFICATION                                     
+                                                                                    
+    CCDCHIP =                    2 / CCD chip (1 or 2)                              
                                                                                     
                   / World Coordinate System and Related Parameters                  
                                                                                     
     WCSAXES =                    2 / number of World Coordinate System axes         
-    CRPIX1  =                507.0 / x-coordinate of reference pixel                
-    CRPIX2  =                507.0 / y-coordinate of reference pixel                
-    CRVAL1  =       36.85374208875 / first axis value at reference pixel            
-    CRVAL2  =       48.92264646942 / second axis value at reference pixel           
+    CRPIX1  =               2048.0 / x-coordinate of reference pixel                
+    CRPIX2  =               1024.0 / y-coordinate of reference pixel                
+    CRVAL1  =    127.7729653461655 / first axis value at reference pixel            
+    CRVAL2  =    65.84354161173992 / second axis value at reference pixel           
     CTYPE1  = 'RA---TAN-SIP'       / the coordinate type for the first axis         
     CTYPE2  = 'DEC--TAN-SIP'       / the coordinate type for the second axis        
-    CD1_1   = -3.1758778512629E-05 / partial of first axis coordinate w.r.t. x      
-    CD1_2   = -1.8099259044494E-05 / partial of first axis coordinate w.r.t. y      
-    CD2_1   = -2.0157648752092E-05 / partial of second axis coordinate w.r.t. x     
-    CD2_2   = 2.83052387051731E-05 / partial of second axis coordinate w.r.t. y     
+    CD1_1   = 1.90483532036217E-08 / partial of first axis coordinate w.r.t. x      
+    CD1_2   = -1.3940675227771E-05 / partial of first axis coordinate w.r.t. y      
+    CD2_1   = -1.3846187057971E-05 / partial of second axis coordinate w.r.t. x     
+    CD2_2   = -9.8508094364170E-07 / partial of second axis coordinate w.r.t. y     
     LTV1    =        0.0000000E+00 / offset in X to subsection start                
     LTV2    =        0.0000000E+00 / offset in Y to subsection start                
+    RAW_LTV1=                  0.0 / original offset in X to subsection start       
+    RAW_LTV2=                  0.0 / original offset in Y to subsection start       
     LTM1_1  =                  1.0 / reciprocal of sampling rate in X               
     LTM2_2  =                  1.0 / reciprocal of sampling rate in Y               
-    PA_APER =              -32.556 / Position Angle of reference aperture center (de
-    VAFACTOR=   9.999085821139E-01 / velocity aberration plate scale factor         
-    ORIENTAT=              -32.556 / position angle of image y axis (deg. e of n)   
-    RA_APER =   3.685374208875E+01 / RA of aperture reference position              
-    DEC_APER=   4.892264646942E+01 / Declination of aperture reference position     
-                                                                                    
-                  / REPEATED EXPOSURES INFORMATION                                  
-                                                                                    
-    NCOMBINE=                    1 / number of image sets combined during CR rejecti
+    ORIENTAT=             -94.0229 / position angle of image y axis (deg. e of n)   
+    RA_APER =   1.277389583333E+02 / RA of aperture reference position              
+    DEC_APER=   6.584194444444E+01 / Declination of aperture reference position     
+    PA_APER =             -94.3071 / Position Angle of reference aperture center (de
+    VAFACTOR=   1.000063780568E+00 / velocity aberration plate scale factor         
                                                                                     
                   / READOUT DEFINITION PARAMETERS                                   
                                                                                     
-    CENTERA1=                  513 / subarray axis1 center pt in unbinned dect. pix 
-    CENTERA2=                  513 / subarray axis2 center pt in unbinned dect. pix 
-    SIZAXIS1=                 1024 / subarray axis1 size in unbinned detector pixels
-    SIZAXIS2=                 1024 / subarray axis2 size in unbinned detector pixels
+    CENTERA1=                 2073 / subarray axis1 center pt in unbinned dect. pix 
+    CENTERA2=                 1035 / subarray axis2 center pt in unbinned dect. pix 
+    SIZAXIS1=                 4096 / subarray axis1 size in unbinned detector pixels
+    SIZAXIS2=                 2048 / subarray axis2 size in unbinned detector pixels
     BINAXIS1=                    1 / axis1 data bin size in unbinned detector pixels
     BINAXIS2=                    1 / axis2 data bin size in unbinned detector pixels
                                                                                     
-                  / READOUT PARAMETERS                                              
+                  / PHOTOMETRY KEYWORDS                                             
                                                                                     
-    SAMPNUM =                   13 / MULTIACCUM sample number                       
-    SAMPTIME=           602.937317 / total integration time (sec)                   
-    DELTATIM=            50.000412 / integration time of this sample (sec)          
-    ROUTTIME=   5.740229030181E+04 / UT time of array readout (MJD)                 
-    TDFTRANS=                    0 / number of TDF transitions during current sample
+    PHOTMODE= 'ACS WFC1 F814W MJD#57677.0450' / observation con                     
+    PHOTFLAM=        7.0486380E-20 / inverse sensitivity, ergs/cm2/Ang/electron     
+    PHOTZPT =       -2.1100000E+01 / ST magnitude zero point                        
+    PHOTPLAM=        8.0449937E+03 / Pivot wavelength (Angstroms)                   
+    PHOTBW  =        6.5305701E+02 / RMS bandwidth of filter plus detector          
+                                                                                    
+                  / REPEATED EXPOSURES INFO                                         
+                                                                                    
+    NCOMBINE=                    1 / number of image sets combined during CR rejecti
                                                                                     
                   / DATA PACKET INFORMATION                                         
                                                                                     
@@ -876,137 +1228,197 @@ for more details.
     STDCFFF =                    F / science telemetry fill data present (T=1/F=0)  
     STDCFFP = '0x5569'             / science telemetry fill pattern (hex)           
                                                                                     
+                  / ON-BOARD COMPRESSION INFORMATION                                
+                                                                                    
+    WFCMPRSD=                    F / was WFC data compressed? (T/F)                 
+    CBLKSIZ =                    0 / size of compression block in 2-byte words      
+    LOSTPIX =                    0 / #pixels lost due to buffer overflow            
+    COMPTYP = 'None    '           / compression type performed (Partial/Full/None) 
+                                                                                    
                   / IMAGE STATISTICS AND DATA QUALITY FLAGS                         
                                                                                     
-    NGOODPIX=               990475 / number of good pixels                          
+    NGOODPIX=              7987438 / number of good pixels                          
     SDQFLAGS=                31743 / serious data quality flags                     
-    GOODMIN =       -2.8782272E+00 / minimum value of good pixels                   
-    GOODMAX =        1.1788658E+04 / maximum value of good pixels                   
-    GOODMEAN=        9.9831134E-01 / mean value of good pixels                      
-    SNRMIN  =        1.8871337E-02 / minimum signal to noise of good pixels         
-    SNRMAX  =        6.3982178E+01 / maximum signal to noise of good pixels         
-    SNRMEAN =        5.3425826E-02 / mean value of signal to noise of good pixels   
+    GOODMIN =       -2.4801433E+02 / minimum value of good pixels                   
+    GOODMAX =        9.0880914E+04 / maximum value of good pixels                   
+    GOODMEAN=        5.3076767E+01 / mean value of good pixels                      
     SOFTERRS=                    0 / number of soft error pixels (DQF=1)            
-    MEANDARK=        1.2191877E+01 / average of the dark values subtracted          
-    MEANBLEV=        1.4332316E+04 / average of all bias levels subtracted          
+    SNRMIN  =       -7.5930123E+00 / minimum signal to noise of good pixels         
+    SNRMAX  =        2.2929968E+02 / maximum signal to noise of good pixels         
+    SNRMEAN =        5.1801496E+00 / mean value of signal to noise of good pixels   
+    MEANDARK=        6.1097779E+00 / average of the dark values subtracted          
+    MEANBLEV=       -1.3650392E-01 / average of all bias levels subtracted          
+    MEANFLSH=             0.000000 / Mean number of counts in post flash exposure   
     RADESYS = 'ICRS    '                                                            
-    OCX10   = 0.000786257500294596                                                  
-    OCX11   =   0.1354287266731262                                                  
-    OCY10   =   0.1209582984447479                                                  
-    OCY11   = -0.00042557646520435                                                  
-    IDCSCALE=   0.1282500028610229                                                  
-    IDCTHETA=                 45.0                                                  
-    IDCXREF =                507.0                                                  
-    IDCYREF =                507.0                                                  
-    IDCV2REF=    1.019000053405762                                                  
-    IDCV3REF=  -0.5070000290870667                                                  
+    OCX10   = 0.001964245000000002                                                  
+    OCX11   =  0.04982054148069229                                                  
+    OCY10   =  0.05027000100000004                                                  
+    OCY11   = 0.001500803312490457                                                  
+    IDCSCALE=                 0.05                                                  
+    IDCTHETA=                  0.0                                                  
+    IDCXREF =               2048.0                                                  
+    IDCYREF =               1024.0                                                  
+    IDCV2REF=    257.1520000000001                                                  
+    IDCV3REF=    302.6619900000002                                                  
+    D2IMERR1=  0.04199999943375587 / Maximum error of NPOL correction for axis 1    
+    D2IMDIS1= 'Lookup  '           / Detector to image correction type              
+    D2IM1   = 'EXTVER: 1' / Version number of WCSDVARR extension containing d2im loo
+    D2IM1   = 'NAXES: 2' / Number of independent variables in d2im function         
+    D2IM1   = 'AXIS.1: 1' / Axis number of the jth independent variable in a d2im fu
+    D2IM1   = 'AXIS.2: 2' / Axis number of the jth independent variable in a d2im fu
+    D2IMERR2=  0.06400000303983688 / Maximum error of NPOL correction for axis 2    
+    D2IMDIS2= 'Lookup  '           / Detector to image correction type              
+    D2IM2   = 'EXTVER: 2' / Version number of WCSDVARR extension containing d2im loo
+    D2IM2   = 'NAXES: 2' / Number of independent variables in d2im function         
+    D2IM2   = 'AXIS.1: 1' / Axis number of the jth independent variable in a d2im fu
+    D2IM2   = 'AXIS.2: 2' / Axis number of the jth independent variable in a d2im fu
+    D2IMEXT = 'jref$02c1450oj_d2i.fits'                                             
     WCSNAMEO= 'OPUS    '                                                            
     WCSAXESO=                    2                                                  
-    CRPIX1O =                507.0                                                  
-    CRPIX2O =                507.0                                                  
+    CRPIX1O =               2100.0                                                  
+    CRPIX2O =               1024.0                                                  
     CDELT1O =                  1.0                                                  
     CDELT2O =                  1.0                                                  
     CUNIT1O = 'deg     '                                                            
     CUNIT2O = 'deg     '                                                            
     CTYPE1O = 'RA---TAN'                                                            
     CTYPE2O = 'DEC--TAN'                                                            
-    CRVAL1O =       36.85374208875                                                  
-    CRVAL2O =       48.92264646942                                                  
+    CRVAL1O =       127.7729685204                                                  
+    CRVAL2O =       65.84282090734                                                  
     LONPOLEO=                180.0                                                  
-    LATPOLEO=       48.92264646942                                                  
+    LATPOLEO=       65.84282090734                                                  
     RADESYSO= 'ICRS    '                                                            
-    CD1_1O  =         -3.17711E-05                                                  
-    CD1_2O  =         -1.80786E-05                                                  
-    CD2_1O  =         -2.01487E-05                                                  
-    CD2_2O  =          2.83166E-05                                                  
-    IDCTAB  = 'iref$w3m18525i_idc.fits'                                             
-    B_1_3   = 1.69983940010457E-13                                                  
-    B_0_3   = -2.2777970488111E-10                                                  
-    A_2_2   = 1.11275247848408E-13                                                  
-    B_0_4   = 1.03978470894974E-12                                                  
-    A_0_4   = -2.0083179974495E-13                                                  
-    B_3_1   = 3.81044199963010E-13                                                  
-    A_3_0   = -1.9851733613323E-10                                                  
-    B_4_0   = -5.7352409055905E-13                                                  
-    B_0_2   = 2.98815054868485E-05                                                  
-    A_1_3   = 6.08832045645843E-13                                                  
-    A_4_0   = -3.2156784473326E-13                                                  
-    B_ORDER =                    4                                                  
-    A_0_2   = 2.77482030873749E-08                                                  
-    A_2_1   = 1.22255499299390E-10                                                  
-    B_2_0   = 6.92276069494587E-06                                                  
-    A_2_0   = -2.0701735553551E-07                                                  
-    A_3_1   = 4.13947711822547E-13                                                  
-    A_1_2   = 3.11477338242516E-11                                                  
-    A_ORDER =                    4                                                  
-    B_1_2   = 7.47270961118588E-11                                                  
-    B_2_2   = 1.38557115814168E-13                                                  
-    A_0_3   = 4.55691839657869E-11                                                  
-    B_2_1   = -2.3836656728517E-10                                                  
-    B_3_0   = 5.14014553890418E-11                                                  
-    B_1_1   = -2.8538202053351E-07                                                  
-    A_1_1   = 2.44176437155426E-05                                                  
-    WCSNAME = 'IDC_w3m18525i'                                                       
-    MDRIZSKY=   0.8125642368041847 / Sky value computed by AstroDrizzle             
+    CD1_1O  =          2.49806E-08                                                  
+    CD1_2O  =         -1.39456E-05                                                  
+    CD2_1O  =         -1.38597E-05                                                  
+    CD2_2O  =         -9.80762E-07                                                  
+    TDDALPHA= ''                                                                    
+    TDD_CXA = ''                                                                    
+    TDD_CXB =    -1.0658206323E-06                                                  
+    TDD_CTB =     1.5787128139E-06                                                  
+    TDD_CYA = ''                                                                    
+    TDD_CYB = ''                                                                    
+    TDDBETA = ''                                                                    
+    TDD_CTA = ''                                                                    
+    IDCTAB  = 'jref$11d1433lj_idc.fits'                                             
+    A_2_2   = 3.78731328537869E-14                                                  
+    B_0_3   = -3.8365982324508E-10                                                  
+    A_ORDER =                    5                                                  
+    A_0_2   = 2.16316670266357E-06                                                  
+    B_5_0   = -2.9216557962212E-18                                                  
+    A_4_1   = -2.2975314425693E-18                                                  
+    B_3_1   = -9.2662863736411E-16                                                  
+    B_1_1   = 6.18673688121303E-06                                                  
+    A_4_0   = 2.49648430134054E-14                                                  
+    B_2_0   = -1.7485625426539E-06                                                  
+    A_3_2   = 1.79076698558529E-18                                                  
+    B_0_2   = -7.2366916752762E-06                                                  
+    B_2_3   = -4.0303373428367E-19                                                  
+    A_2_1   = -3.3923056140854E-11                                                  
+    B_3_0   = 9.85440944815669E-11                                                  
+    B_ORDER =                    5                                                  
+    A_3_0   = -4.9299373340579E-10                                                  
+    B_2_1   = -5.1770017201658E-10                                                  
+    B_3_2   = -6.5749429811757E-19                                                  
+    A_2_0   = 8.55757690624103E-06                                                  
+    B_0_4   = 4.80879850209643E-15                                                  
+    B_1_3   = 1.17049370338725E-14                                                  
+    A_1_2   = -5.3116725265518E-10                                                  
+    B_0_5   = -3.0673060246341E-17                                                  
+    A_0_5   = 6.02661866571512E-18                                                  
+    A_5_0   = 3.34396903040512E-18                                                  
+    B_4_1   = 1.26957713407563E-18                                                  
+    A_2_3   = 2.16524457164329E-18                                                  
+    A_1_3   = -7.8672443613644E-15                                                  
+    B_2_2   = -2.9754427958761E-14                                                  
+    B_1_4   = 1.23793339962009E-17                                                  
+    B_1_2   = -7.2577430975755E-11                                                  
+    A_1_1   = -5.2167190331715E-06                                                  
+    A_0_4   = 2.30261315411602E-14                                                  
+    B_4_0   = -1.7435196173764E-14                                                  
+    A_3_1   = 6.55120590759313E-15                                                  
+    A_1_4   = -1.4386444581929E-18                                                  
+    A_0_3   = -1.4678926146950E-13                                                  
+    WCSNAME = 'IDC_11d1433lj'                                                       
+    CPERR1  =  0.02756105922162533 / Maximum error of NPOL correction for axis 1    
+    CPDIS1  = 'Lookup  '           / Prior distortion function type                 
+    DP1     = 'EXTVER: 1' / Version number of WCSDVARR extension containing lookup d
+    DP1     = 'NAXES: 2' / Number of independent variables in distortion function   
+    DP1     = 'AXIS.1: 1' / Axis number of the jth independent variable in a distort
+    DP1     = 'AXIS.2: 2' / Axis number of the jth independent variable in a distort
+    CPERR2  =  0.01880022883415222 / Maximum error of NPOL correction for axis 2    
+    CPDIS2  = 'Lookup  '           / Prior distortion function type                 
+    DP2     = 'EXTVER: 2' / Version number of WCSDVARR extension containing lookup d
+    DP2     = 'NAXES: 2' / Number of independent variables in distortion function   
+    DP2     = 'AXIS.1: 1' / Axis number of the jth independent variable in a distort
+    DP2     = 'AXIS.2: 2' / Axis number of the jth independent variable in a distort
+    NPOLEXT = 'jref$02c1450rj_npl.fits'                                             
+    MDRIZSKY=    40.54545593261719 / Sky value computed by AstroDrizzle             
     XTENSION= 'IMAGE   '           / IMAGE extension                                
-    BITPIX  =                   32                                                  
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 1014                                                  
-    NAXIS2  =                 1014                                                  
+    BITPIX  =                  -32 / number of bits per data pixel                  
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     PCOUNT  =                    0 / required keyword; must = 0                     
     GCOUNT  =                    1 / required keyword; must = 1                     
-    ORIGIN  = 'HSTIO/CFITSIO March 2010'                                            
-    DATE    = '2016-06-02' / date this file was written (yyyy-mm-dd)                
+    ORIGIN  = 'HSTIO/CFITSIO March 2010' / FITS file originator                     
+    DATE    = '2017-12-03' / date this file was written (yyyy-mm-dd)                
     INHERIT =                    T / inherit the primary header                     
     EXTNAME = 'SCI     '           / extension name                                 
     EXTVER  =                    1 / extension version number                       
-    ROOTNAME= 'iczgs3ygq                         ' / rootname of the observation set
-    EXPNAME = 'iczgs3ygq                ' / exposure identifier                     
-    BUNIT   = 'ELECTRONS/S'        / brightness units                               
+    ROOTNAME= 'jczgx1ptq                         ' / rootname of the observation set
+    EXPNAME = 'jczgx1ptq                ' / exposure identifier                     
+    BUNIT   = 'ELECTRONS'          / brightness units                               
+                                                                                    
+                  / WFC CCD CHIP IDENTIFICATION                                     
+                                                                                    
+    CCDCHIP =                    2 / CCD chip (1 or 2)                              
                                                                                     
                   / World Coordinate System and Related Parameters                  
                                                                                     
     WCSAXES =                    2 / number of World Coordinate System axes         
-    CRPIX1  =                507.0 / x-coordinate of reference pixel                
-    CRPIX2  =                507.0 / y-coordinate of reference pixel                
-    CRVAL1  =       36.85374208875 / first axis value at reference pixel            
-    CRVAL2  =       48.92264646942 / second axis value at reference pixel           
+    CRPIX1  =               2048.0 / x-coordinate of reference pixel                
+    CRPIX2  =               1024.0 / y-coordinate of reference pixel                
+    CRVAL1  =     127.774971972961 / first axis value at reference pixel            
+    CRVAL2  =    65.84362363894992 / second axis value at reference pixel           
     CTYPE1  = 'RA---TAN-SIP'       / the coordinate type for the first axis         
     CTYPE2  = 'DEC--TAN-SIP'       / the coordinate type for the second axis        
-    CD1_1   = -3.1758778512629E-05 / partial of first axis coordinate w.r.t. x      
-    CD1_2   = -1.8099259044494E-05 / partial of first axis coordinate w.r.t. y      
-    CD2_1   = -2.0157648752092E-05 / partial of second axis coordinate w.r.t. x     
-    CD2_2   = 2.83052387051731E-05 / partial of second axis coordinate w.r.t. y     
+    CD1_1   = 1.86049319494035E-08 / partial of first axis coordinate w.r.t. x      
+    CD1_2   = -1.3940697878041E-05 / partial of first axis coordinate w.r.t. y      
+    CD2_1   = -1.3846178828081E-05 / partial of second axis coordinate w.r.t. x     
+    CD2_2   = -9.8463386768576E-07 / partial of second axis coordinate w.r.t. y     
     LTV1    =        0.0000000E+00 / offset in X to subsection start                
     LTV2    =        0.0000000E+00 / offset in Y to subsection start                
+    RAW_LTV1=                  0.0 / original offset in X to subsection start       
+    RAW_LTV2=                  0.0 / original offset in Y to subsection start       
     LTM1_1  =                  1.0 / reciprocal of sampling rate in X               
     LTM2_2  =                  1.0 / reciprocal of sampling rate in Y               
-    PA_APER =              -32.556 / Position Angle of reference aperture center (de
-    VAFACTOR=   9.999085821139E-01 / velocity aberration plate scale factor         
-    ORIENTAT=              -32.556 / position angle of image y axis (deg. e of n)   
-    RA_APER =   3.685374208875E+01 / RA of aperture reference position              
-    DEC_APER=   4.892264646942E+01 / Declination of aperture reference position     
-                                                                                    
-                  / REPEATED EXPOSURES INFORMATION                                  
-                                                                                    
-    NCOMBINE=                    1 / number of image sets combined during CR rejecti
+    ORIENTAT=              -94.021 / position angle of image y axis (deg. e of n)   
+    RA_APER =   1.277409647262E+02 / RA of aperture reference position              
+    DEC_APER=   6.584202691721E+01 / Declination of aperture reference position     
+    PA_APER =             -94.3053 / Position Angle of reference aperture center (de
+    VAFACTOR=   1.000063143039E+00 / velocity aberration plate scale factor         
                                                                                     
                   / READOUT DEFINITION PARAMETERS                                   
                                                                                     
-    CENTERA1=                  513 / subarray axis1 center pt in unbinned dect. pix 
-    CENTERA2=                  513 / subarray axis2 center pt in unbinned dect. pix 
-    SIZAXIS1=                 1024 / subarray axis1 size in unbinned detector pixels
-    SIZAXIS2=                 1024 / subarray axis2 size in unbinned detector pixels
+    CENTERA1=                 2073 / subarray axis1 center pt in unbinned dect. pix 
+    CENTERA2=                 1035 / subarray axis2 center pt in unbinned dect. pix 
+    SIZAXIS1=                 4096 / subarray axis1 size in unbinned detector pixels
+    SIZAXIS2=                 2048 / subarray axis2 size in unbinned detector pixels
     BINAXIS1=                    1 / axis1 data bin size in unbinned detector pixels
     BINAXIS2=                    1 / axis2 data bin size in unbinned detector pixels
                                                                                     
-                  / READOUT PARAMETERS                                              
+                  / PHOTOMETRY KEYWORDS                                             
                                                                                     
-    SAMPNUM =                   13 / MULTIACCUM sample number                       
-    SAMPTIME=           602.937317 / total integration time (sec)                   
-    DELTATIM=            50.000412 / integration time of this sample (sec)          
-    ROUTTIME=   5.740229030181E+04 / UT time of array readout (MJD)                 
-    TDFTRANS=                    0 / number of TDF transitions during current sample
+    PHOTMODE= 'ACS WFC1 F814W MJD#57677.0536' / observation con                     
+    PHOTFLAM=        7.0486380E-20 / inverse sensitivity, ergs/cm2/Ang/electron     
+    PHOTZPT =       -2.1100000E+01 / ST magnitude zero point                        
+    PHOTPLAM=        8.0449937E+03 / Pivot wavelength (Angstroms)                   
+    PHOTBW  =        6.5305701E+02 / RMS bandwidth of filter plus detector          
+                                                                                    
+                  / REPEATED EXPOSURES INFO                                         
+                                                                                    
+    NCOMBINE=                    1 / number of image sets combined during CR rejecti
                                                                                     
                   / DATA PACKET INFORMATION                                         
                                                                                     
@@ -1016,137 +1428,197 @@ for more details.
     STDCFFF =                    F / science telemetry fill data present (T=1/F=0)  
     STDCFFP = '0x5569'             / science telemetry fill pattern (hex)           
                                                                                     
+                  / ON-BOARD COMPRESSION INFORMATION                                
+                                                                                    
+    WFCMPRSD=                    F / was WFC data compressed? (T/F)                 
+    CBLKSIZ =                    0 / size of compression block in 2-byte words      
+    LOSTPIX =                    0 / #pixels lost due to buffer overflow            
+    COMPTYP = 'None    '           / compression type performed (Partial/Full/None) 
+                                                                                    
                   / IMAGE STATISTICS AND DATA QUALITY FLAGS                         
                                                                                     
-    NGOODPIX=               990475 / number of good pixels                          
+    NGOODPIX=              7987448 / number of good pixels                          
     SDQFLAGS=                31743 / serious data quality flags                     
-    GOODMIN =       -2.8782272E+00 / minimum value of good pixels                   
-    GOODMAX =        1.1788658E+04 / maximum value of good pixels                   
-    GOODMEAN=        9.9831134E-01 / mean value of good pixels                      
-    SNRMIN  =        1.8871337E-02 / minimum signal to noise of good pixels         
-    SNRMAX  =        6.3982178E+01 / maximum signal to noise of good pixels         
-    SNRMEAN =        5.3425826E-02 / mean value of signal to noise of good pixels   
+    GOODMIN =       -5.6858374E+02 / minimum value of good pixels                   
+    GOODMAX =        8.4768180E+04 / maximum value of good pixels                   
+    GOODMEAN=        4.5566620E+01 / mean value of good pixels                      
     SOFTERRS=                    0 / number of soft error pixels (DQF=1)            
-    MEANDARK=        1.2191877E+01 / average of the dark values subtracted          
-    MEANBLEV=        1.4332316E+04 / average of all bias levels subtracted          
+    SNRMIN  =       -6.5290461E+00 / minimum signal to noise of good pixels         
+    SNRMAX  =        2.3049573E+02 / maximum signal to noise of good pixels         
+    SNRMEAN =        4.5304279E+00 / mean value of signal to noise of good pixels   
+    MEANDARK=        6.4147372E+00 / average of the dark values subtracted          
+    MEANBLEV=        6.4909774E-01 / average of all bias levels subtracted          
+    MEANFLSH=             0.000000 / Mean number of counts in post flash exposure   
     RADESYS = 'ICRS    '                                                            
-    OCX10   = 0.000786257500294596                                                  
-    OCX11   =   0.1354287266731262                                                  
-    OCY10   =   0.1209582984447479                                                  
-    OCY11   = -0.00042557646520435                                                  
-    IDCSCALE=   0.1282500028610229                                                  
-    IDCTHETA=                 45.0                                                  
-    IDCXREF =                507.0                                                  
-    IDCYREF =                507.0                                                  
-    IDCV2REF=    1.019000053405762                                                  
-    IDCV3REF=  -0.5070000290870667                                                  
+    OCX10   = 0.001964245000000002                                                  
+    OCX11   =  0.04982054148069229                                                  
+    OCY10   =  0.05027000100000004                                                  
+    OCY11   = 0.001500803312490457                                                  
+    IDCSCALE=                 0.05                                                  
+    IDCTHETA=                  0.0                                                  
+    IDCXREF =               2048.0                                                  
+    IDCYREF =               1024.0                                                  
+    IDCV2REF=    257.1520000000001                                                  
+    IDCV3REF=    302.6619900000002                                                  
+    D2IMERR1=  0.04199999943375587 / Maximum error of NPOL correction for axis 1    
+    D2IMDIS1= 'Lookup  '           / Detector to image correction type              
+    D2IM1   = 'EXTVER: 1' / Version number of WCSDVARR extension containing d2im loo
+    D2IM1   = 'NAXES: 2' / Number of independent variables in d2im function         
+    D2IM1   = 'AXIS.1: 1' / Axis number of the jth independent variable in a d2im fu
+    D2IM1   = 'AXIS.2: 2' / Axis number of the jth independent variable in a d2im fu
+    D2IMERR2=  0.06400000303983688 / Maximum error of NPOL correction for axis 2    
+    D2IMDIS2= 'Lookup  '           / Detector to image correction type              
+    D2IM2   = 'EXTVER: 2' / Version number of WCSDVARR extension containing d2im loo
+    D2IM2   = 'NAXES: 2' / Number of independent variables in d2im function         
+    D2IM2   = 'AXIS.1: 1' / Axis number of the jth independent variable in a d2im fu
+    D2IM2   = 'AXIS.2: 2' / Axis number of the jth independent variable in a d2im fu
+    D2IMEXT = 'jref$02c1450oj_d2i.fits'                                             
     WCSNAMEO= 'OPUS    '                                                            
     WCSAXESO=                    2                                                  
-    CRPIX1O =                507.0                                                  
-    CRPIX2O =                507.0                                                  
+    CRPIX1O =               2100.0                                                  
+    CRPIX2O =               1024.0                                                  
     CDELT1O =                  1.0                                                  
     CDELT2O =                  1.0                                                  
     CUNIT1O = 'deg     '                                                            
     CUNIT2O = 'deg     '                                                            
     CTYPE1O = 'RA---TAN'                                                            
     CTYPE2O = 'DEC--TAN'                                                            
-    CRVAL1O =       36.85374208875                                                  
-    CRVAL2O =       48.92264646942                                                  
+    CRVAL1O =       127.7749750908                                                  
+    CRVAL2O =       65.84290293455                                                  
     LONPOLEO=                180.0                                                  
-    LATPOLEO=       48.92264646942                                                  
+    LATPOLEO=       65.84290293455                                                  
     RADESYSO= 'ICRS    '                                                            
-    CD1_1O  =         -3.17711E-05                                                  
-    CD1_2O  =         -1.80786E-05                                                  
-    CD2_1O  =         -2.01487E-05                                                  
-    CD2_2O  =          2.83166E-05                                                  
-    IDCTAB  = 'iref$w3m18525i_idc.fits'                                             
-    B_1_3   = 1.69983940010457E-13                                                  
-    B_0_3   = -2.2777970488111E-10                                                  
-    A_2_2   = 1.11275247848408E-13                                                  
-    B_0_4   = 1.03978470894974E-12                                                  
-    A_0_4   = -2.0083179974495E-13                                                  
-    B_3_1   = 3.81044199963010E-13                                                  
-    A_3_0   = -1.9851733613323E-10                                                  
-    B_4_0   = -5.7352409055905E-13                                                  
-    B_0_2   = 2.98815054868485E-05                                                  
-    A_1_3   = 6.08832045645843E-13                                                  
-    A_4_0   = -3.2156784473326E-13                                                  
-    B_ORDER =                    4                                                  
-    A_0_2   = 2.77482030873749E-08                                                  
-    A_2_1   = 1.22255499299390E-10                                                  
-    B_2_0   = 6.92276069494587E-06                                                  
-    A_2_0   = -2.0701735553551E-07                                                  
-    A_3_1   = 4.13947711822547E-13                                                  
-    A_1_2   = 3.11477338242516E-11                                                  
-    A_ORDER =                    4                                                  
-    B_1_2   = 7.47270961118588E-11                                                  
-    B_2_2   = 1.38557115814168E-13                                                  
-    A_0_3   = 4.55691839657869E-11                                                  
-    B_2_1   = -2.3836656728517E-10                                                  
-    B_3_0   = 5.14014553890418E-11                                                  
-    B_1_1   = -2.8538202053351E-07                                                  
-    A_1_1   = 2.44176437155426E-05                                                  
-    WCSNAME = 'IDC_w3m18525i'                                                       
-    MDRIZSKY=   0.8125642368041847 / Sky value computed by AstroDrizzle             
+    CD1_1O  =          2.45367E-08                                                  
+    CD1_2O  =         -1.39456E-05                                                  
+    CD2_1O  =         -1.38597E-05                                                  
+    CD2_2O  = -9.8031499999999E-07                                                  
+    TDDALPHA= ''                                                                    
+    TDD_CXA = ''                                                                    
+    TDD_CXB =    -1.0658206323E-06                                                  
+    TDD_CTB =     1.5787128139E-06                                                  
+    TDD_CYA = ''                                                                    
+    TDD_CYB = ''                                                                    
+    TDDBETA = ''                                                                    
+    TDD_CTA = ''                                                                    
+    IDCTAB  = 'jref$11d1433lj_idc.fits'                                             
+    A_2_2   = 3.78731328537869E-14                                                  
+    B_0_3   = -3.8365982324508E-10                                                  
+    A_ORDER =                    5                                                  
+    A_0_2   = 2.16316670266357E-06                                                  
+    B_5_0   = -2.9216557962212E-18                                                  
+    A_4_1   = -2.2975314425693E-18                                                  
+    B_3_1   = -9.2662863736411E-16                                                  
+    B_1_1   = 6.18673688121303E-06                                                  
+    A_4_0   = 2.49648430134054E-14                                                  
+    B_2_0   = -1.7485625426539E-06                                                  
+    A_3_2   = 1.79076698558529E-18                                                  
+    B_0_2   = -7.2366916752762E-06                                                  
+    B_2_3   = -4.0303373428367E-19                                                  
+    A_2_1   = -3.3923056140854E-11                                                  
+    B_3_0   = 9.85440944815669E-11                                                  
+    B_ORDER =                    5                                                  
+    A_3_0   = -4.9299373340579E-10                                                  
+    B_2_1   = -5.1770017201658E-10                                                  
+    B_3_2   = -6.5749429811757E-19                                                  
+    A_2_0   = 8.55757690624103E-06                                                  
+    B_0_4   = 4.80879850209643E-15                                                  
+    B_1_3   = 1.17049370338725E-14                                                  
+    A_1_2   = -5.3116725265518E-10                                                  
+    B_0_5   = -3.0673060246341E-17                                                  
+    A_0_5   = 6.02661866571512E-18                                                  
+    A_5_0   = 3.34396903040512E-18                                                  
+    B_4_1   = 1.26957713407563E-18                                                  
+    A_2_3   = 2.16524457164329E-18                                                  
+    A_1_3   = -7.8672443613644E-15                                                  
+    B_2_2   = -2.9754427958761E-14                                                  
+    B_1_4   = 1.23793339962009E-17                                                  
+    B_1_2   = -7.2577430975755E-11                                                  
+    A_1_1   = -5.2167190331715E-06                                                  
+    A_0_4   = 2.30261315411602E-14                                                  
+    B_4_0   = -1.7435196173764E-14                                                  
+    A_3_1   = 6.55120590759313E-15                                                  
+    A_1_4   = -1.4386444581929E-18                                                  
+    A_0_3   = -1.4678926146950E-13                                                  
+    WCSNAME = 'IDC_11d1433lj'                                                       
+    CPERR1  =  0.02756105922162533 / Maximum error of NPOL correction for axis 1    
+    CPDIS1  = 'Lookup  '           / Prior distortion function type                 
+    DP1     = 'EXTVER: 1' / Version number of WCSDVARR extension containing lookup d
+    DP1     = 'NAXES: 2' / Number of independent variables in distortion function   
+    DP1     = 'AXIS.1: 1' / Axis number of the jth independent variable in a distort
+    DP1     = 'AXIS.2: 2' / Axis number of the jth independent variable in a distort
+    CPERR2  =  0.01880022883415222 / Maximum error of NPOL correction for axis 2    
+    CPDIS2  = 'Lookup  '           / Prior distortion function type                 
+    DP2     = 'EXTVER: 2' / Version number of WCSDVARR extension containing lookup d
+    DP2     = 'NAXES: 2' / Number of independent variables in distortion function   
+    DP2     = 'AXIS.1: 1' / Axis number of the jth independent variable in a distort
+    DP2     = 'AXIS.2: 2' / Axis number of the jth independent variable in a distort
+    NPOLEXT = 'jref$02c1450rj_npl.fits'                                             
+    MDRIZSKY=    33.60466766357422 / Sky value computed by AstroDrizzle             
     XTENSION= 'IMAGE   '           / IMAGE extension                                
-    BITPIX  =                  -32                                                  
-    NAXIS   =                    2                                                  
-    NAXIS1  =                 1014                                                  
-    NAXIS2  =                 1014                                                  
+    BITPIX  =                  -32 / number of bits per data pixel                  
+    NAXIS   =                    2 / number of data axes                            
+    NAXIS1  =                 4096 / length of data axis 1                          
+    NAXIS2  =                 2048 / length of data axis 2                          
     PCOUNT  =                    0 / required keyword; must = 0                     
     GCOUNT  =                    1 / required keyword; must = 1                     
-    ORIGIN  = 'HSTIO/CFITSIO March 2010'                                            
-    DATE    = '2016-06-02' / date this file was written (yyyy-mm-dd)                
+    ORIGIN  = 'HSTIO/CFITSIO March 2010' / FITS file originator                     
+    DATE    = '2017-12-03' / date this file was written (yyyy-mm-dd)                
     INHERIT =                    T / inherit the primary header                     
     EXTNAME = 'SCI     '           / extension name                                 
     EXTVER  =                    1 / extension version number                       
-    ROOTNAME= 'iczgs3y5q                         ' / rootname of the observation set
-    EXPNAME = 'iczgs3y5q                ' / exposure identifier                     
-    BUNIT   = 'ELECTRONS/S'        / brightness units                               
+    ROOTNAME= 'jczgx1q1q                         ' / rootname of the observation set
+    EXPNAME = 'jczgx1q1q                ' / exposure identifier                     
+    BUNIT   = 'ELECTRONS'          / brightness units                               
+                                                                                    
+                  / WFC CCD CHIP IDENTIFICATION                                     
+                                                                                    
+    CCDCHIP =                    2 / CCD chip (1 or 2)                              
                                                                                     
                   / World Coordinate System and Related Parameters                  
                                                                                     
     WCSAXES =                    2 / number of World Coordinate System axes         
-    CRPIX1  =                507.0 / x-coordinate of reference pixel                
-    CRPIX2  =                507.0 / y-coordinate of reference pixel                
-    CRVAL1  =       36.85747964213 / first axis value at reference pixel            
-    CRVAL2  =       48.92227663477 / second axis value at reference pixel           
+    CRPIX1  =               2048.0 / x-coordinate of reference pixel                
+    CRPIX2  =               1024.0 / y-coordinate of reference pixel                
+    CRVAL1  =    127.7790008405421 / first axis value at reference pixel            
+    CRVAL2  =     65.8438018528099 / second axis value at reference pixel           
     CTYPE1  = 'RA---TAN-SIP'       / the coordinate type for the first axis         
     CTYPE2  = 'DEC--TAN-SIP'       / the coordinate type for the second axis        
-    CD1_1   = -3.1760811272930E-05 / partial of first axis coordinate w.r.t. x      
-    CD1_2   = -1.8097365221752E-05 / partial of first axis coordinate w.r.t. y      
-    CD2_1   = -2.0155198493371E-05 / partial of second axis coordinate w.r.t. x     
-    CD2_2   = 2.83091348126201E-05 / partial of second axis coordinate w.r.t. y     
+    CD1_1   = 1.77165941042396E-08 / partial of first axis coordinate w.r.t. x      
+    CD1_2   = -1.3940911726204E-05 / partial of first axis coordinate w.r.t. y      
+    CD2_1   = -1.3846329672062E-05 / partial of second axis coordinate w.r.t. x     
+    CD2_2   = -9.8374991384276E-07 / partial of second axis coordinate w.r.t. y     
     LTV1    =        0.0000000E+00 / offset in X to subsection start                
     LTV2    =        0.0000000E+00 / offset in Y to subsection start                
+    RAW_LTV1=                  0.0 / original offset in X to subsection start       
+    RAW_LTV2=                  0.0 / original offset in Y to subsection start       
     LTM1_1  =                  1.0 / reciprocal of sampling rate in X               
     LTM2_2  =                  1.0 / reciprocal of sampling rate in Y               
-    PA_APER =             -32.5531 / Position Angle of reference aperture center (de
-    VAFACTOR=   9.999381116940E-01 / velocity aberration plate scale factor         
-    ORIENTAT=             -32.5531 / position angle of image y axis (deg. e of n)   
-    RA_APER =   3.685747964213E+01 / RA of aperture reference position              
-    DEC_APER=   4.892227663477E+01 / Declination of aperture reference position     
-                                                                                    
-                  / REPEATED EXPOSURES INFORMATION                                  
-                                                                                    
-    NCOMBINE=                    1 / number of image sets combined during CR rejecti
+    ORIENTAT=             -94.0174 / position angle of image y axis (deg. e of n)   
+    RA_APER =   1.277449931071E+02 / RA of aperture reference position              
+    DEC_APER=   6.584220602391E+01 / Declination of aperture reference position     
+    PA_APER =             -94.3016 / Position Angle of reference aperture center (de
+    VAFACTOR=   1.000073952797E+00 / velocity aberration plate scale factor         
                                                                                     
                   / READOUT DEFINITION PARAMETERS                                   
                                                                                     
-    CENTERA1=                  513 / subarray axis1 center pt in unbinned dect. pix 
-    CENTERA2=                  513 / subarray axis2 center pt in unbinned dect. pix 
-    SIZAXIS1=                 1024 / subarray axis1 size in unbinned detector pixels
-    SIZAXIS2=                 1024 / subarray axis2 size in unbinned detector pixels
+    CENTERA1=                 2073 / subarray axis1 center pt in unbinned dect. pix 
+    CENTERA2=                 1035 / subarray axis2 center pt in unbinned dect. pix 
+    SIZAXIS1=                 4096 / subarray axis1 size in unbinned detector pixels
+    SIZAXIS2=                 2048 / subarray axis2 size in unbinned detector pixels
     BINAXIS1=                    1 / axis1 data bin size in unbinned detector pixels
     BINAXIS2=                    1 / axis2 data bin size in unbinned detector pixels
                                                                                     
-                  / READOUT PARAMETERS                                              
+                  / PHOTOMETRY KEYWORDS                                             
                                                                                     
-    SAMPNUM =                   14 / MULTIACCUM sample number                       
-    SAMPTIME=           652.937744 / total integration time (sec)                   
-    DELTATIM=            50.000412 / integration time of this sample (sec)          
-    ROUTTIME=   5.740226431774E+04 / UT time of array readout (MJD)                 
-    TDFTRANS=                    0 / number of TDF transitions during current sample
+    PHOTMODE= 'ACS WFC1 F814W MJD#57677.0946' / observation con                     
+    PHOTFLAM=        7.0486386E-20 / inverse sensitivity, ergs/cm2/Ang/electron     
+    PHOTZPT =       -2.1100000E+01 / ST magnitude zero point                        
+    PHOTPLAM=        8.0449937E+03 / Pivot wavelength (Angstroms)                   
+    PHOTBW  =        6.5305701E+02 / RMS bandwidth of filter plus detector          
+                                                                                    
+                  / REPEATED EXPOSURES INFO                                         
+                                                                                    
+    NCOMBINE=                    1 / number of image sets combined during CR rejecti
                                                                                     
                   / DATA PACKET INFORMATION                                         
                                                                                     
@@ -1156,78 +1628,132 @@ for more details.
     STDCFFF =                    F / science telemetry fill data present (T=1/F=0)  
     STDCFFP = '0x5569'             / science telemetry fill pattern (hex)           
                                                                                     
+                  / ON-BOARD COMPRESSION INFORMATION                                
+                                                                                    
+    WFCMPRSD=                    F / was WFC data compressed? (T/F)                 
+    CBLKSIZ =                    0 / size of compression block in 2-byte words      
+    LOSTPIX =                    0 / #pixels lost due to buffer overflow            
+    COMPTYP = 'None    '           / compression type performed (Partial/Full/None) 
+                                                                                    
                   / IMAGE STATISTICS AND DATA QUALITY FLAGS                         
                                                                                     
-    NGOODPIX=               990476 / number of good pixels                          
+    NGOODPIX=              7987459 / number of good pixels                          
     SDQFLAGS=                31743 / serious data quality flags                     
-    GOODMIN =       -2.9155195E+00 / minimum value of good pixels                   
-    GOODMAX =        2.6231844E+04 / maximum value of good pixels                   
-    GOODMEAN=        9.3451303E-01 / mean value of good pixels                      
-    SNRMIN  =        1.1295157E-02 / minimum signal to noise of good pixels         
-    SNRMAX  =        9.8745354E+01 / maximum signal to noise of good pixels         
-    SNRMEAN =        4.9034115E-02 / mean value of signal to noise of good pixels   
+    GOODMIN =       -4.6811813E+02 / minimum value of good pixels                   
+    GOODMAX =        8.6860820E+04 / maximum value of good pixels                   
+    GOODMEAN=        5.8565811E+01 / mean value of good pixels                      
     SOFTERRS=                    0 / number of soft error pixels (DQF=1)            
-    MEANDARK=        1.3298962E+01 / average of the dark values subtracted          
-    MEANBLEV=        1.4334856E+04 / average of all bias levels subtracted          
+    SNRMIN  =       -5.3112264E+00 / minimum signal to noise of good pixels         
+    SNRMAX  =        2.3047971E+02 / maximum signal to noise of good pixels         
+    SNRMEAN =        5.8733592E+00 / mean value of signal to noise of good pixels   
+    MEANDARK=        6.1097779E+00 / average of the dark values subtracted          
+    MEANBLEV=       -8.4848583E-01 / average of all bias levels subtracted          
+    MEANFLSH=             0.000000 / Mean number of counts in post flash exposure   
     RADESYS = 'ICRS    '                                                            
-    OCX10   = 0.000779107213020324                                                  
-    OCX11   =   0.1354261934757233                                                  
-    OCY10   =    0.120962917804718                                                  
-    OCY11   = -0.00042105099419131                                                  
-    IDCSCALE=   0.1282500028610229                                                  
-    IDCTHETA=                 45.0                                                  
-    IDCXREF =                507.0                                                  
-    IDCYREF =                507.0                                                  
-    IDCV2REF=    1.019000053405762                                                  
-    IDCV3REF=  -0.5070000290870667                                                  
+    OCX10   = 0.001964245000000002                                                  
+    OCX11   =  0.04982054148069229                                                  
+    OCY10   =  0.05027000100000004                                                  
+    OCY11   = 0.001500803312490457                                                  
+    IDCSCALE=                 0.05                                                  
+    IDCTHETA=                  0.0                                                  
+    IDCXREF =               2048.0                                                  
+    IDCYREF =               1024.0                                                  
+    IDCV2REF=    257.1520000000001                                                  
+    IDCV3REF=    302.6619900000002                                                  
+    D2IMERR1=  0.04199999943375587 / Maximum error of NPOL correction for axis 1    
+    D2IMDIS1= 'Lookup  '           / Detector to image correction type              
+    D2IM1   = 'EXTVER: 1' / Version number of WCSDVARR extension containing d2im loo
+    D2IM1   = 'NAXES: 2' / Number of independent variables in d2im function         
+    D2IM1   = 'AXIS.1: 1' / Axis number of the jth independent variable in a d2im fu
+    D2IM1   = 'AXIS.2: 2' / Axis number of the jth independent variable in a d2im fu
+    D2IMERR2=  0.06400000303983688 / Maximum error of NPOL correction for axis 2    
+    D2IMDIS2= 'Lookup  '           / Detector to image correction type              
+    D2IM2   = 'EXTVER: 2' / Version number of WCSDVARR extension containing d2im loo
+    D2IM2   = 'NAXES: 2' / Number of independent variables in d2im function         
+    D2IM2   = 'AXIS.1: 1' / Axis number of the jth independent variable in a d2im fu
+    D2IM2   = 'AXIS.2: 2' / Axis number of the jth independent variable in a d2im fu
+    D2IMEXT = 'jref$02c1450oj_d2i.fits'                                             
     WCSNAMEO= 'OPUS    '                                                            
     WCSAXESO=                    2                                                  
-    CRPIX1O =                507.0                                                  
-    CRPIX2O =                507.0                                                  
+    CRPIX1O =               2100.0                                                  
+    CRPIX2O =               1024.0                                                  
     CDELT1O =                  1.0                                                  
     CDELT2O =                  1.0                                                  
     CUNIT1O = 'deg     '                                                            
     CUNIT2O = 'deg     '                                                            
     CTYPE1O = 'RA---TAN'                                                            
     CTYPE2O = 'DEC--TAN'                                                            
-    CRVAL1O =       36.85747964213                                                  
-    CRVAL2O =       48.92227663477                                                  
+    CRVAL1O =       127.7790038454                                                  
+    CRVAL2O =    65.84308114840999                                                  
     LONPOLEO=                180.0                                                  
-    LATPOLEO=       48.92227663477                                                  
+    LATPOLEO=    65.84308114840999                                                  
     RADESYSO= 'ICRS    '                                                            
-    CD1_1O  =         -3.17721E-05                                                  
-    CD1_2O  =         -1.80771E-05                                                  
-    CD2_1O  =         -2.01471E-05                                                  
-    CD2_2O  =          2.83175E-05                                                  
-    IDCTAB  = 'iref$w3m18525i_idc.fits'                                             
-    B_1_2   = 2.35150691092754E-11                                                  
-    A_3_0   = -1.8769691205859E-10                                                  
-    B_ORDER =                    4                                                  
-    A_2_1   = 9.33802326056672E-11                                                  
-    A_1_1   = 2.44489619913889E-05                                                  
-    A_2_2   = 5.99856272799014E-15                                                  
-    B_0_3   = -2.0092851573342E-10                                                  
-    B_3_1   = 1.00607112230593E-13                                                  
-    B_3_0   = 3.66824943640799E-11                                                  
-    A_2_0   = -1.8678411786277E-07                                                  
-    B_1_3   = -6.9677270201133E-15                                                  
-    A_0_2   = 4.73630640333079E-08                                                  
-    A_1_3   = 5.55221560333543E-13                                                  
-    B_0_4   = 7.52827599670567E-13                                                  
-    B_2_2   = -1.1683621160870E-13                                                  
-    A_0_4   = -2.0852050771470E-13                                                  
-    B_0_2   = 2.99875048026693E-05                                                  
-    A_4_0   = -3.1314754837293E-13                                                  
-    B_4_0   = -6.4384058620497E-13                                                  
-    A_ORDER =                    4                                                  
-    A_0_3   = 2.65011000430244E-11                                                  
-    B_2_1   = -2.8558390691514E-10                                                  
-    A_1_2   = 5.07616164062598E-11                                                  
-    B_1_1   = -2.0379403931148E-07                                                  
-    A_3_1   = 5.25748787891111E-13                                                  
-    B_2_0   = 6.97816138011029E-06                                                  
-    WCSNAME = 'IDC_w3m18525i'                                                       
-    MDRIZSKY=   0.7757664823972165 / Sky value computed by AstroDrizzle             
+    CD1_1O  =          2.36474E-08                                                  
+    CD1_2O  =         -1.39456E-05                                                  
+    CD2_1O  =         -1.38597E-05                                                  
+    CD2_2O  =          -9.7942E-07                                                  
+    TDDALPHA= ''                                                                    
+    TDD_CXA = ''                                                                    
+    TDD_CXB =    -1.0658206323E-06                                                  
+    TDD_CTB =     1.5787128139E-06                                                  
+    TDD_CYA = ''                                                                    
+    TDD_CYB = ''                                                                    
+    TDDBETA = ''                                                                    
+    TDD_CTA = ''                                                                    
+    IDCTAB  = 'jref$11d1433lj_idc.fits'                                             
+    A_2_2   = 3.78731328537869E-14                                                  
+    B_0_3   = -3.8365982324508E-10                                                  
+    A_ORDER =                    5                                                  
+    A_0_2   = 2.16316670266357E-06                                                  
+    B_5_0   = -2.9216557962212E-18                                                  
+    A_4_1   = -2.2975314425693E-18                                                  
+    B_3_1   = -9.2662863736411E-16                                                  
+    B_1_1   = 6.18673688121303E-06                                                  
+    A_4_0   = 2.49648430134054E-14                                                  
+    B_2_0   = -1.7485625426539E-06                                                  
+    A_3_2   = 1.79076698558529E-18                                                  
+    B_0_2   = -7.2366916752762E-06                                                  
+    B_2_3   = -4.0303373428367E-19                                                  
+    A_2_1   = -3.3923056140854E-11                                                  
+    B_3_0   = 9.85440944815669E-11                                                  
+    B_ORDER =                    5                                                  
+    A_3_0   = -4.9299373340579E-10                                                  
+    B_2_1   = -5.1770017201658E-10                                                  
+    B_3_2   = -6.5749429811757E-19                                                  
+    A_2_0   = 8.55757690624103E-06                                                  
+    B_0_4   = 4.80879850209643E-15                                                  
+    B_1_3   = 1.17049370338725E-14                                                  
+    A_1_2   = -5.3116725265518E-10                                                  
+    B_0_5   = -3.0673060246341E-17                                                  
+    A_0_5   = 6.02661866571512E-18                                                  
+    A_5_0   = 3.34396903040512E-18                                                  
+    B_4_1   = 1.26957713407563E-18                                                  
+    A_2_3   = 2.16524457164329E-18                                                  
+    A_1_3   = -7.8672443613644E-15                                                  
+    B_2_2   = -2.9754427958761E-14                                                  
+    B_1_4   = 1.23793339962009E-17                                                  
+    B_1_2   = -7.2577430975755E-11                                                  
+    A_1_1   = -5.2167190331715E-06                                                  
+    A_0_4   = 2.30261315411602E-14                                                  
+    B_4_0   = -1.7435196173764E-14                                                  
+    A_3_1   = 6.55120590759313E-15                                                  
+    A_1_4   = -1.4386444581929E-18                                                  
+    A_0_3   = -1.4678926146950E-13                                                  
+    WCSNAME = 'IDC_11d1433lj'                                                       
+    CPERR1  =  0.02756105922162533 / Maximum error of NPOL correction for axis 1    
+    CPDIS1  = 'Lookup  '           / Prior distortion function type                 
+    DP1     = 'EXTVER: 1' / Version number of WCSDVARR extension containing lookup d
+    DP1     = 'NAXES: 2' / Number of independent variables in distortion function   
+    DP1     = 'AXIS.1: 1' / Axis number of the jth independent variable in a distort
+    DP1     = 'AXIS.2: 2' / Axis number of the jth independent variable in a distort
+    CPERR2  =  0.01880022883415222 / Maximum error of NPOL correction for axis 2    
+    CPDIS2  = 'Lookup  '           / Prior distortion function type                 
+    DP2     = 'EXTVER: 2' / Version number of WCSDVARR extension containing lookup d
+    DP2     = 'NAXES: 2' / Number of independent variables in distortion function   
+    DP2     = 'AXIS.1: 1' / Axis number of the jth independent variable in a distort
+    DP2     = 'AXIS.2: 2' / Axis number of the jth independent variable in a distort
+    NPOLEXT = 'jref$02c1450rj_npl.fits'                                             
+    MDRIZSKY=    50.43417358398437 / Sky value computed by AstroDrizzle             
 
 
 
@@ -1251,6 +1777,7 @@ options to change the histogram type, scaling, bin sizes, and more.
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
     
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
@@ -1258,8 +1785,40 @@ options to change the histogram type, scaling, bin sizes, and more.
 
 .. code:: ipython3
 
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103577501032" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
     # Change these values to your desired data files
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     
     # Pull out the first science array, we also need to flatten the data to a 
     # 1D array before sending it to hist
@@ -1277,7 +1836,7 @@ options to change the histogram type, scaling, bin sizes, and more.
 
 
 
-.. image:: images.imutil_files/images.imutil_59_0.png
+.. image:: images.imutil_files/images.imutil_67_0.png
 
 
 
@@ -1301,11 +1860,44 @@ documentation <http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?h
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103629766216" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change these values to your desired data files
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     out_file = 'imreplace_out.fits'
     
     # Pull out the first science array
@@ -1393,7 +1985,7 @@ be using
 .. code:: ipython3
 
     # Pull image data array and image header
-    orig_hdu = fits.open('/eng/ssb/iraf_transition/test_data/imstack_out.fits')
+    orig_hdu = fits.open('../data/imstack_out.fits')
     
     print("Here's the extensions in our input file:")
     orig_hdu.info()
@@ -1424,7 +2016,7 @@ be using
 .. parsed-literal::
 
     Here's the extensions in our input file:
-    Filename: /eng/ssb/iraf_transition/test_data/imstack_out.fits
+    Filename: ../data/imstack_out.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
       0  SCI           1 PrimaryHDU     199   (4096, 2048, 2)   float32   
     
@@ -1456,13 +2048,58 @@ images. Here we show that manipulation using the ``astropy`` library and
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+    obsid = '2004663556'
+    Observations.download_products(obsid, productFilename="jczgx1q1q_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits with expected size 167964480.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103629896840" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Pull two image data arrays and an image header
-    header1 = fits.getheader('/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits',ext=1)
-    image1 = fits.getdata('/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits')
-    image2 = fits.getdata('/eng/ssb/iraf_transition/test_data/jczgx1q1q_flc.fits')
+    header1 = fits.getheader('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits',ext=1)
+    image1 = fits.getdata('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits')
+    image2 = fits.getdata('./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits')
     
     # Stack arrays, the new dimension will be put first, unless otherwise specified with the axis keyword
     outstack = np.stack((image1,image2))
@@ -1509,11 +2146,44 @@ issue <https://github.com/spacetelescope/stak-notebooks/issues/83>`__.
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy import stats
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103619284664" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change these values to your desired data files
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     sci1 = fits.getdata(test_data, ext=1)
     
     # The sigma_clipped_stats function returns the mean, median, and stddev respectively
@@ -1569,12 +2239,57 @@ for more details.
     from astropy.io import fits
     from astropy import units
     from ccdproc import CCDData, Combiner
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615003'
+    Observations.download_products(obsid,productFilename="iczgs3y5q_flt.fits")
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits with expected size 16534080. [astroquery.query]
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103623554440" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change these values to your desired data files
-    test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
-    test_data2 = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data1 = './mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits'
+    test_data2 = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     
     # First we need to pull out the science arrays to create CCDData objects
     # Our actual unit is electrons/sec, this is not accepted by the current
@@ -1592,6 +2307,12 @@ for more details.
     # And finally to combine...
     final_combine = combiner.average_combine()
     print(final_combine.data)
+
+
+.. parsed-literal::
+
+    INFO:astropy:using the unit electron / s passed to the FITS reader instead of the unit ELECTRONS/S in the FITS file.
+    INFO:astropy:using the unit electron / s passed to the FITS reader instead of the unit ELECTRONS/S in the FITS file.
 
 
 .. parsed-literal::
@@ -1634,11 +2355,44 @@ list of files, see information about Python loops
 
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615003'
+    Observations.download_products(obsid,productFilename="iczgs3y5q_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO:astropy:Found cached file ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits with expected size 16534080.
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103576438824" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3y5q/iczgs3y5q_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change this value to your desired data files
-    test_data1 = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
+    test_data1 = './mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits'
     
     # To quickly pull out the data array you can use the astropy convenience function
     data_arr = fits.getdata(test_data1,ext=1)

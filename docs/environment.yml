@@ -6,6 +6,7 @@ dependencies:
   - numpy
   - scipy
   - astropy
+  - astroquery
   - numpydoc
   - nbconvert>=5.0.0
   - sphinx>=1.5

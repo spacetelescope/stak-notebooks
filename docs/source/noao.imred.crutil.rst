@@ -44,11 +44,39 @@ for more information. More kernel shapes are also listed on this page.
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table120765609800" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change this value to your desired data file
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
     out_file = 'crgrow.fits'
     
     # Read in your fits file, when using some fits file, the byteswap call is required to
@@ -69,7 +97,7 @@ for more information. More kernel shapes are also listed on this page.
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
+    Filename: ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
       0  PRIMARY       1 PrimaryHDU     266   ()      
       1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
@@ -106,11 +134,39 @@ information on usage.
     from astropy.io import fits
     from astropy import units
     from ccdproc import cosmicray_median, fits_ccddata_reader
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615003'
+    Observations.download_products(obsid,productFilename="iczgs3y5q_flt.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table120765609688" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3y5q/iczgs3y5q_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # Change these values to your desired data files
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits'
     
     # First we need to pull out the science and error(uncertainty) array to 
     # create CCDData objects. Our acutal unit is electrons/sec, this is not
@@ -125,7 +181,13 @@ information on usage.
 
 .. parsed-literal::
 
-    INFO: using the unit electron / s passed to the FITS reader instead of the unit ELECTRONS/S in the FITS file. [ccdproc.ccddata]
+    INFO: using the unit electron / s passed to the FITS reader instead of the unit ELECTRONS/S in the FITS file. [astropy.nddata.ccddata]
+
+
+.. parsed-literal::
+
+    /Users/ogaz/miniconda3/envs/irafdev/lib/python3.5/site-packages/ccdproc/core.py:1565: RuntimeWarning: divide by zero encountered in true_divide
+      rarr = (data - marr) / error_image
 
 
 

@@ -81,7 +81,7 @@ the **images.imutil.imsum** task for a short usage example.
 .. code:: ipython3
 
     # Get the data
-    test_data = glob.glob('/eng/ssb/iraf_transition/test_data/mscombine/nnicpw4*_blv_tmp.fits')
+    test_data = glob.glob('../data/nn*_blv_tmp.fits')
 
 .. code:: ipython3
 
@@ -121,15 +121,6 @@ the **images.imutil.imsum** task for a short usage example.
     masked_arrays_ext5_squared = [(item * (1/weight_image_ext4))**2 for item in masked_arrays_ext5]
     comb_ext2 = np.sqrt(np.ma.sum(masked_arrays_ext2_squared, axis=0)).data
     comb_ext5 = np.sqrt(np.ma.sum(masked_arrays_ext5_squared, axis=0)).data
-
-
-.. parsed-literal::
-
-    /Users/ogaz/miniconda2/envs/irafdev3/lib/python3.6/site-packages/ipykernel_launcher.py:10: RuntimeWarning: divide by zero encountered in true_divide
-      # Remove the CWD from sys.path while we load stuff.
-    /Users/ogaz/miniconda2/envs/irafdev3/lib/python3.6/site-packages/ipykernel_launcher.py:11: RuntimeWarning: divide by zero encountered in true_divide
-      # This is added back by InteractiveShellApp.init_path()
-
 
 .. code:: ipython3
 
@@ -179,10 +170,9 @@ images.imutil.imstatistics notebook entry.
 
     # Change these values to your desired data file list
     # loop over multiple files, make filelist
-    test_files = glob.glob('/eng/ssb/iraf_transition/test_data/i*_flt.fits')
+    test_files = glob.glob('../data/n*_tmp.fits')
     
     for filename in test_files:
-        #test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
         hdulist = fits.open(filename)
     
         # Make mask using Python bitmath, using bit flags 32 and 4
@@ -203,20 +193,20 @@ images.imutil.imstatistics notebook entry.
 
 .. parsed-literal::
 
-    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
-    mean: 0.820129451464822
-    median: 0.8166738748550415
-    standard deviation: 0.05532484610965952
+    Stats for file: ../data/nnicqr34r1q_blv_tmp.fits
+    mean: 1.049938712724799
+    median: 0.8347640037536621
+    standard deviation: 3.386821124737488
     
-    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3ygq_newdtype_flt.fits
-    mean: 1.0
-    median: 1.0
-    standard deviation: 0.0
+    Stats for file: ../data/nnicqr34rgq_blv_tmp.fits
+    mean: 1.0696971193430191
+    median: 0.8951225280761719
+    standard deviation: 3.341097790698396
     
-    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
-    mean: 0.7803241408189818
-    median: 0.7780539989471436
-    standard deviation: 0.049491070357460455
+    Stats for file: ../data/nnicqr34rvq_blv_tmp.fits
+    mean: 1.036385163417633
+    median: 0.8546183109283447
+    standard deviation: 3.405510574506165
     
 
 

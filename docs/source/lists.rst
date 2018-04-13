@@ -137,7 +137,7 @@ the IRAF task unique. More information on going to and from ``Astropy``
 .. code:: ipython3
 
     # Read text file into table
-    text_file = '/eng/ssb/iraf_transition/test_data/table.txt'
+    text_file = '../data/table.txt'
     tab = Table.read(text_file, format='ascii.no_header')
     tab.pprint()
 
