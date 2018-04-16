@@ -10,8 +10,7 @@ dependencies:
   - numpydoc
   - nbconvert>=5.0.0
   - sphinx>=1.5
+  - sphinx_rtd_theme
+  - stsci_rtd_theme
   - ipython
-  - pip:
-    - sphinx_rtd_theme
-    - stsci_rtd_theme
 
