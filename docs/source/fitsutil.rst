@@ -63,13 +63,41 @@ compression and another using GZIP compression
 
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90640538424" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # RICE example
     
     # test files
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     outfile_rice = 'jczgx1ppq_rice.fits'
     
     # open FITS file
@@ -87,9 +115,9 @@ compression and another using GZIP compression
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits
+    Filename: ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
-      0  PRIMARY       1 PrimaryHDU     270   ()      
+      0  PRIMARY       1 PrimaryHDU     279   ()      
       1  SCI           1 ImageHDU       200   (4096, 2048)   float32   
       2  ERR           1 ImageHDU        56   (4096, 2048)   float32   
       3  DQ            1 ImageHDU        48   (4096, 2048)   int16   
@@ -112,7 +140,7 @@ compression and another using GZIP compression
     # Gzip example
     
     # test files
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     outfile_gzip = 'jczgx1ppq_gzip.fits'
     
     hdulist = fits.open(test_data)
@@ -139,11 +167,39 @@ equivalent of fxcopy and fxinsert.
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90661538056" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # test files
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     outfile = 'fxinsert.fits'
     
     # open fits file, this outputs an hdulist object
@@ -173,9 +229,9 @@ equivalent of fxcopy and fxinsert.
 .. parsed-literal::
 
     hdulist before:
-    Filename: /eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits
+    Filename: ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
-      0  PRIMARY       1 PrimaryHDU     270   ()      
+      0  PRIMARY       1 PrimaryHDU     279   ()      
       1  SCI           1 ImageHDU       200   (4096, 2048)   float32   
       2  ERR           1 ImageHDU        56   (4096, 2048)   float32   
       3  DQ            1 ImageHDU        48   (4096, 2048)   int16   
@@ -219,11 +275,39 @@ extension from the original ``HDUList``
 
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615003'
+    Observations.download_products(obsid,productFilename="iczgs3y5q_flt.fits")
+
+
+.. parsed-literal::
+
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3y5q/iczgs3y5q_flt.fits to ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits ... [Done]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table4499119632" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3y5q/iczgs3y5q_flt.fits</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # FITS filenames
-    test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits'
+    test_data = './mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits'
     outfile_1 = 'fxsplit.fits'
     outfile_2 = 'fxdelete.fits'
     
@@ -257,7 +341,7 @@ extension from the original ``HDUList``
 .. parsed-literal::
 
     original FITS file:
-    Filename: /eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
+    Filename: ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
       0  PRIMARY       1 PrimaryHDU     265   ()      
       1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
@@ -343,33 +427,52 @@ data shape and format for each extension.
 
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
 
 .. code:: ipython3
 
-    # run fits.info
-    fits.info('/eng/ssb/iraf_transition/test_data/tester.fits')
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615003'
+    Observations.download_products(obsid,productFilename="iczgs3y5q_flt.fits")
 
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/tester.fits
+    INFO: Found cached file ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits with expected size 16534080. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90640344064" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3y5q/iczgs3y5q_flt.fits</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
+    # run fits.info
+    fits.info('./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits')
+
+
+.. parsed-literal::
+
+    Filename: ./mastDownload/HST/ICZGS3Y5Q/iczgs3y5q_flt.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
-      0  PRIMARY       1 PrimaryHDU     270   ()      
-      1  SCI           1 ImageHDU       200   (4096, 2048)   float32   
-      2  ERR           1 ImageHDU        56   (4096, 2048)   float32   
-      3  DQ            1 ImageHDU        48   (4096, 2048)   int16   
-      4  SCI           2 ImageHDU       198   (4096, 2048)   float32   
-      5  ERR           2 ImageHDU        56   (4096, 2048)   float32   
-      6  DQ            2 ImageHDU        48   (4096, 2048)   int16   
-      7  D2IMARR       1 ImageHDU        15   (64, 32)   float32   
-      8  D2IMARR       2 ImageHDU        15   (64, 32)   float32   
-      9  D2IMARR       3 ImageHDU        15   (64, 32)   float32   
-     10  D2IMARR       4 ImageHDU        15   (64, 32)   float32   
-     11  WCSDVARR      1 ImageHDU        15   (64, 32)   float32   
-     12  WCSDVARR      2 ImageHDU        15   (64, 32)   float32   
-     13  WCSDVARR      3 ImageHDU        15   (64, 32)   float32   
-     14  WCSDVARR      4 ImageHDU        15   (64, 32)   float32   
-     15  WCSCORR       1 BinTableHDU     59   14R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
+      0  PRIMARY       1 PrimaryHDU     265   ()      
+      1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
+      2  ERR           1 ImageHDU        51   (1014, 1014)   float32   
+      3  DQ            1 ImageHDU        43   (1014, 1014)   int16   
+      4  SAMP          1 ImageHDU        37   (1014, 1014)   int16   
+      5  TIME          1 ImageHDU        37   (1014, 1014)   float32   
+      6  WCSCORR       1 BinTableHDU     59   7R x 24C   [40A, I, A, 24A, 24A, 24A, 24A, D, D, D, D, D, D, D, D, 24A, 24A, D, D, D, D, J, 40A, 128A]   
 
 
 
@@ -394,7 +497,7 @@ for more details.
 .. code:: ipython3
 
     # Define input and output files
-    infile = '/eng/ssb/iraf_transition/test_data/table3.txt'
+    infile = '../data/table3.txt'
     outfile = 'table3.fits'
     
     # read txt, write to fits

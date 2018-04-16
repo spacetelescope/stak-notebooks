@@ -58,7 +58,7 @@ Contents:
     #Here we import the example table we will be using from a text file:
     from astropy.table import Table
     
-    filename = "/eng/ssb/iraf_transition/test_data/table2.txt"
+    filename = "../data/table2.txt"
     ex_table = Table.read(filename, format='ascii')
     ex_table
 
@@ -68,7 +68,7 @@ Contents:
 .. raw:: html
 
     <i>Table length=5</i>
-    <table id="table90472151528" class="table-striped table-bordered table-condensed">
+    <table id="table90311216096" class="table-striped table-bordered table-condensed">
     <thead><tr><th>sname</th><th>radius</th><th>fwhm</th></tr></thead>
     <thead><tr><th>str5</th><th>int64</th><th>float64</th></tr></thead>
     <tr><td>star1</td><td>10</td><td>6.5</td></tr>
@@ -247,7 +247,7 @@ values from the table data, and metadata.
 .. code:: ipython3
 
     # Pulling values out of the metadata
-    fits_file = '/eng/ssb/iraf_transition/test_data/08b18470j_imp.fits'
+    fits_file = '../data/08b18470j_imp.fits'
     fits_table = Table.read(fits_file, hdu=2)
     print(fits_table.meta)
     print(fits_table.meta['EXTNAME'])
@@ -372,7 +372,7 @@ Units <http://docs.astropy.org/en/stable/units/>`__ module.
 .. code:: ipython3
 
     # Set filename, read in file
-    filename = "/eng/ssb/iraf_transition/test_data/table2.txt"
+    filename = "../data/table2.txt"
     ed_table = Table.read(filename, format='ascii')
     
     # To get table info
@@ -758,7 +758,7 @@ table. Below we show the ``Astropy Table`` equivalents, including
 
     # To print a table outside of a Python interpreter
     # Astropy has added the convenience function showtable
-    !showtable --format ascii /eng/ssb/iraf_transition/test_data/table2.txt
+    !showtable --format ascii ../data/table2.txt
 
 
 .. parsed-literal::
@@ -986,8 +986,8 @@ to suit your needs.
 .. code:: ipython3
 
     # Open table files
-    file1 = '/eng/ssb/iraf_transition/test_data/HCG7_SDSS_photo.dat'
-    file2 = '/eng/ssb/iraf_transition/test_data/HCG7_2MASS.tbl'
+    file1 = '../data/HCG7_SDSS_photo.dat'
+    file2 = '../data/HCG7_2MASS.tbl'
     sdss = Table.read(file1, format='ascii')
     twomass = Table.read(file2, format='ascii')
     

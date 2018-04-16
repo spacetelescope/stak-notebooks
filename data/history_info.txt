@@ -1,0 +1,2 @@
+Example text read from an ASCII file
+On January 01, 2017

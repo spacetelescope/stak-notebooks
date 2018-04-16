@@ -95,6 +95,7 @@ using ``Box2DKernel``, which is convinient for square box sizes.
     from astropy.io import fits
     from astropy.convolution import convolve as ap_convolve
     from astropy.convolution import Box2DKernel
+    from astroquery.mast import Observations
     
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
@@ -102,8 +103,35 @@ using ``Box2DKernel``, which is convinient for square box sizes.
 
 .. code:: ipython3
 
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103517933864" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
     # grab subsection of fits images
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
     
@@ -121,7 +149,7 @@ using ``Box2DKernel``, which is convinient for square box sizes.
 
 
 
-.. image:: images.imfilter_files/images.imfilter_11_0.png
+.. image:: images.imfilter_files/images.imfilter_12_0.png
 
 
 .. code:: ipython3
@@ -141,7 +169,7 @@ using ``Box2DKernel``, which is convinient for square box sizes.
 
 
 
-.. image:: images.imfilter_files/images.imfilter_12_0.png
+.. image:: images.imfilter_files/images.imfilter_13_0.png
 
 
 
@@ -165,6 +193,7 @@ kernel applied to a 10 by 10 array using the
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy.convolution import convolve as ap_convolve
+    from astroquery.mast import Observations
     
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
@@ -172,8 +201,35 @@ kernel applied to a 10 by 10 array using the
 
 .. code:: ipython3
 
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table4515903472" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
     # grab subsection of fits images
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[840:950,2350:2500]
     
@@ -195,7 +251,7 @@ kernel applied to a 10 by 10 array using the
 
 
 
-.. image:: images.imfilter_files/images.imfilter_18_0.png
+.. image:: images.imfilter_files/images.imfilter_20_0.png
 
 
 .. code:: ipython3
@@ -215,7 +271,7 @@ kernel applied to a 10 by 10 array using the
 
 
 
-.. image:: images.imfilter_files/images.imfilter_19_0.png
+.. image:: images.imfilter_files/images.imfilter_21_0.png
 
 
 Here is an example using masking with ``scipy.convolve``
@@ -236,7 +292,7 @@ Here is an example using masking with ``scipy.convolve``
 .. code:: ipython3
 
     # grab subsection of fits images
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
     
@@ -254,7 +310,7 @@ Here is an example using masking with ``scipy.convolve``
 
 
 
-.. image:: images.imfilter_files/images.imfilter_23_0.png
+.. image:: images.imfilter_files/images.imfilter_25_0.png
 
 
 .. code:: ipython3
@@ -274,7 +330,7 @@ Here is an example using masking with ``scipy.convolve``
 
 
 
-.. image:: images.imfilter_files/images.imfilter_24_0.png
+.. image:: images.imfilter_files/images.imfilter_26_0.png
 
 
 
@@ -299,6 +355,7 @@ size is defined slightly differently from the IRAF version.
     from astropy.io import fits
     from astropy.convolution import convolve as ap_convolve
     from astropy.convolution import Gaussian2DKernel
+    from astroquery.mast import Observations
     
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
@@ -306,8 +363,35 @@ size is defined slightly differently from the IRAF version.
 
 .. code:: ipython3
 
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103707370328" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
     # grab subsection of fits images
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
     
@@ -323,7 +407,7 @@ size is defined slightly differently from the IRAF version.
 
 .. parsed-literal::
 
-    <astropy.convolution.kernels.Gaussian2DKernel at 0x12875e048>
+    <astropy.convolution.kernels.Gaussian2DKernel at 0x18255efe80>
 
 
 
@@ -336,7 +420,7 @@ size is defined slightly differently from the IRAF version.
 
 
 
-.. image:: images.imfilter_files/images.imfilter_30_0.png
+.. image:: images.imfilter_files/images.imfilter_33_0.png
 
 
 .. code:: ipython3
@@ -356,7 +440,7 @@ size is defined slightly differently from the IRAF version.
 
 
 
-.. image:: images.imfilter_files/images.imfilter_31_0.png
+.. image:: images.imfilter_files/images.imfilter_34_0.png
 
 
 
@@ -381,6 +465,7 @@ create your kernel.
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
     
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
@@ -388,8 +473,35 @@ create your kernel.
 
 .. code:: ipython3
 
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103539988240" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
     # grab subsection of fits images
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
     
@@ -408,7 +520,7 @@ create your kernel.
 
 
 
-.. image:: images.imfilter_files/images.imfilter_37_0.png
+.. image:: images.imfilter_files/images.imfilter_41_0.png
 
 
 .. code:: ipython3
@@ -427,7 +539,7 @@ create your kernel.
 
 
 
-.. image:: images.imfilter_files/images.imfilter_38_0.png
+.. image:: images.imfilter_files/images.imfilter_42_0.png
 
 
 
@@ -450,6 +562,7 @@ back out to a FITS file. We will use the
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
     
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
@@ -457,8 +570,35 @@ back out to a FITS file. We will use the
 
 .. code:: ipython3
 
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103541307880" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
     # create test array
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     out_file = 'median_out.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
@@ -489,7 +629,7 @@ back out to a FITS file. We will use the
 
 
 
-.. image:: images.imfilter_files/images.imfilter_45_0.png
+.. image:: images.imfilter_files/images.imfilter_50_0.png
 
 
 For a ring median filter we can supply a more specific footprint to the
@@ -512,13 +652,11 @@ handling of ``numpy`` ``nan`` values is only available with the
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
     %matplotlib inline
-    
-    #deprecation warning, is fixed already in the dev version, not sure when this is getting pushed
 
 .. code:: ipython3
 
     # create test array
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
     
@@ -540,7 +678,7 @@ handling of ``numpy`` ``nan`` values is only available with the
 
 
 
-.. image:: images.imfilter_files/images.imfilter_49_0.png
+.. image:: images.imfilter_files/images.imfilter_54_0.png
 
 
 .. code:: ipython3
@@ -560,7 +698,7 @@ handling of ``numpy`` ``nan`` values is only available with the
 
 
 
-.. image:: images.imfilter_files/images.imfilter_50_0.png
+.. image:: images.imfilter_files/images.imfilter_55_0.png
 
 
 
@@ -585,10 +723,38 @@ The equation was used as an approximation for a mode calculation.
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
     
     # Plotting Imports/Setup
     import matplotlib.pyplot as plt
     %matplotlib inline
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table103519377168" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
@@ -601,7 +767,7 @@ For a box footprint:
 .. code:: ipython3
 
     # create test array
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
     
@@ -625,7 +791,7 @@ For a box footprint:
 
 
 
-.. image:: images.imfilter_files/images.imfilter_58_0.png
+.. image:: images.imfilter_files/images.imfilter_64_0.png
 
 
 For a ring footprint (similar to IRAF's rmode):
@@ -647,7 +813,7 @@ For a ring footprint (similar to IRAF's rmode):
 .. code:: ipython3
 
     # create test array
-    test_data = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    test_data = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     sci1 = fits.getdata(test_data,ext=1)
     my_arr = sci1[700:1030,2250:2800]
     
@@ -665,7 +831,7 @@ For a ring footprint (similar to IRAF's rmode):
 
 
 
-.. image:: images.imfilter_files/images.imfilter_62_0.png
+.. image:: images.imfilter_files/images.imfilter_68_0.png
 
 
 .. code:: ipython3
@@ -685,7 +851,7 @@ For a ring footprint (similar to IRAF's rmode):
 
 
 
-.. image:: images.imfilter_files/images.imfilter_63_0.png
+.. image:: images.imfilter_files/images.imfilter_69_0.png
 
 
 

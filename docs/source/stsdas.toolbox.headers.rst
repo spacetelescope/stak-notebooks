@@ -51,11 +51,42 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
     # Astronomy Specific Imports
     from astropy.io import fits
     from astropy.io.fits import printdiff
+    from astroquery.mast import Observations
 
 .. code:: ipython3
 
-    file1 = '/eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits'
-    file2 = '/eng/ssb/iraf_transition/test_data/jczgx1ppq_flc.fits'
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table4562435544" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
+    file1 = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
+    file2 = './mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits'
     
     # printdiff example ignoring HISTORY and COMMENT cards, and only extension 0
     printdiff(file1, file2, ext=0, ignore_keywords=('HISTORY', 'COMMENT'))
@@ -67,7 +98,7 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
      Headers contain differences:
        Headers have different number of cards:
         a: 225
-        b: 233
+        b: 242
        Extra keyword 'ANG_SIDE' in a: 0.0
        Extra keyword 'BIACFILE' in a: 'N/A'
        Extra keyword 'CCDOFSAB' in a: 190
@@ -76,7 +107,7 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
        Extra keyword 'DWELL_LN' in a: 0
        Extra keyword 'DWELL_TM' in a: 0.0
        Extra keyword 'FILTER' in a: 'F140W'
-       Extra keyword 'MYKEY1' in a: 'Editing this keyword'
+       Extra keyword 'MYKEY1' in a: 5
        Extra keyword 'NLINCORR' in a: 'COMPLETE'
        Extra keyword 'NLINFILE' in a: 'iref$u1k1727mi_lin.fits'
        Extra keyword 'NO_LINES' in a: 0
@@ -99,7 +130,6 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
        Extra keyword 'SCAN_RAT' in a: 0.0
        Extra keyword 'SCAN_TYP' in a: 'N'
        Extra keyword 'SCAN_WID' in a: 0.0
-       Extra keyword 'SNKCFILE' in a: 'N/A'
        Extra keyword 'SUBTYPE' in a: 'FULLIMAG'
        Extra keyword 'UNITCORR' in a: 'COMPLETE'
        Extra keyword 'ZOFFCORR' in a: 'COMPLETE'
@@ -112,14 +142,17 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
        Extra keyword 'CCDOFSTD' in b: 1
        Extra keyword 'CFLTFILE' in b: 'N/A'
        Extra keyword 'CRSPLIT' in b: 1
+       Extra keyword 'CTEDATE0' in b: 52334.86
+       Extra keyword 'CTEDATE1' in b: 57710.4460102
        Extra keyword 'CTEDIR' in b: 'NONE'
        Extra keyword 'CTEIMAGE' in b: 'NONE'
-       Extra keyword 'CTE_NAME' in b: 'PixelCTE 2012'
-       Extra keyword 'CTE_VER' in b: '3.3'
+       Extra keyword 'CTE_NAME' in b: 'PixelCTE 2017'
+       Extra keyword 'CTE_VER' in b: '1.2'
        Extra keyword 'DARKTIME' in b: 581.247202
        Extra keyword 'EXPSCORR' in b: 'COMPLETE'
        Extra keyword 'FILTER1' in b: 'CLEAR1L'
        Extra keyword 'FILTER2' in b: 'F814W'
+       Extra keyword 'FIXROCR' in b: 1
        Extra keyword 'FLASHCUR' in b: 'OFF'
        Extra keyword 'FLASHDUR' in b: 0.0
        Extra keyword 'FLASHSTA' in b: 'NOT PERFORMED'
@@ -134,16 +167,17 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
        Extra keyword 'LRFWAVE' in b: 0.0
        Extra keyword 'MLINTAB' in b: 'N/A'
        Extra keyword 'PCTECORR' in b: 'COMPLETE'
-       Extra keyword 'PCTEFRAC' in b: 2.011591423149
-       Extra keyword 'PCTENSMD' in b: 1
-       Extra keyword 'PCTERNCL' in b: 5.0
-       Extra keyword 'PCTESHFT' in b: 7
-       Extra keyword 'PCTESMIT' in b: 7
+       Extra keyword 'PCTEFRAC' in b: 0.9937865427707
+       Extra keyword 'PCTENFOR' in b: 5
+       Extra keyword 'PCTENPAR' in b: 7
+       Extra keyword 'PCTERNOI' in b: 4.3
+       Extra keyword 'PCTETLEN' in b: 60
        Extra keyword 'PCTETRSH' in b: -10.0
        Extra keyword 'PHOTTAB' in b: 'N/A'
        Extra keyword 'SHADCORR' in b: 'OMIT'
        Extra keyword 'SHADFILE' in b: 'N/A'
        Extra keyword 'SHUTRPOS' in b: 'A'
+       Extra keyword 'SINKCORR' in b: 'COMPLETE'
        Extra keyword 'SPOTTAB' in b: 'N/A'
        Extra keyword 'STATFLAG' in b: False
        Extra keyword 'WRTERR' in b: True
@@ -208,7 +242,7 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           b> analog to digital correction file
        Keyword BIASFILE has different values:
           a> N/A
-          b> jref$0a415460j_bia.fits
+          b> jref$1541940gj_bia.fits
        Keyword BIASFILE has different comments:
           b> bias image file name
        Keyword BIASLEVA has different values:
@@ -216,13 +250,15 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           b> 4221.167
        Keyword BIASLEVB has different values:
           a> 0.0
-          b> 4029.7476
+          b> 4029.7478
        Keyword BIASLEVC has different values:
           a> 0.0
-          b> 4441.6982
+          b> 4441.6987
        Keyword BIASLEVD has different values:
           a> 0.0
           b> 4631.4839
+       Keyword BITPIX   has different comments:
+          b> number of bits per data pixel
        Keyword BLEVCORR has different comments:
           a> subtract bias level computed from ref pixels
            ?                                    ^^^^ ^^^^
@@ -233,7 +269,7 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           b> jref$t3n1116nj_bpx.fits
        Keyword CAL_VER  has different values:
           a> 3.3(28-Jan-2016)
-          b> 8.3.4 (07-Jul-2016)
+          b> 9.2.0 (01-Jun-2017)
        Keyword CAL_VER  has different comments:
           a> CALWF3 code version
            ?    ^^^
@@ -257,19 +293,21 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           a> identify cosmic ray hits
           b> combine observations to reject cosmic rays
        Keyword CRDS_CTX has different values:
-          a> hst_0453.pmap
-           ?       ^^
-          b> hst_0484.pmap
-           ?       ^^
+          a> hst_0478.pmap
+           ?      ^^^
+          b> hst_0592.pmap
+           ?      ^^^
        Keyword CRDS_VER has different values:
-          a> 1.9.0, opus_2015_3dms, 2767
-          b> 7.0.1, opus_2016.1-universal, af27872
+          a> 7.0.1, opus_2016.1-universal, af27872
+          b> 7.1.5, 7.1.5, 3548bc1
        Keyword CRREJTAB has different values:
           a> iref$u6a1748ri_crr.fits
           b> N/A
        Keyword CSYS_VER has different values:
-          a> opus_2015_3a_dms
-          b> hstdp-2016.1
+          a> hstdp-2016.1
+           ?          ^ ^
+          b> hstdp-2017.3
+           ?          ^ ^
        Keyword D2IMFILE has different values:
           a> N/A
           b> jref$02c1450oj_d2i.fits
@@ -277,10 +315,10 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           b> Column Correction Reference File
        Keyword DARKFILE has different values:
           a> iref$xag19296i_drk.fits
-          b> jref$0a41546sj_drk.fits
+          b> jref$19k1602ij_drk.fits
        Keyword DATE     has different values:
-          a> 2016-06-02
-          b> 2016-10-16
+          a> 2016-09-21
+          b> 2017-12-03
        Keyword DATE-OBS has different values:
           a> 2016-01-15
            ?       -  ^
@@ -300,13 +338,13 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           b> jref$qbu16429j_dxy.fits
        Keyword DISTNAME has different values:
           a> iczgs3ygq_w3m18525i-NOMODEL-NOMODEL
-          b> jczgx1ppq_0461802dj-02c1450rj-02c1450oj
+          b> jczgx1ppq_11d1433lj-02c1450rj-02c1450oj
        Keyword DRIZCORR has different values:
           a> COMPLETE
           b> PERFORM
        Keyword DRKCFILE has different values:
           a> N/A
-          b> jref$0a41546rj_dkc.fits
+          b> jref$19k15450j_dkc.fits
        Keyword DRKCFILE has different comments:
           b> De-trailed Dark Reference File
        Keyword EXPEND   has different values:
@@ -325,7 +363,7 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           b> post flash correction file name
        Keyword IDCTAB   has different values:
           a> iref$w3m18525i_idc.fits
-          b> jref$0461802dj_idc.fits
+          b> jref$11d1433lj_idc.fits
        Keyword IMPHTTAB has different values:
           a> iref$wbj1825ri_imp.fits
           b> jref$08b18470j_imp.fits
@@ -337,12 +375,12 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           b> X1.009
        Keyword MDRIZTAB has different values:
           a> iref$ubi1853pi_mdz.fits
-           ? ^      ^ -  ^^
-          b> jref$ub21537aj_mdz.fits
-           ? ^      ^   ^^^
+          b> jref$16r12191j_mdz.fits
        Keyword MOONANGL has different values:
           a> 57.153374
           b> 92.141869
+       Keyword NAXIS    has different comments:
+          b> number of data axes
        Keyword NEXTEND  has different values:
           a> 6
           b> 15
@@ -355,13 +393,15 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           a> MULTIACCUM
           b> ACCUM
        Keyword OPUS_VER has different values:
-          a> HSTDP 2015_3a
+          a> HSTDP 2016_1a
+           ?          ^ ^^
+          b> HSTDP 2017_3
            ?          ^ ^
-          b> HSTDP 2016_1a
-           ?          ^ ^
+       Keyword ORIGIN   has different comments:
+          b> FITS file originator
        Keyword OSCNTAB  has different values:
           a> iref$q911321mi_osc.fits
-          b> jref$lch1459bj_osc.fits
+          b> jref$17717071j_osc.fits
        Keyword OSCNTAB  has different comments:
           a> detector overscan table
           b> CCD overscan table
@@ -370,20 +410,20 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
           b> 88.003448
        Keyword PCTETAB  has different values:
           a> N/A
-          b> jref$xa81724cj_cte.fits
+          b> jref$19i16323j_cte.fits
        Keyword PCTETAB  has different comments:
           b> CTE Correction Table
        Keyword PFLTFILE has different values:
           a> iref$uc721143i_pfl.fits
           b> jref$qb12257pj_pfl.fits
        Keyword PROCTIME has different values:
-          a> 57541.85384259
-          b> 57677.3616088
+          a> 57652.2953588
+          b> 58090.39077546
        Keyword PROPAPER has different values:
           b> WFCENTER
        Keyword PYWCSVER has different values:
-          a> 1.1.2
-          b> 1.2.1
+          a> 1.2.1
+          b> 1.3.3
        Keyword RA_TARG  has different values:
           a> 36.85374208875
           b> 127.7389583333
@@ -409,7 +449,12 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
            ? ^^^
        Keyword SIPNAME  has different values:
           a> iczgs3ygq_w3m18525i
-          b> jczgx1ppq_0461802dj
+          b> jczgx1ppq_11d1433lj
+       Keyword SNKCFILE has different values:
+          a> N/A
+          b> jref$16q1417cj_snk.fits
+       Keyword SNKCFILE has different comments:
+          b> Map of sink pixels
        Keyword SUNANGLE has different values:
           a> 112.720184
           b> 91.557938
@@ -422,8 +467,9 @@ doc <http://docs.astropy.org/en/stable/io/fits/api/diff.html>`__.
        Keyword TIME-OBS has different values:
           a> 06:47:59
           b> 01:04:51
-       Keyword T_SGSTAR has different values:
-          b> N/A
+       Keyword UPWCSVER has different values:
+          a> 1.2.3.dev
+          b> 1.3.2
     
 
 
@@ -447,12 +493,40 @@ file using Python's built in i/o functionality and the
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90606254960" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # open our text file and fits file objects, we're going to make a copy of a fits file, and edit the copy
-    my_file = open('/eng/ssb/iraf_transition/test_data/history_info.txt', 'r')
-    shutil.copyfile('/eng/ssb/iraf_transition/test_data/stfhist.fits','stfhist_copy.fits')
+    my_file = open('../data/history_info.txt', 'r')
+    shutil.copyfile('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits','stfhist_copy.fits')
     test_data = fits.open('stfhist_copy.fits', mode='update')
     
     # loop through lines in text file and write to fits file

@@ -109,8 +109,34 @@ page <http://docs.astropy.org/en/stable/io/fits/>`__.
 
 .. code:: ipython3
 
+    # To pull our sample data file we will use an astroquery call
+    from astroquery.mast import Observations
+    obsid = '2004615006'
+    Observations.download_products(obsid,productFilename="iczgs3ygq_flt.fits")
+
+
+.. parsed-literal::
+
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits to ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits ... [Done]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90363105176" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
+    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    </table>
+
+
+
+.. code:: ipython3
+
     # Assign filename to the variable test_file
-    test_file = '/eng/ssb/iraf_transition/test_data/wfc3data_flt.fits'
+    test_file = './mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits'
 
 Below we will open the FITS file. You can open the file in various
 modes, for this example we will open in update mode. The default mode is
@@ -133,7 +159,7 @@ indexing the HDUList.
 
 .. parsed-literal::
 
-    Filename: /eng/ssb/iraf_transition/test_data/wfc3data_flt.fits
+    Filename: ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
       0  PRIMARY       1 PrimaryHDU     265   ()      
       1  SCI           1 ImageHDU       140   (1014, 1014)   float32   
@@ -158,7 +184,7 @@ Now we will extract the primary header into the variable
 
 .. parsed-literal::
 
-    iczgs3y5q_flt.fits
+    iczgs3ygq_flt.fits
 
 
 Next we extract the image data into a variable called ``image_data``
@@ -178,19 +204,19 @@ page <https://docs.scipy.org/doc/numpy/user/basics.indexing.html>`__.
 
 .. parsed-literal::
 
-    [[  0.86692303   0.80678135   0.78075016 ...,   4.54734516  10.16776085
-        5.09605217]
-     [  0.83312052   0.76854318   0.88651454 ...,   0.81159276   5.15299034
-       -0.40152752]
-     [  0.77341086   0.80276382   0.78382087 ...,   4.50097942 -11.52676868
-        3.39691401]
+    [[  0.88747919   0.83535039   0.80967814 ...,   3.19881892   4.66315889
+       12.94333744]
+     [  0.94745165   0.80834782   0.76161045 ...,   0.91167408   3.91721344
+        2.38371158]
+     [  0.86024958   0.86270761   0.85969168 ...,   2.71301699  -4.11855459
+        2.52296972]
      ..., 
-     [ 48.13546371   6.93788576 -22.45811272 ...,  22.81965828  28.73524284
-       34.41676331]
-     [ 44.60122681 -10.17064476  -9.5944128  ...,  14.01812649  29.81622887
-        5.58320761]
-     [ 54.62176895  30.16882896  79.96840668 ...,   0.          10.12944221
-       24.66659927]]
+     [ 33.32045746  23.79335022   4.87152386 ...,  22.54588509  21.88571739
+       23.2428627 ]
+     [ 47.97618103   1.16626728  13.08955574 ...,  12.46915627  21.59257698
+       16.61116219]
+     [ 30.99951744  29.15618515  46.40042877 ...,   0.           9.47169876
+       20.67056084]]
 
 
 We now have two options for saving out the FITS information.
@@ -217,10 +243,10 @@ handler you used to open the file.**
 .. code:: ipython3
 
     # Save using the writeto method to a new file, writeto will close the new file for you
-    HDUList_object.writeto("acsdata_new.fits")
+    HDUList_object.writeto("wfc3data_new.fits")
     
     # Save using the writeto method, overwriting the original file
-    HDUList_object.writeto("/eng/ssb/iraf_transition/test_data/acsdata_flt.fits", overwrite=True)
+    HDUList_object.writeto("./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits", overwrite=True)
 
 .. code:: ipython3
 

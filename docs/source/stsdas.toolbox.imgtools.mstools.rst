@@ -77,11 +77,45 @@ the **images.imutil.imsum** task for a short usage example.
     # Astronomy Specific Imports
     from astropy.io import fits
     from stsci.tools.bitmask import bitfield_to_boolean_mask
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid, productFilename="jczgx1ppq_flc.fits")
+    obsid = '2004663554'
+    Observations.download_products(obsid, productFilename="jczgx1ptq_flc.fits")
+    obsid = '2004663556'
+    Observations.download_products(obsid, productFilename="jczgx1q1q_flc.fits")
+    
+    import shutil
+    shutil.move('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits','../data/')
+    shutil.move('./mastDownload/HST/JCZGX1PTQ/jczgx1ptq_flc.fits','../data/')
+    shutil.move('./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits','../data/')
+
+
+.. parsed-literal::
+
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/jczgx1ppq/jczgx1ppq_flc.fits to ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits ... [Done]
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/jczgx1ptq/jczgx1ptq_flc.fits to ./mastDownload/HST/JCZGX1PTQ/jczgx1ptq_flc.fits ... [Done]
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/jczgx1q1q/jczgx1q1q_flc.fits to ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits ... [Done]
+
+
+
+
+.. parsed-literal::
+
+    '../data/jczgx1q1q_flc.fits'
+
+
 
 .. code:: ipython3
 
     # Get the data
-    test_data = glob.glob('/eng/ssb/iraf_transition/test_data/mscombine/nnicpw4*_blv_tmp.fits')
+    test_data = glob.glob('../data/jcz*flc.fits')
 
 .. code:: ipython3
 
@@ -109,8 +143,8 @@ the **images.imutil.imsum** task for a short usage example.
 .. code:: ipython3
 
     # Propoagate uncertainties for ERR arrays, divide by zero expected
-    weight_image_ext1 = np.zeros((2051, 4096))
-    weight_image_ext4 = np.zeros((2051, 4096))
+    weight_image_ext1 = np.zeros((2048, 4096))
+    weight_image_ext4 = np.zeros((2048, 4096))
     for array in masked_arrays_ext1:
         mask = array.mask
         weight_image_ext1[np.where(mask == False)] += 1.0
@@ -125,17 +159,17 @@ the **images.imutil.imsum** task for a short usage example.
 
 .. parsed-literal::
 
-    /Users/ogaz/miniconda2/envs/irafdev3/lib/python3.6/site-packages/ipykernel_launcher.py:10: RuntimeWarning: divide by zero encountered in true_divide
+    /Users/ogaz/miniconda3/envs/irafdev/lib/python3.5/site-packages/ipykernel_launcher.py:10: RuntimeWarning: divide by zero encountered in true_divide
       # Remove the CWD from sys.path while we load stuff.
-    /Users/ogaz/miniconda2/envs/irafdev3/lib/python3.6/site-packages/ipykernel_launcher.py:11: RuntimeWarning: divide by zero encountered in true_divide
+    /Users/ogaz/miniconda3/envs/irafdev/lib/python3.5/site-packages/ipykernel_launcher.py:11: RuntimeWarning: divide by zero encountered in true_divide
       # This is added back by InteractiveShellApp.init_path()
 
 
 .. code:: ipython3
 
     # Create empty DQ arrays
-    comb_ext3 = np.zeros((2051, 4096))
-    comb_ext6 = np.zeros((2051, 4096))
+    comb_ext3 = np.zeros((2048, 4096))
+    comb_ext6 = np.zeros((2048, 4096))
 
 .. code:: ipython3
 
@@ -179,10 +213,9 @@ images.imutil.imstatistics notebook entry.
 
     # Change these values to your desired data file list
     # loop over multiple files, make filelist
-    test_files = glob.glob('/eng/ssb/iraf_transition/test_data/i*_flt.fits')
+    test_files = glob.glob('../data/n*_tmp.fits')
     
     for filename in test_files:
-        #test_data = '/eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
         hdulist = fits.open(filename)
     
         # Make mask using Python bitmath, using bit flags 32 and 4
@@ -203,20 +236,20 @@ images.imutil.imstatistics notebook entry.
 
 .. parsed-literal::
 
-    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3ygq_flt.fits
-    mean: 0.820129451464822
-    median: 0.8166738748550415
-    standard deviation: 0.05532484610965952
+    Stats for file: ../data/nnicqr34r1q_blv_tmp.fits
+    mean: 1.049938712724799
+    median: 0.8347640037536621
+    standard deviation: 3.386821124737488
     
-    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3ygq_newdtype_flt.fits
-    mean: 1.0
-    median: 1.0
-    standard deviation: 0.0
+    Stats for file: ../data/nnicqr34rgq_blv_tmp.fits
+    mean: 1.0696971193430191
+    median: 0.8951225280761719
+    standard deviation: 3.341097790698396
     
-    Stats for file: /eng/ssb/iraf_transition/test_data/iczgs3y5q_flt.fits
-    mean: 0.7803241408189818
-    median: 0.7780539989471436
-    standard deviation: 0.049491070357460455
+    Stats for file: ../data/nnicqr34rvq_blv_tmp.fits
+    mean: 1.036385163417633
+    median: 0.8546183109283447
+    standard deviation: 3.405510574506165
     
 
 

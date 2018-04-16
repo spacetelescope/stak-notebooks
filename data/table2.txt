@@ -1,0 +1,6 @@
+sname    radius  fwhm
+star1    10      6.5
+star2    7       5.10
+star3    2       0.5
+star4    1       0.75
+star5    20      13 
