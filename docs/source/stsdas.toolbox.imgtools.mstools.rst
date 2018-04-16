@@ -77,11 +77,45 @@ the **images.imutil.imsum** task for a short usage example.
     # Astronomy Specific Imports
     from astropy.io import fits
     from stsci.tools.bitmask import bitfield_to_boolean_mask
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid, productFilename="jczgx1ppq_flc.fits")
+    obsid = '2004663554'
+    Observations.download_products(obsid, productFilename="jczgx1ptq_flc.fits")
+    obsid = '2004663556'
+    Observations.download_products(obsid, productFilename="jczgx1q1q_flc.fits")
+    
+    import shutil
+    shutil.move('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits','../data/')
+    shutil.move('./mastDownload/HST/JCZGX1PTQ/jczgx1ptq_flc.fits','../data/')
+    shutil.move('./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits','../data/')
+
+
+.. parsed-literal::
+
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/jczgx1ppq/jczgx1ppq_flc.fits to ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits ... [Done]
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/jczgx1ptq/jczgx1ptq_flc.fits to ./mastDownload/HST/JCZGX1PTQ/jczgx1ptq_flc.fits ... [Done]
+    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/jczgx1q1q/jczgx1q1q_flc.fits to ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits ... [Done]
+
+
+
+
+.. parsed-literal::
+
+    '../data/jczgx1q1q_flc.fits'
+
+
 
 .. code:: ipython3
 
     # Get the data
-    test_data = glob.glob('../data/nn*_blv_tmp.fits')
+    test_data = glob.glob('../data/jcz*flc.fits')
 
 .. code:: ipython3
 
@@ -109,8 +143,8 @@ the **images.imutil.imsum** task for a short usage example.
 .. code:: ipython3
 
     # Propoagate uncertainties for ERR arrays, divide by zero expected
-    weight_image_ext1 = np.zeros((2051, 4096))
-    weight_image_ext4 = np.zeros((2051, 4096))
+    weight_image_ext1 = np.zeros((2048, 4096))
+    weight_image_ext4 = np.zeros((2048, 4096))
     for array in masked_arrays_ext1:
         mask = array.mask
         weight_image_ext1[np.where(mask == False)] += 1.0
@@ -122,11 +156,20 @@ the **images.imutil.imsum** task for a short usage example.
     comb_ext2 = np.sqrt(np.ma.sum(masked_arrays_ext2_squared, axis=0)).data
     comb_ext5 = np.sqrt(np.ma.sum(masked_arrays_ext5_squared, axis=0)).data
 
+
+.. parsed-literal::
+
+    /Users/ogaz/miniconda3/envs/irafdev/lib/python3.5/site-packages/ipykernel_launcher.py:10: RuntimeWarning: divide by zero encountered in true_divide
+      # Remove the CWD from sys.path while we load stuff.
+    /Users/ogaz/miniconda3/envs/irafdev/lib/python3.5/site-packages/ipykernel_launcher.py:11: RuntimeWarning: divide by zero encountered in true_divide
+      # This is added back by InteractiveShellApp.init_path()
+
+
 .. code:: ipython3
 
     # Create empty DQ arrays
-    comb_ext3 = np.zeros((2051, 4096))
-    comb_ext6 = np.zeros((2051, 4096))
+    comb_ext3 = np.zeros((2048, 4096))
+    comb_ext6 = np.zeros((2048, 4096))
 
 .. code:: ipython3
 

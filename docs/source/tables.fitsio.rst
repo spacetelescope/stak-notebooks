@@ -185,6 +185,9 @@ Below we show an example of running this task in a python session. You
 may or may not need to byteswap your image data depending on which
 system it was originally written on.
 
+Below we show an example with a local file. **This example will not run
+unless the filename is replaced with one of your local files.**
+
 .. code:: ipython3
 
     # Standard Imports
@@ -195,7 +198,7 @@ system it was originally written on.
 
 .. code:: ipython3
 
-    filename = "../data/x31g0108t.c0h"
+    filename = "x31g0108t.c0h"
     hdulist = readgeis.readgeis(filename)
     hdulist[1].data = hdulist[1].data.byteswap()
     del hdulist[1].header['CD1_1']

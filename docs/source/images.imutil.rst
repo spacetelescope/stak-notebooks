@@ -31,8 +31,7 @@ Contents:
 -  `imheader <#imheader>`__
 -  `imhistogram <#imhistogram>`__
 -  `imreplace <#imreplace>`__
--  `imslice <#imslice>`__
--  `imstack <#imstack>`__
+-  `imstack-imslice <#imslice>`__
 -  `imstatistics <#imstatistics>`__
 -  `imsum <#imsum>`__
 -  `listpixels <#listpixels>`__
@@ -1961,11 +1960,16 @@ documentation <http://scikit-image.org/docs/0.12.x/api/skimage.morphology.html?h
 
 
 
-imslice
--------
+imstack-imslice
+---------------
 
 **Please review the** `Notes <#notes>`__ **section above before running
 any examples in this notebook**
+
+Imstack can take multiple FITS images and stack the data, writing out a
+new file where the FITS data is 1-dimension higher then the input
+images. Here we show that manipulation using the ``astropy`` library and
+`numpy.stack <https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html#numpy.stack>`__.
 
 Imslice can take a 3-D datacube FITS image and return multiple 2D images
 sliced through the chosen dimension. Keep in mind for the python
@@ -1974,6 +1978,9 @@ will be used for all output images, including WCS information. We will
 be using
 `numpy.split <https://docs.scipy.org/doc/numpy/reference/generated/numpy.split.html#numpy.split>`__.
 
+Below we first produced a 3-D datacube with by stacking, then split the
+output.
+
 .. code:: ipython3
 
     # Standard Imports
@@ -1981,11 +1988,69 @@ be using
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+    obsid = '2004663556'
+    Observations.download_products(obsid, productFilename="jczgx1q1q_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+    INFO: Found cached file ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90662738464" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
+
+Here is an example that stacks arrays into a 3-D datacube
+
+.. code:: ipython3
+
+    # Pull two image data arrays and an image header
+    header1 = fits.getheader('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits',ext=1)
+    image1 = fits.getdata('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits')
+    image2 = fits.getdata('./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits')
+    
+    # Stack arrays, the new dimension will be put first, unless otherwise specified with the axis keyword
+    outstack = np.stack((image1,image2))
+    print("final shape is:")
+    print(outstack.shape)
+    
+    # Now we can write this new array into a new FITS file by packing it back into an HDU object
+    hdu = fits.PrimaryHDU(outstack,header1)
+    hdu.writeto('imstack_out.fits', overwrite=True)
+
+
+.. parsed-literal::
+
+    final shape is:
+    (2, 2048, 4096)
+
+
+Now we take that output and break it back down to 2-D arrays.
 
 .. code:: ipython3
 
     # Pull image data array and image header
-    orig_hdu = fits.open('../data/imstack_out.fits')
+    orig_hdu = fits.open('imstack_out.fits')
     
     print("Here's the extensions in our input file:")
     orig_hdu.info()
@@ -2016,7 +2081,7 @@ be using
 .. parsed-literal::
 
     Here's the extensions in our input file:
-    Filename: ../data/imstack_out.fits
+    Filename: imstack_out.fits
     No.    Name      Ver    Type      Cards   Dimensions   Format
       0  SCI           1 PrimaryHDU     199   (4096, 2048, 2)   float32   
     
@@ -2026,95 +2091,6 @@ be using
     
     final shape of a slice is:
     (2048, 4096)
-
-
-
-
-imstack
--------
-
-**Please review the** `Notes <#notes>`__ **section above before running
-any examples in this notebook**
-
-imstack can take multiple FITS images and stack the data, writing out a
-new file where the FITS data is 1-dimension higher then the input
-images. Here we show that manipulation using the ``astropy`` library and
-`numpy.stack <https://docs.scipy.org/doc/numpy/reference/generated/numpy.stack.html#numpy.stack>`__.
-
-.. code:: ipython3
-
-    # Standard Imports
-    import numpy as np
-    
-    # Astronomy Specific Imports
-    from astropy.io import fits
-    from astroquery.mast import Observations
-
-.. code:: ipython3
-
-    # Download test file using astroquery, this only needs to be run once
-    # and can be skipped if using your own data.
-    # Astroquery will only download file if not already present.
-    obsid = '2004663553'
-    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
-    obsid = '2004663556'
-    Observations.download_products(obsid, productFilename="jczgx1q1q_flc.fits")
-
-
-.. parsed-literal::
-
-    INFO:astropy:Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480.
-
-
-.. parsed-literal::
-
-    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
-
-
-.. parsed-literal::
-
-    INFO:astropy:Found cached file ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits with expected size 167964480.
-
-
-.. parsed-literal::
-
-    INFO: Found cached file ./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits with expected size 167964480. [astroquery.query]
-
-
-
-
-.. raw:: html
-
-    <i>Table length=1</i>
-    <table id="table103629896840" class="table-striped table-bordered table-condensed">
-    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
-    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
-    <tr><td>./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
-    </table>
-
-
-
-.. code:: ipython3
-
-    # Pull two image data arrays and an image header
-    header1 = fits.getheader('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits',ext=1)
-    image1 = fits.getdata('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits')
-    image2 = fits.getdata('./mastDownload/HST/JCZGX1Q1Q/jczgx1q1q_flc.fits')
-    
-    # Stack arrays, the new dimension will be put first, unless otherwise specified with the axis keyword
-    outstack = np.stack((image1,image2))
-    print("final shape is:")
-    print(outstack.shape)
-    
-    # Now we can write this new array into a new FITS file by packing it back into an HDU object
-    hdu = fits.PrimaryHDU(outstack,header1)
-    hdu.writeto('imstack_out.fits', overwrite=True)
-
-
-.. parsed-literal::
-
-    final shape is:
-    (2, 2048, 4096)
 
 
 

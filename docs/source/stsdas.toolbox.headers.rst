@@ -493,12 +493,40 @@ file using Python's built in i/o functionality and the
     
     # Astronomy Specific Imports
     from astropy.io import fits
+    from astroquery.mast import Observations
+
+.. code:: ipython3
+
+    # Download test file using astroquery, this only needs to be run once
+    # and can be skipped if using your own data.
+    # Astroquery will only download file if not already present.
+    obsid = '2004663553'
+    Observations.download_products(obsid,productFilename="jczgx1ppq_flc.fits")
+
+
+.. parsed-literal::
+
+    INFO: Found cached file ./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits with expected size 167964480. [astroquery.query]
+
+
+
+
+.. raw:: html
+
+    <i>Table length=1</i>
+    <table id="table90606254960" class="table-striped table-bordered table-condensed">
+    <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
+    </table>
+
+
 
 .. code:: ipython3
 
     # open our text file and fits file objects, we're going to make a copy of a fits file, and edit the copy
     my_file = open('../data/history_info.txt', 'r')
-    shutil.copyfile('../data/stfhist.fits','stfhist_copy.fits')
+    shutil.copyfile('./mastDownload/HST/JCZGX1PPQ/jczgx1ppq_flc.fits','stfhist_copy.fits')
     test_data = fits.open('stfhist_copy.fits', mode='update')
     
     # loop through lines in text file and write to fits file
