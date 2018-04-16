@@ -1,7 +1,6 @@
 name: stak-notebooks
 channels:
   - http://ssb.stsci.edu/astroconda
-  - conda-forge
 dependencies:
   - numpy
   - scipy
