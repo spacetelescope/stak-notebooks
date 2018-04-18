@@ -46,13 +46,6 @@ Fits Tools:
   tables.fitsio.rst
   tables.ttools.rst
 
-  
-Photometry Tools:
-
-.. toctree::
-  :maxdepth: 1
-
-  noao.digiphot.daophot.rst
 
  
 Cosmic Ray Rejections:
