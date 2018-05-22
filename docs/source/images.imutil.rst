@@ -2108,11 +2108,13 @@ documentation <http://docs.astropy.org/en/stable/api/astropy.stats.sigma_clipped
 for details on the advanced usage. We also use some Numpy functions for
 additional statistics.
 
-**Important Note to Users:** There are some differences in algorithms
-between the IRAF and Python statistical calculations. Proceed with care
-if you are comparing prior IRAF results to Python results. For more
-details on this issue see the `filed Github
-issue <https://github.com/spacetelescope/stak-notebooks/issues/83>`__.
+**Important Note to Users:** There are some small differences in
+algorithms between the IRAF and Python statistical calculations. Both
+the centering function used for the clipping as well as the degrees of
+freedom may vary. For example, ``astropy.stats.sigma_clipped_stats``
+uses a simple median for the clipping center. However a custom centering
+function can be provided through the ``cenfunc`` parameter. Proceed with
+care if you are comparing prior IRAF results to Python results.
 
 .. code:: ipython3
 
