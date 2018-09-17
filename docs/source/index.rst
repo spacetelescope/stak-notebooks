@@ -5,12 +5,14 @@ Jupyter Notebook Tutorials
 Below you will find Jupyter Notebook tutorials organized by usage/subject.
 Each notebook is grouped by one library/sub-library of IRAF tasks, which
 corresponds to the title of the notebook.  Putting together these tutorial
-notebooks is an ongoing task, `feedback <http://stak.userecho.com/>`_ and
+notebooks is an ongoing task, and
 `contributions <https://github.com/spacetelescope/stak>`_ are welcome.
 
 If you are new to Python or Astropy, we recommend starting with the
 introduction page to see some Python and Astropy information that will be used
 extensively in these tutorials.
+
+For questions or comments please see our `github <https://github.com/spacetelescope/stak-notebooks>`_ or you can visit the STScI `help page <https://hsthelp.stsci.edu>`_.
 
 .. toctree::
   :maxdepth: 2
