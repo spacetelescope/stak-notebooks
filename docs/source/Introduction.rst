@@ -117,7 +117,7 @@ page <http://docs.astropy.org/en/stable/io/fits/>`__.
 
 .. parsed-literal::
 
-    Downloading URL https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits to ./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits ... [Done]
+    INFO: Found cached file ./mastDownload/HST/iczgs3ygq/iczgs3ygq_flt.fits with expected size 16534080. [astroquery.query]
 
 
 
@@ -125,10 +125,10 @@ page <http://docs.astropy.org/en/stable/io/fits/>`__.
 .. raw:: html
 
     <i>Table length=1</i>
-    <table id="table90363105176" class="table-striped table-bordered table-condensed">
+    <table id="table90371172504" class="table-striped table-bordered table-condensed">
     <thead><tr><th>Local Path</th><th>Status</th><th>Message</th><th>URL</th></tr></thead>
-    <thead><tr><th>str47</th><th>str5</th><th>str87</th><th>str93</th></tr></thead>
-    <tr><td>./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits</td><td>ERROR</td><td>Downloaded filesize is 16531200,but should be 16534080, file may be partial or corrupt.</td><td>https://mast.stsci.edu/api/v0/download/file?uri=mast:HST/product/iczgs3ygq/iczgs3ygq_flt.fits</td></tr>
+    <thead><tr><th>str47</th><th>str8</th><th>object</th><th>object</th></tr></thead>
+    <tr><td>./mastDownload/HST/iczgs3ygq/iczgs3ygq_flt.fits</td><td>COMPLETE</td><td>None</td><td>None</td></tr>
     </table>
 
 
@@ -230,15 +230,12 @@ closed.
 We can also use the ``writeto`` method to save the ``HDUObject`` to a
 new file. ``writeto`` will close the new file for you.
 
-``writeto`` will also save to the original file if you provide it with
-the original filename, and use the ``overwrite=True`` parameter. In this
-case, the original file handling object will still need to be closed at
-some point in the session.
+The ``flush`` method will also save to the original file. In this case,
+the original file handling object will still need to be closed at some
+point in the session.
 
 **No matter which mode you used to open a FITS file, you should still
-call the close method to close the open FITS file. Even if you use
-writeto to write to the original file, you still need to close the file
-handler you used to open the file.**
+call the close method to close any open FITS file.**
 
 .. code:: ipython3
 
@@ -246,7 +243,7 @@ handler you used to open the file.**
     HDUList_object.writeto("wfc3data_new.fits")
     
     # Save using the writeto method, overwriting the original file
-    HDUList_object.writeto("./mastDownload/HST/ICZGS3YGQ/iczgs3ygq_flt.fits", overwrite=True)
+    HDUList_object.flush()
 
 .. code:: ipython3
 

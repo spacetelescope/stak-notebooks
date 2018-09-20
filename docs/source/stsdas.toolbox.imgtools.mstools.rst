@@ -57,7 +57,9 @@ any examples in this notebook**
 The original ``mscombine`` IRAF task performed image combination of
 several ``SCI`` exetensions of HST data while allowing the user to
 reject specified ``DQ`` bits. Additionally, the user could choose to
-combine the stack using the average or the median.
+combine the stack using the average or the median. This was similar to
+the ``imcombine`` task. This example can be used to replicate either
+task.
 
 This ``mscombine`` alternative uses ``numpy`` masked arrays to avoid
 using flagged pixels in the ``DQ`` array. In this simple example, we
