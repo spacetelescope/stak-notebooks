@@ -8,7 +8,7 @@
 
 Notebooks for STAK project
 ==========================
-This repository houses the STAK Jupyter notebooks.  For the STAK code repo and more information, go here: https://github.com/spacetelescope/stak.  Readthedocs page can be found here: http://stak-notebooks.readthedocs.io/en/latest/.
+This repository houses the STAK Jupyter notebooks. Readthedocs page can be found here: http://stak-notebooks.readthedocs.io/en/latest/.
 
 Useful Resources
 ================
@@ -20,7 +20,7 @@ If you are new to working with FITS files in Python we highly recommend working 
 
 Contributing
 ============
-Please open a new `issue <https://github.com/spacetelescope/stak-notebooks/issues>`_
+Please open a new `issue <https://github.com/spacetelescope/-notebooks/issues>`_
 or new `pull request <https://github.com/spacetelescope/stak-notebooks/pulls>`_
 for bugs, feedback, or new features you would like to see.
 
