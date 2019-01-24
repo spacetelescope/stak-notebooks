@@ -47,6 +47,7 @@ Contents:
 -  `tinfo-tlcol-tprint <#tinfo-tlcol-tprint>`__
 -  `tintegrate <#tintegrate>`__
 -  `tjoin <#tjoin>`__
+-  `tlinear <#tlinear>`__
 -  `tmatch <#tmatch>`__
 -  `tmerge <#tmerge>`__
 -  `tselect-tproject-tquery <#tselect-tproject-tquery>`__
@@ -960,6 +961,66 @@ for more details. We take the examples shown here from the Astropy docs.
     NGC3516 2011-11-11    --    --  42.1
 
 
+tlinear
+-------
+
+**Please review the** `Notes <#notes>`__ **section above before running
+any examples in this notebook**
+
+Tlinear is used to fit a one-dimensional line to a dataset and apply
+weights with standard deviation. This functionality is contained in the
+`polyfit
+package <https://docs.scipy.org/doc/numpy/reference/generated/numpy.polyfit.html>`__
+and `poly1d
+package <https://docs.scipy.org/doc/numpy-1.10.4/reference/generated/numpy.poly1d.html>`__
+of Numpy. Tlinear applies Gaussian weights (inverse STD instead of
+inverse squared STD) but with this change in mind Polyfit recreates the
+results of Tlinear to machine precision. We took this example from the
+WFC3/UVIS Gain Monitor to demonstrate.
+
+.. code:: ipython3
+
+    # All you need is Numpy 
+    import numpy as np
+    
+    # But Astropy will let us open the file
+    from astropy.io import ascii
+    
+    # And Matplotlib will make for better demonstration
+    import matplotlib.pyplot as plt
+    %matplotlib inline
+
+.. code:: ipython3
+
+    # Test dataset taken from WFC3/UVIS Gain Monitor
+    infile = '../data/WFC3_gain.dat'
+    data = ascii.read(infile)
+    variance, mean, std = data['variance'], data['mean'], data['std']
+    
+    # Fit 1D line to variance vs mean with Gaussian std weights.
+    fit = np.polyfit(mean, variance, deg=1, w=1/std)
+    slope, intercept = fit
+    
+    # Turn the slope and intercept into a functional form and apply it.
+    fit_line = np.poly1d(fit)
+    y_line = fit_line(mean)
+    
+    # Show off our handy work
+    print('Line fit to the data : y = {}*x + {}'.format(slope, intercept))
+    plt.scatter(mean, variance, color='black', alpha=.1, s=8)
+    plt.plot(mean, y_line, color='green')
+    plt.xlabel('Mean')
+    plt.ylabel('Variance')
+    plt.title('WFC3 Gain')
+
+
+.. parsed-literal::
+
+    Line fit to the data : y = 0.6364783735418926*x + 5.130580511662094
+
+
+
+.. image:: tables.ttools_files/tables.ttools_89_1.png
 
 
 tmatch
@@ -1304,8 +1365,6 @@ Not Replacing
 -  thedit - Edit or print table header keywords. See
    **images.imutil.hedit**
 -  thselect - Print table keyword values. See **images.imutil.hselect**
--  tlinear - Use linear regression to fit one or two table columns. See
-   **images.imfit.fit1d**
 -  tproduct - Form the Cartesian product of two tables. See
    `tjoin <#tjoin>`__
 -  Trebin - Allows the user to rebin columns in a table using linear or
