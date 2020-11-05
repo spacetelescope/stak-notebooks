@@ -8,6 +8,9 @@
 
 Notebooks for STAK project
 ==========================
+
+**Notice: This project was archived.**
+
 This repository houses the STAK Jupyter notebooks. Readthedocs page can be found here: http://stak-notebooks.readthedocs.io/en/latest/.
 
 Useful Resources
